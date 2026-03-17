@@ -8,14 +8,14 @@
   "theme_color": "#b91c1c",
   "icons": [
     {
-      "src": "App_Célula.jpg",
+      "src": "App_Célula.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
-      "src": "App_Célula.jpg",
+      "src": "App_Célula.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
