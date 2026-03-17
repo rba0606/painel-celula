@@ -8,9 +8,10 @@
   "theme_color": "#b91c1c",
   "icons": [
     {
-      "src": "https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg",
+      "src": "App_Célula.png",
       "sizes": "512x512",
-      "type": "image/jpg"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
