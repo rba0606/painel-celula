@@ -16,6 +16,33 @@
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+	
+	/* ESTILO DOS CARDS COM BORDAS FORÇADAS */
+        .formando-card { 
+            background: white !important; 
+            border: 2px solid #e2e8f0 !important; 
+            border-radius: 16px !important; 
+            padding: 1.25rem !important; 
+            transition: all 0.3s ease !important; 
+            position: relative !important; 
+            display: flex !important; 
+            flex-direction: column !important; 
+            height: 100% !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+        }
+
+        .formando-card:hover { 
+            border-color: #b91c1c !important; 
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Bordas Laterais Coloridas */
+        .card-p2 { border-left: 8px solid #16a34a !important; }
+        .card-p1 { border-left: 8px solid #2563eb !important; }
+
+        .info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-bottom: 2px; display: block; }
+        .info-value { font-size: 0.8rem; color: #334155; font-weight: 600; line-height: 1.2; }
 
         .table-container { overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
         .styled-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
@@ -94,334 +121,95 @@
         </div>
 
         <div id="tab-lista" class="tab-content">
-    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-    
-    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <span class="w-2 h-8 bg-green-600 rounded-full"></span> P2 - Nível de Discipulado
-    </h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-        
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Alex Fernando Viana Couto da Silva</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Música</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">05/08/1984</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">02/09/2017</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">axfdsl@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Marcelo (Tânia)</p></div>
+            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="w-2 h-8 bg-green-600 rounded-full"></span> P2 - Nível de Discipulado
+            </h3>
+            
+            <div id="container-p2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span class="w-2 h-8 bg-blue-600 rounded-full"></span> P1 - Nível de Ingresso
+            </h3>
+            
+            <div id="container-p1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
+
+            <script>
+                // BANCO DE DADOS COMPLETO
+                const formandosP2 = [
+                    { nome: "Alex Fernando Viana Couto da Silva", min: "Música", nasc: "05/08/1984", casam: "02/09/2017", email: "axfdsl@gmail.com", fap: "Marcelo (Tânia)" },
+                    { nome: "Kelly Cristina Viana Couto da Silva", min: "Centro de Formação", nasc: "29/07/1984", casam: "02/09/2017", email: "kellyvcouto@gmail.com", fap: "Thais (Marcelo)" },
+                    { nome: "Bartholomeu Francisco de Souza Neto", min: "Coord. Pastoreio Adulto", nasc: "11/09/1990", casam: "12/07/2025", email: "bartho.neto1@hotmail.com", fap: "José (Cris)" },
+                    { nome: "Bianca Cristina da Cunha Conceição", min: "Pastoreio de Casais", nasc: "12/05/1984", casam: "18/06/2005", email: "anapauloedy@gmail.com", fap: "Thais (Marcelo)" },
+                    { nome: "Edivaldo José Da Conceição da Cunha", min: "Pastoreio de Casais", nasc: "31/07/1979", casam: "18/06/2005", email: "ejcpd2012@gmail.com", fap: "Marcelo (Tânia)" },
+                    { nome: "Bianca Cristina Vidal da Cunha", min: "Pastoreio Jovem", nasc: "02/10/2003", casam: "-", email: "biancacunha210@gmail.com", fap: "Leticia Moreschi" },
+                    { nome: "Érika Pereira do Prado", min: "Coord. Servos Seminário", nasc: "22/10/1996", casam: "-", email: "erika.prado@sempreceub.com", fap: "Renata Ribas" },
+                    { nome: "Flávia Maria Fialho de Oliveira", min: "Pastoreio", nasc: "25/02/1999", casam: "-", email: "flaviam.fialho@hotmail.com", fap: "Barbara Mendes" },
+                    { nome: "Lilian Beatriz de Lima Peters", min: "Servos de seminário", nasc: "10/03/1988", casam: "13/10/2019", email: "liriopeters@hotmail.com", fap: "Thais (Marcelo)" },
+                    { nome: "Luis Alexandre Macedo Nepomuceno", min: "Pastoreio", nasc: "28/10/1984", casam: "18/12/2021", email: "luisalexandre6533@gmail.com", fap: "Marcelo (Tânia)" },
+                    { nome: "Mara Rúbia Araújo do Nascimento Silva", min: "Coord. Intercessão", nasc: "29/04/1975", casam: "29/07/1995", email: "mararubiabr@yahoo.com.br", fap: "Thais (Marcelo)" },
+                    { nome: "Maria Helena Nunes Silva", min: "Pastoreio jovem", nasc: "27/12/2004", casam: "-", email: "mariahelenanunessilva27@gmail.com", fap: "Leticia Moreschi" },
+                    { nome: "Pedro Francisco de Souza Teixeira", min: "Pastoreio/Núcleo PJJ", nasc: "22/12/2004", casam: "-", email: "pedrosouzadf075@gmail.com", fap: "José (Cris)" },
+                    { nome: "Raissa Souza Alabarce", min: "Comunicação", nasc: "06/09/1990", casam: "-", email: "raissaalabarce.souza@gmail.com", fap: "Milena Brito" },
+                    { nome: "Walkner Pinheiro Melo de Almeida", min: "Música", nasc: "22/08/1980", casam: "-", email: "walkner.almeida@yahoo.com.br", fap: "Marcelo (Tânia)" },
+                    { nome: "Agnes Caroline Serafim Cardoso", min: "Júridico", nasc: "19/12/1999", casam: "25/11/2023", email: "agneserafimcardosoreis@gmail.com", fap: "Jenisangêla - CV" },
+                    { nome: "Gustavo Teixeira Reis", min: "Sem ministério", nasc: "06/01/2000", casam: "25/11/2023", email: "gustavoreis2302@gmail.com", fap: "Marcelo Vieira" },
+                    { nome: "Caio Eduardo Dos Santos Ferreira", min: "Promoção humana", nasc: "25/09/1999", casam: "-", email: "caiodudu10@gmail.com", fap: "A definir" },
+                    { nome: "Joalyne Viana Ribeiro", min: "Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Renata" }
+                ];
+
+                const formandosP1 = [
+                    { nome: "Laura Dias Marques Braz", min: "Sem ministério", nasc: "30/09/2003", casam: "-", email: "lauravoc2024@gmail.com", fap: "Renata Ribas" },
+                    { nome: "Sabrina Magalhães Vieira", min: "1° anúncio", nasc: "21/08/1996", casam: "-", email: "sabrinavieirapsi@gmail.com", fap: "Barbara Mendes" },
+                    { nome: "Júlia Cordeiro Lucas Barbosa", min: "Celeiro/Pastoreio", nasc: "27/04/2007", casam: "-", email: "juliacordeirolucas@gmail.com", fap: "A definir" },
+                    { nome: "João Felipe Machado Cantanhede", min: "Pastoreio jovem", nasc: "04/03/2002", casam: "-", email: "jfcantanhedecod@gmail.com", fap: "A definir" },
+                    { nome: "Júlio Viana de Carvalho", min: "Pastoreio/Liturgia", nasc: "19/10/2003", casam: "-", email: "juliovianadecarvalho@gmail.com", fap: "A definir" },
+                    { nome: "Miguel Pedro da Cunha Doroteu", min: "Sem ministério", nasc: "05/09/2005", casam: "-", email: "migueldoroteu55@gmail.com", fap: "A definir" },
+                    { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "A definir" }
+                ];
+
+                function renderCards(data, targetId, badgeClass, cardTypeClass) {
+            const container = document.getElementById(targetId);
+            container.innerHTML = ''; 
+            data.forEach(f => {
+                const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
+                container.innerHTML += `
+                    <div class="formando-card ${cardTypeClass}">
+                        <span class="badge ${badgeClass}">${badgeClass.includes('p1') ? 'P1' : 'P2'}</span>
+                        <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
+                        
+                        <div class="mb-3">
+                            <span class="info-label">Ministério</span>
+                            <p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
+                            <div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div>
+                            <div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div>
+                        </div>
+
+                        <div class="mt-3 pt-3 border-t border-dashed border-slate-100">
+                            <span class="info-label">📧 E-mail</span>
+                            <p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p>
+                        </div>
+
+                        <div class="mt-auto pt-4">
+                            <div class="bg-red-50 p-3 rounded-xl border border-red-100">
+                                <span class="info-label text-red-400">Acompanhamento (FP)</span>
+                                <p class="info-value text-red-800 font-bold">${f.fap}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+                
+                // Disparar a criação dos cards
+                renderCards(formandosP2, 'container-p2', 'badge-p2', 'card-p2');
+                renderCards(formandosP1, 'container-p1', 'badge-p1', 'card-p1');
+            </script>
         </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Kelly Cristina Viana Couto da Silva</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Centro de Formação</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">29/07/1984</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">02/09/2017</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">kellyvcouto@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Thais (Marcelo)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Bartholomeu Francisco de Souza Neto</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Coord. Pastoreio Adulto</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">11/09/1990</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">12/07/2025</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">bartho.neto1@hotmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">José (Cris)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Bianca Cristina da Cunha Conceição</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio de Casais</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">12/05/1984</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">18/06/2005</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">anapauloedy@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Thais (Marcelo)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Edivaldo José Da Conceição da Cunha</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio de Casais</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">31/07/1979</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">18/06/2005</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">ejcpd2012@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Marcelo (Tânia)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Bianca Cristina Vidal da Cunha</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio Jovem</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">02/10/2003</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">biancacunha210@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Leticia Moreschi</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Érika Pereira do Prado</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Coord. Servos Seminário</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">22/10/1996</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">erika.prado@sempreceub.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Renata Ribas</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Flávia Maria Fialho de Oliveira</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">25/02/1999</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">flaviam.fialho@hotmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Barbara Mendes</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Lilian Beatriz de Lima Peters</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Servos de seminário</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">10/03/1988</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">13/10/2019</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">liriopeters@hotmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Thais (Marcelo)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Luis Alexandre Macedo Nepomuceno</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">28/10/1984</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">18/12/2021</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">luisalexandre6533@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Marcelo (Tânia)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Mara Rúbia Araújo do Nascimento Silva</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Coord. Intercessão</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">29/04/1975</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">29/07/1995</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">mararubiabr@yahoo.com.br</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Thais (Marcelo)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Maria Helena Nunes Silva</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio jovem</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">27/12/2004</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">mariahelenanunessilva27@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Leticia Moreschi</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Pedro Francisco de Souza Teixeira</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio/Núcleo PJJ</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">22/12/2004</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">pedrosouzadf075@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">José (Cris)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Raissa Souza Alabarce</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Comunicação</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">06/09/1990</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">raissaalabarce.souza@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Milena Brito</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Walkner Pinheiro Melo de Almeida</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Música</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">22/08/1980</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">walkner.almeida@yahoo.com.br</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Marcelo (Tânia)</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Agnes Caroline Serafim Cardoso</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Júridico</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">19/12/1999</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">25/11/2023</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">agneserafimcardosoreis@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Jenisangêla - CV</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Gustavo Teixeira Reis</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value to-define">Sem ministério</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">06/01/2000</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">25/11/2023</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">gustavoreis2302@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Marcelo Vieira</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Caio Eduardo Dos Santos Ferreira</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Promoção humana</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">25/09/1999</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">caiodudu10@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-        <div class="formando-card card-p2">
-            <span class="badge badge-p2">P2</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Joalyne Viana Ribeiro</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Projeto Criança</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">24/08/1990</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">joalyneviana@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Renata</p></div>
-        </div>
-
-    </div>
-
-    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <span class="w-2 h-8 bg-blue-600 rounded-full"></span> P1 - Nível de Ingresso
-    </h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-        
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Laura Dias Marques Braz</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value to-define">Sem ministério</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">30/09/2003</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">lauravoc2024@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Renata Ribas</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Sabrina Magalhães Vieira</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">1° anúncio</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">21/08/1996</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">sabrinavieirapsi@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value text-red-700">Barbara Mendes</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Júlia Cordeiro Lucas Barbosa</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Celeiro/Pastoreio</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">27/04/2007</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">juliacordeirolucas@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">João Felipe Machado Cantanhede</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio jovem</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">04/03/2002</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">jfcantanhedecod@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Júlio Viana de Carvalho</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio/Liturgia</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">19/10/2003</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">juliovianadecarvalho@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Miguel Pedro da Cunha Doroteu</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value to-define">Sem ministério</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">05/09/2005</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">migueldoroteu55@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-        <div class="formando-card card-p1">
-            <span class="badge badge-p1">P1</span>
-            <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2">Rafaela Aiala Fernandes Correia</h4>
-            <div class="info-block"><span class="info-label">Ministério</span><p class="info-value">Pastoreio</p></div>
-            <div class="info-grid">
-                <div class="info-block"><span class="info-label">🎂 Nasc.</span><p class="info-value">15/07/2006</p></div>
-                <div class="info-block"><span class="info-label">💍 Casam.</span><p class="info-value">-</p></div>
-            </div>
-            <div class="info-block mt-2"><span class="info-label">📧 E-mail</span><p class="info-value text-slate-500">rafaelaaiala.sh@gmail.com</p></div>
-            <div class="info-block mt-3 bg-red-50 p-2 rounded-lg"><span class="info-label">Acompanhamento (FP)</span><p class="info-value to-define">A definir</p></div>
-        </div>
-
-    </div>
-</div>
 
         <div id="tab-acompanhamento" class="tab-content">
             <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
