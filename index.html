@@ -7,37 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
         .font-serif { font-family: 'Playfair Display', serif; }
-        
-        /* Sistema de exibição por seções */
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-	
-	/* ESTILO DOS CARDS COM BORDAS FORÇADAS */
+	.formando-card { background: white !important; border: 2px solid #e2e8f0; transition: all 0.3s ease; }
+	.formando-card:hover { transform: translateY(-5px); border-color: #b91c1c; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+
         .formando-card { 
-            background: white !important; 
-            border: 2px solid #e2e8f0 !important; 
-            border-radius: 16px !important; 
-            padding: 1.25rem !important; 
-            transition: all 0.3s ease !important; 
-            position: relative !important; 
-            display: flex !important; 
-            flex-direction: column !important; 
-            height: 100% !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+            background: white !important; border: 2px solid #e2e8f0 !important; 
+            border-radius: 16px !important; padding: 1.25rem !important; 
+            transition: all 0.3s ease !important; position: relative !important;
+            display: flex !important; flex-direction: column !important; 
+            height: 100% !important; box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
         }
-
-        .formando-card:hover { 
-            border-color: #b91c1c !important; 
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
-        }
-
-        /* Bordas Laterais Coloridas */
+        .formando-card:hover { border-color: #b91c1c !important; transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
         .card-p2 { border-left: 8px solid #16a34a !important; }
         .card-p1 { border-left: 8px solid #2563eb !important; }
 
@@ -49,9 +37,6 @@
         .styled-table thead tr { background-color: #b91c1c; color: #ffffff; text-align: left; }
         .styled-table th, .styled-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
         
-        .nivel-header { background-color: #f1f5f9; color: #475569; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; border-left: 4px solid #b91c1c; }
-        .to-define { background-color: #fef2f2 !important; color: #dc2626 !important; font-weight: 600; font-style: italic; }
-
         .badge { padding: 2px 6px; border-radius: 9999px; font-weight: 700; font-size: 0.6rem; display: inline-block; text-transform: uppercase; }
         .badge-p1 { background-color: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
         .badge-p2 { background-color: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
@@ -64,6 +49,7 @@
         .home-card .icon-box { width: 48px; height: 48px; background: #fff1f2; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.75rem; color: #b91c1c; }
         
         .back-btn { margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #b91c1c; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; }
+    	
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -79,16 +65,18 @@
         <div id="tab-home" class="tab-content active">
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-8 flex flex-col items-center text-center">
                 <div class="w-44 md:w-56 mb-6">
-                    <img src="Papa João Paulo II em reflexão.jpg" alt="São João Paulo II" 
-                         class="rounded-xl shadow-md border-2 border-slate-50 w-full"
-                         onerror="this.src='https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg'">
+                    <img src="Papa João Paulo II em reflexão.jpg" alt="São João Paulo II" class="rounded-xl shadow-md border-2 border-slate-50 w-full" onerror="this.src='https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg'">
                 </div>
                 <h2 class="font-serif italic text-2xl md:text-4xl text-red-900 leading-tight">
                     "Não tenhais medo! <br>Abri, melhor, escancarai as portas a Cristo!"
                 </h2>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                <div class="home-card" onclick="openTab('tab-alertas')">
+                    <div class="icon-box">🔔</div>
+                    <h3 class="font-bold text-sm">Aniversariantes do Mês</h3>
+                </div>
                 <div class="home-card" onclick="openTab('tab-lista')">
                     <div class="icon-box">👥</div>
                     <h3 class="font-bold text-sm">Formandos</h3>
@@ -120,95 +108,32 @@
             </div>
         </div>
 
+        <div id="tab-alertas" class="tab-content">
+            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Celebrações de Março</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">🎂 Aniversariantes</h3>
+                    <div id="lista-aniversarios" class="space-y-3"></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-blue-700 mb-4 flex items-center gap-2">💍 Casamentos</h3>
+                    <div id="lista-casamentos" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
         <div id="tab-lista" class="tab-content">
             <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            
             <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <span class="w-2 h-8 bg-green-600 rounded-full"></span> P2 - Nível de Discipulado
             </h3>
-            
             <div id="container-p2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
 
             <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <span class="w-2 h-8 bg-blue-600 rounded-full"></span> P1 - Nível de Ingresso
             </h3>
-            
             <div id="container-p1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
-
-            <script>
-                // BANCO DE DADOS COMPLETO
-                const formandosP2 = [
-                    { nome: "Alex Fernando Viana Couto da Silva", min: "Música", nasc: "05/08/1984", casam: "02/09/2017", email: "axfdsl@gmail.com", fap: "Marcelo (Tânia)" },
-                    { nome: "Kelly Cristina Viana Couto da Silva", min: "Centro de Formação", nasc: "29/07/1984", casam: "02/09/2017", email: "kellyvcouto@gmail.com", fap: "Thais (Marcelo)" },
-                    { nome: "Bartholomeu Francisco de Souza Neto", min: "Coord. Pastoreio Adulto", nasc: "11/09/1990", casam: "12/07/2025", email: "bartho.neto1@hotmail.com", fap: "José (Cris)" },
-                    { nome: "Bianca Cristina da Cunha Conceição", min: "Pastoreio de Casais", nasc: "12/05/1984", casam: "18/06/2005", email: "anapauloedy@gmail.com", fap: "Thais (Marcelo)" },
-                    { nome: "Edivaldo José Da Conceição da Cunha", min: "Pastoreio de Casais", nasc: "31/07/1979", casam: "18/06/2005", email: "ejcpd2012@gmail.com", fap: "Marcelo (Tânia)" },
-                    { nome: "Bianca Cristina Vidal da Cunha", min: "Pastoreio Jovem", nasc: "02/10/2003", casam: "-", email: "biancacunha210@gmail.com", fap: "Leticia Moreschi" },
-                    { nome: "Érika Pereira do Prado", min: "Coord. Servos Seminário", nasc: "22/10/1996", casam: "-", email: "erika.prado@sempreceub.com", fap: "Renata Ribas" },
-                    { nome: "Flávia Maria Fialho de Oliveira", min: "Pastoreio", nasc: "25/02/1999", casam: "-", email: "flaviam.fialho@hotmail.com", fap: "Barbara Mendes" },
-                    { nome: "Lilian Beatriz de Lima Peters", min: "Servos de seminário", nasc: "10/03/1988", casam: "13/10/2019", email: "liriopeters@hotmail.com", fap: "Thais (Marcelo)" },
-                    { nome: "Luis Alexandre Macedo Nepomuceno", min: "Pastoreio", nasc: "28/10/1984", casam: "18/12/2021", email: "luisalexandre6533@gmail.com", fap: "Marcelo (Tânia)" },
-                    { nome: "Mara Rúbia Araújo do Nascimento Silva", min: "Coord. Intercessão", nasc: "29/04/1975", casam: "29/07/1995", email: "mararubiabr@yahoo.com.br", fap: "Thais (Marcelo)" },
-                    { nome: "Maria Helena Nunes Silva", min: "Pastoreio jovem", nasc: "27/12/2004", casam: "-", email: "mariahelenanunessilva27@gmail.com", fap: "Leticia Moreschi" },
-                    { nome: "Pedro Francisco de Souza Teixeira", min: "Pastoreio/Núcleo PJJ", nasc: "22/12/2004", casam: "-", email: "pedrosouzadf075@gmail.com", fap: "José (Cris)" },
-                    { nome: "Raissa Souza Alabarce", min: "Comunicação", nasc: "06/09/1990", casam: "-", email: "raissaalabarce.souza@gmail.com", fap: "Milena Brito" },
-                    { nome: "Walkner Pinheiro Melo de Almeida", min: "Música", nasc: "22/08/1980", casam: "-", email: "walkner.almeida@yahoo.com.br", fap: "Marcelo (Tânia)" },
-                    { nome: "Agnes Caroline Serafim Cardoso", min: "Júridico", nasc: "19/12/1999", casam: "25/11/2023", email: "agneserafimcardosoreis@gmail.com", fap: "Jenisangêla - CV" },
-                    { nome: "Gustavo Teixeira Reis", min: "Sem ministério", nasc: "06/01/2000", casam: "25/11/2023", email: "gustavoreis2302@gmail.com", fap: "Marcelo Vieira" },
-                    { nome: "Caio Eduardo Dos Santos Ferreira", min: "Promoção humana", nasc: "25/09/1999", casam: "-", email: "caiodudu10@gmail.com", fap: "A definir" },
-                    { nome: "Joalyne Viana Ribeiro", min: "Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Renata" }
-                ];
-
-                const formandosP1 = [
-                    { nome: "Laura Dias Marques Braz", min: "Sem ministério", nasc: "30/09/2003", casam: "-", email: "lauravoc2024@gmail.com", fap: "Renata Ribas" },
-                    { nome: "Sabrina Magalhães Vieira", min: "1° anúncio", nasc: "21/08/1996", casam: "-", email: "sabrinavieirapsi@gmail.com", fap: "Barbara Mendes" },
-                    { nome: "Júlia Cordeiro Lucas Barbosa", min: "Celeiro/Pastoreio", nasc: "27/04/2007", casam: "-", email: "juliacordeirolucas@gmail.com", fap: "A definir" },
-                    { nome: "João Felipe Machado Cantanhede", min: "Pastoreio jovem", nasc: "04/03/2002", casam: "-", email: "jfcantanhedecod@gmail.com", fap: "A definir" },
-                    { nome: "Júlio Viana de Carvalho", min: "Pastoreio/Liturgia", nasc: "19/10/2003", casam: "-", email: "juliovianadecarvalho@gmail.com", fap: "A definir" },
-                    { nome: "Miguel Pedro da Cunha Doroteu", min: "Sem ministério", nasc: "05/09/2005", casam: "-", email: "migueldoroteu55@gmail.com", fap: "A definir" },
-                    { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "A definir" }
-                ];
-
-                function renderCards(data, targetId, badgeClass, cardTypeClass) {
-            const container = document.getElementById(targetId);
-            container.innerHTML = ''; 
-            data.forEach(f => {
-                const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
-                container.innerHTML += `
-                    <div class="formando-card ${cardTypeClass}">
-                        <span class="badge ${badgeClass}">${badgeClass.includes('p1') ? 'P1' : 'P2'}</span>
-                        <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
-                        
-                        <div class="mb-3">
-                            <span class="info-label">Ministério</span>
-                            <p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
-                            <div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div>
-                            <div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div>
-                        </div>
-
-                        <div class="mt-3 pt-3 border-t border-dashed border-slate-100">
-                            <span class="info-label">📧 E-mail</span>
-                            <p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p>
-                        </div>
-
-                        <div class="mt-auto pt-4">
-                            <div class="bg-red-50 p-3 rounded-xl border border-red-100">
-                                <span class="info-label text-red-400">Acompanhamento (FP)</span>
-                                <p class="info-value text-red-800 font-bold">${f.fap}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-                
-                // Disparar a criação dos cards
-                renderCards(formandosP2, 'container-p2', 'badge-p2', 'card-p2');
-                renderCards(formandosP1, 'container-p1', 'badge-p1', 'card-p1');
-            </script>
         </div>
 
         <div id="tab-acompanhamento" class="tab-content">
@@ -249,12 +174,9 @@
                         <span class="name-balloon coordinator-label">Walkner</span>
                     </div>
                     <div class="flex flex-wrap">
-                        <span class="name-balloon">Maria Helena</span>
-                        <span class="name-balloon">Edvaldo</span>
-                        <span class="name-balloon">Rafaela</span>
+                        <span class="name-balloon">Maria Helena</span><span class="name-balloon">Edvaldo</span><span class="name-balloon">Rafaela</span>
                     </div>
                 </div>
-
                 <div class="bg-white p-4 rounded-xl border border-slate-200">
                     <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Liturgia</h4>
                     <div class="mb-2">
@@ -262,45 +184,27 @@
                         <span class="name-balloon coordinator-label">João</span>
                     </div>
                     <div class="flex flex-wrap">
-                        <span class="name-balloon">Lilian</span>
-                        <span class="name-balloon">Luis</span>
-                        <span class="name-balloon">Pedro</span>
-                        <span class="name-balloon">Sabrina</span>
-                        <span class="name-balloon">Joaline</span>
-                        <span class="name-balloon">Miguel</span>
+                        <span class="name-balloon">Lilian</span><span class="name-balloon">Luis</span><span class="name-balloon">Pedro</span><span class="name-balloon">Sabrina</span><span class="name-balloon">Joaline</span><span class="name-balloon">Miguel</span>
                     </div>
                 </div>
-
                 <div class="bg-white p-4 rounded-xl border border-slate-200">
                     <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Fraternidade</h4>
                     <div class="mb-2">
                         <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenadoras</span>
-                        <span class="name-balloon coordinator-label">Agnes</span>
-                        <span class="name-balloon coordinator-label">Julia</span>
+                        <span class="name-balloon coordinator-label">Agnes</span><span class="name-balloon coordinator-label">Julia</span>
                     </div>
                     <div class="flex flex-wrap">
-                        <span class="name-balloon">Bianca Vidal</span>
-                        <span class="name-balloon">Flávia</span>
-                        <span class="name-balloon">Bartho</span>
-                        <span class="name-balloon">Gustavo</span>
-                        <span class="name-balloon">Caio</span>
-                        <span class="name-balloon">Raissa</span>
-                        <span class="name-balloon">Laura</span>
+                        <span class="name-balloon">Bianca Vidal</span><span class="name-balloon">Flávia</span><span class="name-balloon">Bartho</span><span class="name-balloon">Gustavo</span><span class="name-balloon">Caio</span><span class="name-balloon">Raissa</span><span class="name-balloon">Laura</span>
                     </div>
                 </div>
-
                 <div class="bg-white p-4 rounded-xl border border-slate-200">
                     <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Intercessão / Amor em Atos</h4>
                     <div class="mb-2">
                         <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenadores</span>
-                        <span class="name-balloon coordinator-label">Alex</span>
-                        <span class="name-balloon coordinator-label">Kelly</span>
+                        <span class="name-balloon coordinator-label">Alex</span><span class="name-balloon coordinator-label">Kelly</span>
                     </div>
                     <div class="flex flex-wrap">
-                        <span class="name-balloon">Bianca Cristina</span>
-                        <span class="name-balloon">Érika</span>
-                        <span class="name-balloon">Mara</span>
-                        <span class="name-balloon">Júlio</span>
+                        <span class="name-balloon">Bianca Cristina</span><span class="name-balloon">Érika</span><span class="name-balloon">Mara</span><span class="name-balloon">Júlio</span>
                     </div>
                 </div>
             </div>
@@ -378,18 +282,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Pagamento da Plataforma 2026</td>
-                            <td>18/03/2026</td>
-                            <td>R$ 15,00</td>
-                            <td>Aberto</td>
-                        </tr>
-                        <tr>
-                            <td>Retiro de Ingresso P1 </td>
-                            <td>18 e 19/04/2026</td>
-                            <td>R$ </td>
-                            <td>Aberto</td>
-                       </tr>
+                        <tr><td>Pagamento da Plataforma 2026</td><td>18/03/2026</td><td>R$ 15,00</td><td>Aberto</td></tr>
+                        <tr><td>Retiro de Ingresso P1 </td><td>18 e 19/04/2026</td><td>R$ </td><td>Aberto</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -400,36 +294,214 @@
 
     </div>
 
+	<div id="modal-alerta-dia" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-300">
+            <div class="bg-red-700 p-6 text-center text-white">
+                <div class="text-4xl mb-2">🎉</div>
+                <h2 class="font-bold text-lg uppercase tracking-wider text-white">Celebrações de Hoje!</h2>
+                <p id="data-hoje-modal" class="text-red-100 text-[10px] font-bold uppercase"></p>
+            </div>
+            <div id="conteudo-alerta-dia" class="p-6 space-y-4 text-left"></div>
+            <div class="p-4 bg-slate-50 flex justify-center border-t border-slate-100">
+                <button onclick="fecharModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-10 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer">
+                    Amém!
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-    function openTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        document.getElementById(tabId).classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        // BANCO DE DADOS
+        const formandosP2 = [
+            { nome: "Alex Fernando Viana Couto da Silva", min: "Música", nasc: "05/08/1984", casam: "02/09/2017", email: "axfdsl@gmail.com", fap: "Marcelo (Tânia)" },
+            { nome: "Kelly Cristina Viana Couto da Silva", min: "Centro de Formação", nasc: "29/07/1984", casam: "02/09/2017", email: "kellyvcouto@gmail.com", fap: "Thais (Marcelo)" },
+            { nome: "Bartholomeu Francisco de Souza Neto", min: "Coord. Pastoreio Adulto", nasc: "11/09/1990", casam: "12/07/2025", email: "bartho.neto1@hotmail.com", fap: "José (Cris)" },
+            { nome: "Bianca Cristina da Cunha Conceição", min: "Pastoreio de Casais", nasc: "12/05/1984", casam: "18/06/2005", email: "anapauloedy@gmail.com", fap: "Thais (Marcelo)" },
+            { nome: "Edivaldo José Da Conceição da Cunha", min: "Pastoreio de Casais", nasc: "31/07/1979", casam: "18/06/2005", email: "ejcpd2012@gmail.com", fap: "Marcelo (Tânia)" },
+            { nome: "Bianca Cristina Vidal da Cunha", min: "Pastoreio Jovem", nasc: "02/10/2003", casam: "-", email: "biancacunha210@gmail.com", fap: "Leticia Moreschi" },
+            { nome: "Érika Pereira do Prado", min: "Coord. Servos Seminário", nasc: "22/10/1996", casam: "-", email: "erika.prado@sempreceub.com", fap: "Renata Ribas" },
+            { nome: "Flávia Maria Fialho de Oliveira", min: "Pastoreio", nasc: "25/02/1999", casam: "-", email: "flaviam.fialho@hotmail.com", fap: "Barbara Mendes" },
+            { nome: "Lilian Beatriz de Lima Peters", min: "Servos de seminário", nasc: "10/03/1988", casam: "13/10/2019", email: "liriopeters@hotmail.com", fap: "Thais (Marcelo)" },
+            { nome: "Luis Alexandre Macedo Nepomuceno", min: "Pastoreio", nasc: "28/10/1984", casam: "18/12/2021", email: "luisalexandre6533@gmail.com", fap: "Marcelo (Tânia)" },
+            { nome: "Mara Rúbia Araújo do Nascimento Silva", min: "Coord. Intercessão", nasc: "29/04/1975", casam: "29/07/1995", email: "mararubiabr@yahoo.com.br", fap: "Thais (Marcelo)" },
+            { nome: "Maria Helena Nunes Silva", min: "Pastoreio jovem", nasc: "27/12/2004", casam: "-", email: "mariahelenanunessilva27@gmail.com", fap: "Leticia Moreschi" },
+            { nome: "Pedro Francisco de Souza Teixeira", min: "Pastoreio/Núcleo PJJ", nasc: "22/12/2004", casam: "-", email: "pedrosouzadf075@gmail.com", fap: "José (Cris)" },
+            { nome: "Raissa Souza Alabarce", min: "Comunicação", nasc: "06/09/1990", casam: "-", email: "raissaalabarce.souza@gmail.com", fap: "Milena Brito" },
+            { nome: "Walkner Pinheiro Melo de Almeida", min: "Música", nasc: "22/08/1980", casam: "-", email: "walkner.almeida@yahoo.com.br", fap: "Marcelo (Tânia)" },
+            { nome: "Agnes Caroline Serafim Cardoso", min: "Júridico", nasc: "19/12/1999", casam: "25/11/2023", email: "agneserafimcardosoreis@gmail.com", fap: "Jenisangêla - CV" },
+            { nome: "Gustavo Teixeira Reis", min: "Sem ministério", nasc: "06/01/2000", casam: "25/11/2023", email: "gustavoreis2302@gmail.com", fap: "Marcelo Vieira" },
+            { nome: "Caio Eduardo Dos Santos Ferreira", min: "Promoção humana", nasc: "25/09/1999", casam: "-", email: "caiodudu10@gmail.com", fap: "A definir" },
+            { nome: "Joalyne Viana Ribeiro", min: "Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Renata" }
+        ];
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const rows = document.querySelectorAll("#tabelaFormandos tbody tr");
-        
-        rows.forEach(row => {
-            const cells = row.querySelectorAll("td");
-            if (cells.length < 6) return;
+        const formandosP1 = [
+            { nome: "Laura Dias Marques Braz", min: "Sem ministério", nasc: "30/09/2003", casam: "-", email: "lauravoc2024@gmail.com", fap: "Renata Ribas" },
+            { nome: "Sabrina Magalhães Vieira", min: "1° anúncio", nasc: "21/08/1996", casam: "-", email: "sabrinavieirapsi@gmail.com", fap: "Barbara Mendes" },
+            { nome: "Júlia Cordeiro Lucas Barbosa", min: "Celeiro/Pastoreio", nasc: "27/04/2007", casam: "-", email: "juliacordeirolucas@gmail.com", fap: "A definir" },
+            { nome: "João Felipe Machado Cantanhede", min: "Pastoreio jovem", nasc: "04/03/2002", casam: "-", email: "jfcantanhedecod@gmail.com", fap: "A definir" },
+            { nome: "Júlio Viana de Carvalho", min: "Pastoreio/Liturgia", nasc: "19/10/2003", casam: "-", email: "juliovianadecarvalho@gmail.com", fap: "A definir" },
+            { nome: "Miguel Pedro da Cunha Doroteu", min: "Sem ministério", nasc: "05/09/2005", casam: "-", email: "migueldoroteu55@gmail.com", fap: "A definir" },
+            { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "A definir" }
+        ];
 
-            const cellCasamento = cells[2];
-            if (cellCasamento.innerText.trim() === "" || cellCasamento.innerText.trim() === "A definir") {
-                cellCasamento.innerText = "-";
-            }
+        const formadores = [
+            { nome: "Tânia Andréia Gentil Goulart", nasc: "23/07/1971", casam: "09/06/2000" },
+            { nome: "Larissa Torres de Olinda Silva", nasc: "05/02/1999", casam: "04/10/2025" },
+            { nome: "Rafael de Brito Albuquerque", nasc: "06/06/1982", casam: "14/11/2007" }
+        ];
 
-            [4, 5].forEach(index => {
-                const cell = cells[index];
-                const text = cell.innerText.trim().toLowerCase();
-                if (text === "" || text === "-" || text === "a definir" || text === "sem ministério") {
-                    cell.classList.add("to-define");
+        function renderCards(data, targetId, badgeClass, cardTypeClass) {
+            const container = document.getElementById(targetId);
+            container.innerHTML = ''; 
+            data.forEach(f => {
+                const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
+                container.innerHTML += `
+                    <div class="formando-card ${cardTypeClass}">
+                        <span class="badge ${badgeClass}">${badgeClass.includes('p1') ? 'P1' : 'P2'}</span>
+                        <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
+                        <div class="mb-3">
+                            <span class="info-label">Ministério</span>
+                            <p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
+                            <div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div>
+                            <div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div>
+                        </div>
+                        <div class="mt-3 pt-3 border-t border-dashed border-slate-100">
+                            <span class="info-label">📧 E-mail</span>
+                            <p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p>
+                        </div>
+                        <div class="mt-auto pt-4">
+                            <div class="bg-red-50 p-3 rounded-xl border border-red-100">
+                                <span class="info-label text-red-400">Acompanhamento (FP)</span>
+                                <p class="info-value text-red-800 font-bold">${f.fap}</p>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function verificarAlertasDoDia() {
+            const hoje = new Date();
+            const diaHoje = hoje.getDate();
+            const mesHoje = hoje.getMonth() + 1;
+            
+            const opcoes = { day: 'numeric', month: 'long' };
+            document.getElementById('data-hoje-modal').innerText = hoje.toLocaleDateString('pt-BR', opcoes);
+
+            const todos = [...formandosP2, ...formandosP1, ...formadores];
+            const conteudo = document.getElementById('conteudo-alerta-dia');
+            let temEvento = false;
+
+            conteudo.innerHTML = '';
+
+            todos.forEach(p => {
+                const [diaN, mesN] = p.nasc.split('/').map(Number);
+                if (diaN === diaHoje && mesN === mesHoje) {
+                    temEvento = true;
+                    conteudo.innerHTML += `
+                        <div class="flex items-center gap-4 p-4 bg-red-50 rounded-2xl border border-red-100">
+                            <span class="text-2xl">🎂</span>
+                            <div>
+                                <p class="text-[10px] font-black text-red-600 uppercase">Aniversariante</p>
+                                <p class="font-bold text-slate-800 leading-tight">${p.nome}</p>
+                            </div>
+                        </div>`;
+                }
+
+                if (p.casam && p.casam !== "-" && !p.casam.includes("definir")) {
+                    const [diaC, mesC] = p.casam.split('/').map(Number);
+                    if (diaC === diaHoje && mesC === mesHoje) {
+                        temEvento = true;
+                        conteudo.innerHTML += `
+                            <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <span class="text-2xl">💍</span>
+                                <div>
+                                    <p class="text-[10px] font-black text-blue-600 uppercase">Bodas / Casamento</p>
+                                    <p class="font-bold text-slate-800 leading-tight">${p.nome}</p>
+                                </div>
+                            </div>`;
+                    }
                 }
             });
-        });
+
+            if (temEvento) {
+                document.getElementById('modal-alerta-dia').classList.remove('hidden');
+                dispararConfetes();
+            }
+        }
+
+        function dispararConfetes() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#b91c1c', '#1e293b', '#fbbf24'] });
+        }
+
+        function fecharModal() {
+            document.getElementById('modal-alerta-dia').classList.add('hidden');
+        }
+
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+	function renderAlertasMes() {
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth() + 1;
+
+    const listaAniversarios = document.getElementById('lista-aniversarios');
+    const listaCasamentos = document.getElementById('lista-casamentos');
+
+    listaAniversarios.innerHTML = '';
+    listaCasamentos.innerHTML = '';
+
+    const todos = [...formandosP2, ...formandosP1, ...formadores];
+
+    let temAniversario = false;
+    let temCasamento = false;
+
+    todos.forEach(p => {
+        if (p.nasc) {
+            const [dia, mes] = p.nasc.split('/').map(Number);
+            if (mes === mesAtual) {
+                temAniversario = true;
+                listaAniversarios.innerHTML += `
+                    <div class="p-3 bg-red-50 rounded-xl border border-red-100">
+                        <p class="font-bold text-slate-800">${p.nome}</p>
+                        <p class="text-xs text-red-600">${dia}/${mes}</p>
+                    </div>
+                `;
+            }
+        }
+
+        if (p.casam && p.casam !== "-" && !p.casam.includes("definir")) {
+            const [diaC, mesC] = p.casam.split('/').map(Number);
+            if (mesC === mesAtual) {
+                temCasamento = true;
+                listaCasamentos.innerHTML += `
+                    <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                        <p class="font-bold text-slate-800">${p.nome}</p>
+                        <p class="text-xs text-blue-600">${diaC}/${mesC}</p>
+                    </div>
+                `;
+            }
+        }
     });
+
+    if (!temAniversario) {
+        listaAniversarios.innerHTML = `<p class="text-sm text-slate-500">Nenhum aniversariante este mês.</p>`;
+    }
+
+    if (!temCasamento) {
+        listaCasamentos.innerHTML = `<p class="text-sm text-slate-500">Nenhum casamento este mês.</p>`;
+    }
+}
+
+        document.addEventListener("DOMContentLoaded", function() {
+    renderCards(formandosP2, 'container-p2', 'bg-red-100 text-red-700');
+    renderCards(formandosP1, 'container-p1', 'bg-blue-100 text-blue-700');
+    verificarAlertasDoDia();
+    renderAlertasMes(); // 👈 AQUI
+});
     </script>
 </body>
 </html>
