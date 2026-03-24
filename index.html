@@ -331,7 +331,7 @@
             { nome: "Agnes Caroline Serafim Cardoso", min: "Júridico", nasc: "19/12/1999", casam: "25/11/2023", email: "agneserafimcardosoreis@gmail.com", fap: "Jenisangêla - CV" },
             { nome: "Gustavo Teixeira Reis", min: "Sem ministério", nasc: "06/01/2000", casam: "25/11/2023", email: "gustavoreis2302@gmail.com", fap: "Marcelo Vieira" },
             { nome: "Caio Eduardo Dos Santos Ferreira", min: "Promoção humana", nasc: "25/09/1999", casam: "-", email: "caiodudu10@gmail.com", fap: "A definir" },
-            { nome: "Joalyne Viana Ribeiro", min: "Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Renata" }
+            
         ];
 
         const formandosP1 = [
@@ -341,7 +341,8 @@
             { nome: "João Felipe Machado Cantanhede", min: "Pastoreio jovem", nasc: "04/03/2002", casam: "-", email: "jfcantanhedecod@gmail.com", fap: "A definir" },
             { nome: "Júlio Viana de Carvalho", min: "Pastoreio/Liturgia", nasc: "19/10/2003", casam: "-", email: "juliovianadecarvalho@gmail.com", fap: "A definir" },
             { nome: "Miguel Pedro da Cunha Doroteu", min: "Sem ministério", nasc: "05/09/2005", casam: "-", email: "migueldoroteu55@gmail.com", fap: "A definir" },
-            { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "A definir" }
+            { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "A definir" },
+            { nome: "Joalyne Viana Ribeiro", min: "Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Renata" }
         ];
 
         const formadores = [
@@ -357,7 +358,7 @@
                 const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
                 container.innerHTML += `
                     <div class="formando-card ${cardTypeClass}">
-                        <span class="badge ${badgeClass}">${badgeClass.includes('p1') ? 'P1' : 'P2'}</span>
+                        <span class="badge ${badgeClass}">${cardTypeClass === 'card-p1' ? 'P1' : 'P2'}</span>
                         <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
                         <div class="mb-3">
                             <span class="info-label">Ministério</span>
@@ -497,8 +498,8 @@
 }
 
         document.addEventListener("DOMContentLoaded", function() {
-    renderCards(formandosP2, 'container-p2', 'bg-red-100 text-red-700');
-    renderCards(formandosP1, 'container-p1', 'bg-blue-100 text-blue-700');
+    renderCards(formandosP2, 'container-p2', 'bg-red-100 text-red-700', 'card-p2');
+    renderCards(formandosP1, 'container-p1', 'bg-blue-100 text-blue-700', 'card-p1');
     verificarAlertasDoDia();
     renderAlertasMes(); // 👈 AQUI
 });
