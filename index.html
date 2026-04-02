@@ -101,6 +101,10 @@
                     <div class="icon-box">📅</div>
                     <h3 class="font-bold text-sm">Retiro</h3>
                 </div>
+                <div class="home-card" onclick="openTab('tab-vigilias')">
+                    <div class="icon-box">🕯️</div>
+                    <h3 class="font-bold text-sm">Vigílias</h3>
+                </div>
                 <div class="home-card" onclick="openTab('tab-pagamentos')">
                     <div class="icon-box">💰</div>
                     <h3 class="font-bold text-sm">Pagamentos</h3>
@@ -110,7 +114,13 @@
 
         <div id="tab-alertas" class="tab-content">
             <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-6">Celebrações de Março</h2>
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="alertas-titulo" class="text-2xl font-bold text-slate-800">Celebrações</h2>
+                <div class="flex gap-2">
+                    <button onclick="mudarMesAlertas(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">◀ Mês anterior</button>
+                    <button onclick="mudarMesAlertas(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">Próximo mês ▶</button>
+                </div>
+            </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">🎂 Aniversariantes</h3>
@@ -236,6 +246,19 @@
             </div>
         </div>
 
+        <div id="tab-vigilias" class="tab-content">
+            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Vigílias</h2>
+            <div id="tab-vigilias-actions" class="mb-4 flex items-center justify-between gap-2">
+                <p id="tab-vigilias-period" class="text-sm text-slate-600">Escala do mês</p>
+                <div class="flex gap-2">
+                    <button onclick="mudarMesVigilias(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">◀ Anterior</button>
+                    <button onclick="mudarMesVigilias(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">Próximo ▶</button>
+                </div>
+            </div>
+            <div id="tab-vigilias-content" class="space-y-4"></div>
+        </div>
+
         <div id="tab-formadores-detalhe" class="tab-content">
             <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
             <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6">
@@ -351,6 +374,124 @@
             { nome: "Rafael de Brito Albuquerque", nasc: "06/06/1982", casam: "14/11/2007" }
         ];
 
+        const vigilias = [
+            { data: "10/04/2026", horario: "19:00", local: "Capela São João", tema: "Oração e Adoração" },
+            { data: "24/04/2026", horario: "20:00", local: "Salão Paroquial", tema: "Crescimento na Fé" }
+        ];
+
+        let vigiliaMesAtual = new Date().getMonth() + 1;
+        let vigiliaAnoAtual = new Date().getFullYear();
+        let escalaAtual = null;
+
+        function nomeDoMes(mes) {
+            return ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"][mes - 1] || "";
+        }
+
+        function getTodosParticipantes() {
+            const formadoresNomes = formadores.map(f => f.nome);
+            const formandosNomes = [...formandosP2, ...formandosP1].map(f => f.nome);
+            return [...formadoresNomes, ...formandosNomes];
+        }
+
+        function calcularGrupos(ano, mes) {
+            const participantes = getTodosParticipantes();
+            const grupos = [[], [], []];
+            participantes.forEach((nome, idx) => {
+                grupos[idx % 3].push(nome);
+            });
+            return {
+                dia15_1: mes % 2 === 1 ? grupos[0] : grupos[1],
+                dia15_2: mes % 2 === 1 ? grupos[1] : grupos[0],
+                dia16: grupos[2],
+                mes
+            };
+        }
+
+        function extrairPrimeiroNome(nome) {
+            return nome.split(' ')[0];
+        }
+
+        function extrairSobrenome(nome) {
+            const partes = nome.split(' ').filter(Boolean);
+            if (partes.length <= 1) return nome;
+            return partes[partes.length - 1];
+        }
+
+        function formatarNome(nome, allNomes = []) {
+            const primeiro = extrairPrimeiroNome(nome);
+            const duplicados = allNomes.filter(n => extrairPrimeiroNome(n) === primeiro);
+            const exibicao = duplicados.length > 1 ? nome : primeiro;
+
+            const destaque = ["Rafael", "Tânia", "Larissa"];
+            if (destaque.includes(primeiro)) {
+                return `<strong>${exibicao}</strong>`;
+            }
+            return exibicao;
+        }
+
+        function renderVigilias(ano = vigiliaAnoAtual, mes = vigiliaMesAtual) {
+            vigiliaAnoAtual = ano;
+            vigiliaMesAtual = mes;
+
+            const grupos = calcularGrupos(ano, mes);
+            const dia16Label = mes % 2 === 1 ? '1º horário (22:00 - 02:00)' : '2º horário (02:00 - 06:00)';
+
+            const container = document.getElementById('tab-vigilias-content');
+            if (!container) return;
+
+            document.getElementById('tab-vigilias-period').innerHTML = `Escala de ${nomeDoMes(mes)} de ${ano}`;
+
+            container.innerHTML = '';
+            container.innerHTML += `
+                <p class="text-sm text-slate-500">Horários: 15 (1º e 2º), 16 (apenas 1 turno dependendo do mês: ${dia16Label}).</p>
+                <p class="text-xs text-slate-500">Regra: quem esteve em 15-1 no mês anterior passa para 15-2 neste mês e vice-versa; dia 16 alterna 1º/2º por paridade do mês.</p>
+            `;
+
+            const todosNomes = [...grupos.dia15_1, ...grupos.dia15_2, ...grupos.dia16];
+            const dia15_1_format = grupos.dia15_1.map(nome => formatarNome(nome, todosNomes));
+            const dia15_2_format = grupos.dia15_2.map(nome => formatarNome(nome, todosNomes));
+            const dia16_format = grupos.dia16.map(nome => formatarNome(nome, todosNomes));
+
+            container.innerHTML += `
+                <div class="mb-4 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800">Dia 15</h3>
+                    <div class="mt-2 space-y-2">
+                        <div>
+                            <p class="text-sm font-semibold">1º horário (22:00 - 02:00):</p>
+                            <p class="text-sm text-slate-700">${dia15_1_format.join(', ')}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold">2º horário (02:00 - 06:00):</p>
+                            <p class="text-sm text-slate-700">${dia15_2_format.join(', ')}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML += `
+                <div class="mb-4 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800">Dia 16</h3>
+                    <div class="mt-2 space-y-2">
+                        <div>
+                            <p class="text-sm font-semibold">${dia16Label}:</p>
+                            <p class="text-sm text-slate-700">${dia16_format.join(', ')}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function mudarMesVigilias(delta) {
+            let mes = vigiliaMesAtual + delta;
+            let ano = vigiliaAnoAtual;
+            if (mes < 1) { mes = 12; ano -= 1; }
+            if (mes > 12) { mes = 1; ano += 1; }
+
+            vigiliaAnoAtual = ano;
+            vigiliaMesAtual = mes;
+            renderVigilias(ano, mes);
+        }
+
         function renderCards(data, targetId, badgeClass, cardTypeClass) {
             const container = document.getElementById(targetId);
             container.innerHTML = ''; 
@@ -445,30 +586,37 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-	function renderAlertasMes() {
-    const hoje = new Date();
-    const mesAtual = hoje.getMonth() + 1;
+	let alertasMesAtual = new Date().getMonth() + 1;
+	let alertasAnoAtual = new Date().getFullYear();
 
-    const listaAniversarios = document.getElementById('lista-aniversarios');
-    const listaCasamentos = document.getElementById('lista-casamentos');
+	function renderAlertasMes(mes = alertasMesAtual, ano = alertasAnoAtual) {
+	    alertasMesAtual = mes;
+	    alertasAnoAtual = ano;
 
-    listaAniversarios.innerHTML = '';
-    listaCasamentos.innerHTML = '';
+	    document.getElementById('alertas-titulo').innerText = `Celebrações de ${nomeDoMes(mes)} de ${ano}`;
 
-    const todos = [...formandosP2, ...formandosP1, ...formadores];
+	    const listaAniversarios = document.getElementById('lista-aniversarios');
+	    const listaCasamentos = document.getElementById('lista-casamentos');
 
-    let temAniversario = false;
-    let temCasamento = false;
+	    listaAniversarios.innerHTML = '';
+	    listaCasamentos.innerHTML = '';
+
+	    const todos = [...formandosP2, ...formandosP1, ...formadores];
+
+	    let temAniversario = false;
+	    let temCasamento = false;
+
+    const casamentosPorData = {};
 
     todos.forEach(p => {
         if (p.nasc) {
-            const [dia, mes] = p.nasc.split('/').map(Number);
-            if (mes === mesAtual) {
+            const [dia, mesN] = p.nasc.split('/').map(Number);
+            if (mesN === mes) {
                 temAniversario = true;
                 listaAniversarios.innerHTML += `
                     <div class="p-3 bg-red-50 rounded-xl border border-red-100">
                         <p class="font-bold text-slate-800">${p.nome}</p>
-                        <p class="text-xs text-red-600">${dia}/${mes}</p>
+                        <p class="text-xs text-red-600">${dia}/${mesN}</p>
                     </div>
                 `;
             }
@@ -476,30 +624,47 @@
 
         if (p.casam && p.casam !== "-" && !p.casam.includes("definir")) {
             const [diaC, mesC] = p.casam.split('/').map(Number);
-            if (mesC === mesAtual) {
-                temCasamento = true;
-                listaCasamentos.innerHTML += `
-                    <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
-                        <p class="font-bold text-slate-800">${p.nome}</p>
-                        <p class="text-xs text-blue-600">${diaC}/${mesC}</p>
-                    </div>
-                `;
+            if (mesC === mes) {
+                const chave = `${diaC}-${mesC}`;
+                if (!casamentosPorData[chave]) {
+                    casamentosPorData[chave] = [];
+                }
+                casamentosPorData[chave].push(p.nome);
             }
         }
     });
 
-    if (!temAniversario) {
-        listaAniversarios.innerHTML = `<p class="text-sm text-slate-500">Nenhum aniversariante este mês.</p>`;
-    }
+    Object.entries(casamentosPorData).forEach(([chave, nomes]) => {
+        const [diaC, mesC] = chave.split('-').map(Number);
+        if (nomes.length > 0) {
+            temCasamento = true;
+            const textoNomes = nomes.length > 1 ? nomes.join(' e ') : nomes[0];
+            listaCasamentos.innerHTML += `
+                <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                    <p class="font-bold text-slate-800">Casamento de ${textoNomes}</p>
+                    <p class="text-xs text-blue-600">${diaC}/${mesC}</p>
+                </div>
+            `;
+        }
+    });
 
     if (!temCasamento) {
         listaCasamentos.innerHTML = `<p class="text-sm text-slate-500">Nenhum casamento este mês.</p>`;
     }
 }
 
+function mudarMesAlertas(delta) {
+	    let mes = alertasMesAtual + delta;
+	    let ano = alertasAnoAtual;
+	    if (mes < 1) { mes = 12; ano -= 1; }
+	    if (mes > 12) { mes = 1; ano += 1; }
+	    renderAlertasMes(mes, ano);
+	}
+
         document.addEventListener("DOMContentLoaded", function() {
     renderCards(formandosP2, 'container-p2', 'bg-red-100 text-red-700', 'card-p2');
     renderCards(formandosP1, 'container-p1', 'bg-blue-100 text-blue-700', 'card-p1');
+    renderVigilias();
     verificarAlertasDoDia();
     renderAlertasMes(); // 👈 AQUI
 });
