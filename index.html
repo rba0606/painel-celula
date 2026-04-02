@@ -248,9 +248,8 @@
 
         <div id="tab-vigilias" class="tab-content">
             <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <h2 class="text-2xl font-bold text-slate-800 mb-6">Vigílias</h2>
             <div id="tab-vigilias-actions" class="mb-4 flex items-center justify-between gap-2">
-                <p id="tab-vigilias-period" class="text-sm text-slate-600">Escala do mês</p>
+                <p id="tab-vigilias-period" class="text-lg font-bold text-red-700">Escala do mês</p>
                 <div class="flex gap-2">
                     <button onclick="mudarMesVigilias(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">◀ Anterior</button>
                     <button onclick="mudarMesVigilias(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">Próximo ▶</button>
@@ -442,39 +441,30 @@
             document.getElementById('tab-vigilias-period').innerHTML = `Escala de ${nomeDoMes(mes)} de ${ano}`;
 
             container.innerHTML = '';
-            container.innerHTML += `
-                <p class="text-sm text-slate-500">Horários: 15 (1º e 2º), 16 (apenas 1 turno dependendo do mês: ${dia16Label}).</p>
-                <p class="text-xs text-slate-500">Regra: quem esteve em 15-1 no mês anterior passa para 15-2 neste mês e vice-versa; dia 16 alterna 1º/2º por paridade do mês.</p>
-            `;
 
             const todosNomes = [...grupos.dia15_1, ...grupos.dia15_2, ...grupos.dia16];
             const dia15_1_format = grupos.dia15_1.map(nome => formatarNome(nome, todosNomes));
             const dia15_2_format = grupos.dia15_2.map(nome => formatarNome(nome, todosNomes));
             const dia16_format = grupos.dia16.map(nome => formatarNome(nome, todosNomes));
 
-            container.innerHTML += `
-                <div class="mb-4 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="font-bold text-slate-800">Dia 15</h3>
-                    <div class="mt-2 space-y-2">
-                        <div>
-                            <p class="text-sm font-semibold">1º horário (22:00 - 02:00):</p>
-                            <p class="text-sm text-slate-700">${dia15_1_format.join(', ')}</p>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold">2º horário (02:00 - 06:00):</p>
-                            <p class="text-sm text-slate-700">${dia15_2_format.join(', ')}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
+            const badges15_1 = dia15_1_format.map(nome => `<span class="name-balloon">${nome}</span>`).join(' ');
+            const badges15_2 = dia15_2_format.map(nome => `<span class="name-balloon">${nome}</span>`).join(' ');
+            const badges16 = dia16_format.map(nome => `<span class="name-balloon">${nome}</span>`).join(' ');
 
             container.innerHTML += `
-                <div class="mb-4 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="font-bold text-slate-800">Dia 16</h3>
-                    <div class="mt-2 space-y-2">
+                <div class="mb-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <div class="space-y-4">
                         <div>
-                            <p class="text-sm font-semibold">${dia16Label}:</p>
-                            <p class="text-sm text-slate-700">${dia16_format.join(', ')}</p>
+                            <p class="text-base font-semibold text-slate-800">Dia 8</p>
+                            <p class="text-sm text-slate-700">1º horário (22:00 - 02:00):</p>
+                            <div class="mt-2">${badges15_1}</div>
+                            <p class="text-sm text-slate-700 mt-3">2º horário (02:00 - 06:00):</p>
+                            <div class="mt-2">${badges15_2}</div>
+                        </div>
+                        <div>
+                            <p class="text-base font-semibold text-slate-800">Dia 7</p>
+                            <p class="text-sm text-slate-700">${dia16Label}:</p>
+                            <div class="mt-2">${badges16}</div>
                         </div>
                     </div>
                 </div>
