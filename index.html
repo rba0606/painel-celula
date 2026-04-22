@@ -15,8 +15,8 @@
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-	.formando-card { background: white !important; border: 2px solid #e2e8f0; transition: all 0.3s ease; }
-	.formando-card:hover { transform: translateY(-5px); border-color: #b91c1c; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+	    .formando-card { background: white !important; border: 2px solid #e2e8f0; transition: all 0.3s ease; }
+	    .formando-card:hover { transform: translateY(-5px); border-color: #b91c1c; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 
         .formando-card { 
             background: white !important; border: 2px solid #e2e8f0 !important; 
@@ -49,6 +49,21 @@
         .home-card .icon-box { width: 48px; height: 48px; background: #fff1f2; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.75rem; color: #b91c1c; }
         
         .back-btn { margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #b91c1c; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; }
+
+        /* ESTILOS ESPECÍFICOS DO TESTE 2 (MATRIZ DE CONTROLE) */
+        .matrix-container { overflow-x: auto; background: white; border-radius: 16px; border: 1px solid #e2e8f0; }
+        .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        .matrix-table th, .matrix-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
+        .name-cell { text-align: left !important; font-weight: 700; position: sticky; left: 0; background: white; border-right: 1px solid #e2e8f0; min-width: 160px; z-index: 10; }
+        .total-cell { font-weight: 800; color: #b91c1c; background: #fff1f2 !important; border-left: 1px solid #e2e8f0; width: 50px; }
+        .cb-fap { 
+            appearance: none; width: 20px; height: 20px; border: 2px solid #dc2626; 
+            border-radius: 6px; cursor: pointer; transition: all 0.2s; position: relative;
+            display: inline-block; vertical-align: middle;
+        }
+        .cb-fap:checked { background-color: #16a34a; border-color: #16a34a; }
+        .cb-fap:checked::after { content: '✓'; color: white; position: absolute; top: -2px; left: 4px; font-size: 13px; font-weight: bold; }
+        .btn-primary { background-color: #b91c1c; color: white; font-weight: 700; padding: 1rem; border-radius: 12px; transition: all 0.2s; width: 100%; cursor: pointer; border: none; }
     	
     </style>
 </head>
@@ -108,6 +123,48 @@
                 <div class="home-card" onclick="openTab('tab-pagamentos')">
                     <div class="icon-box">💰</div>
                     <h3 class="font-bold text-sm">Pagamentos</h3>
+                </div>
+                <div class="home-card" onclick="openTab('tab-controle')">
+                    <div class="icon-box">📊</div>
+                    <h3 class="font-bold text-sm">Mapa de Controle</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-controle" class="tab-content">
+            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
+            
+            <div id="auth-section" class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-xl text-center">
+                <h2 class="text-xl font-bold mb-4 text-slate-800">Registro Formador</h2>
+                <p class="text-sm text-slate-500 mb-6">Insira a senha para gerenciar os acompanhamentos.</p>
+                <input type="password" id="pass" placeholder="Senha de Segurança" class="w-full p-4 border rounded-xl mb-4 text-center bg-slate-50 outline-red-700">
+                <button onclick="login()" class="btn-primary shadow-lg shadow-red-900/20">Entrar no Painel</button>
+            </div>
+
+            <div id="protected-content" class="hidden space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl border border-slate-100 gap-4 shadow-sm">
+                    <h2 class="text-lg font-bold text-slate-800 italic">Mapa de Acompanhamento Anual</h2>
+                    <div class="flex gap-4 text-[10px] font-bold uppercase">
+                        <span class="flex items-center gap-2"><span class="w-4 h-4 bg-green-600 rounded"></span> Realizado</span>
+                        <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-red-600 rounded"></span> Pendente</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-2 md:p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="matrix-container">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr class="bg-slate-50">
+                                    <th class="name-cell">Formando</th>
+                                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                                    <th class="total-cell">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="matrix-body"></tbody>
+                        </table>
+                    </div>
+                    <p class="text-center text-[10px] text-slate-400 mt-4 italic">As alterações são sincronizadas automaticamente com a planilha.</p>
                 </div>
             </div>
         </div>
@@ -333,7 +390,7 @@
     </div>
 
     <script>
-        // BANCO DE DADOS
+        // BANCO DE DADOS (INDEX ORIGINAL)
         const formandosP2 = [
             { nome: "Alex Fernando Viana Couto da Silva", min: "Música", nasc: "05/08/1984", casam: "02/09/2017", email: "axfdsl@gmail.com", fap: "Marcelo (Tânia)" },
             { nome: "Kelly Cristina Viana Couto da Silva", min: "Centro de Formação", nasc: "29/07/1984", casam: "02/09/2017", email: "kellyvcouto@gmail.com", fap: "Thais (Marcelo)" },
@@ -373,152 +430,116 @@
             { nome: "Rafael de Brito Albuquerque", nasc: "06/06/1982", casam: "14/11/2007" }
         ];
 
-        const vigilias = [
-            { data: "10/04/2026", horario: "19:00", local: "Capela São João", tema: "Oração e Adoração" },
-            { data: "24/04/2026", horario: "20:00", local: "Salão Paroquial", tema: "Crescimento na Fé" }
+        // CONFIGURAÇÕES DO TESTE 2
+        const API_URL = "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec"; 
+        const SENHA_MESTRA = "jp2_2026";
+        const listaFormandosMatriz = [
+            "Agnes Caroline", "Alex Fernando Viana", "Bartholomeu Francisco", "Bianca Cristina Cunha", "Bianca Cristina Vidal",
+            "Caio Eduardo", "Edivaldo José", "Érika Pereira", "Flávia Maria Fialho", "Gustavo Teixeira", "Joalyne Viana",
+            "João Felipe Machado", "Júlia Cordeiro", "Júlio Viana", "Kelly Cristina Viana", "Laura Dias Marques",
+            "Lilian Beatriz", "Luis Alexandre Macedo", "Mara Rúbia Araújo", "Maria Helena Nunes", "Miguel Pedro",
+            "Pedro Francisco", "Rafaela Aiala", "Raissa Souza", "Sabrina Magalhães", "Walkner Pinheiro"
         ];
+        const nomesMesesMatriz = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        let dbLocal = JSON.parse(localStorage.getItem('fap_db_2026')) || [];
 
+
+        /* LÓGICA DE TRANSIÇÃO E INTERFACE */
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        /* LÓGICA DO TESTE 2 (LOGIN E MATRIZ) */
+        function login() {
+            if(document.getElementById('pass').value === SENHA_MESTRA) {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('protected-content').classList.remove('hidden');
+                
+                // Limpeza solicitada para Agnes e Alex no teste anterior
+                dbLocal = dbLocal.filter(r => r.formando !== "Agnes Caroline" && r.formando !== "Alex Fernando Viana");
+                localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
+                
+                renderMatrix();
+            } else { alert("Senha incorreta!"); }
+        }
+
+        function gerarIdSeguro(nome) {
+            return "total-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '');
+        }
+
+        function renderMatrix() {
+            const body = document.getElementById('matrix-body');
+            body.innerHTML = "";
+            listaFormandosMatriz.forEach(formando => {
+                const registrosDesteFormando = dbLocal.filter(r => r.formando === formando);
+                let row = `<tr><td class="name-cell">${formando}</td>`;
+                nomesMesesMatriz.forEach((mesNome) => {
+                    const jaExiste = registrosDesteFormando.some(r => r.mes === mesNome);
+                    row += `<td>
+                        <input type="checkbox" class="cb-fap" ${jaExiste ? 'checked' : ''} 
+                               onchange="sincronizarFap('${formando}', '${mesNome}', this)">
+                    </td>`;
+                });
+                row += `<td class="total-cell" id="${gerarIdSeguro(formando)}">${registrosDesteFormando.length}</td></tr>`;
+                body.innerHTML += row;
+            });
+        }
+
+        async function sincronizarFap(formando, mesNome, checkbox) {
+            const estaAtivo = checkbox.checked;
+            const idElementoTotal = gerarIdSeguro(formando);
+            if (estaAtivo) {
+                if (!dbLocal.some(r => r.formando === formando && r.mes === mesNome)) {
+                    dbLocal.push({ formando, mes: mesNome });
+                }
+            } else {
+                dbLocal = dbLocal.filter(r => !(r.formando === formando && r.mes === mesNome));
+            }
+            localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
+            const novoTotal = dbLocal.filter(r => r.formando === formando).length;
+            const campoTotal = document.getElementById(idElementoTotal);
+            if (campoTotal) campoTotal.innerText = novoTotal;
+            try {
+                checkbox.style.opacity = "0.4";
+                await fetch(API_URL, { 
+                    method: 'POST', mode: 'no-cors', 
+                    body: JSON.stringify({ formando, mes: mesNome, acao: estaAtivo ? "MARCADO" : "DESMARCADO" }) 
+                });
+                checkbox.style.opacity = "1";
+            } catch (error) { checkbox.style.opacity = "1"; }
+        }
+
+
+        /* LÓGICA DO INDEX ORIGINAL (RENDERIZAÇÕES) */
         let vigiliaMesAtual = new Date().getMonth() + 1;
         let vigiliaAnoAtual = new Date().getFullYear();
-        let escalaAtual = null;
 
         function nomeDoMes(mes) {
             return ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"][mes - 1] || "";
         }
 
-        function getTodosParticipantes() {
-            const formadoresNomes = formadores.map(f => f.nome);
-            const formandosNomes = [...formandosP2, ...formandosP1].map(f => f.nome);
-            return [...formadoresNomes, ...formandosNomes];
-        }
-
-        function calcularGrupos(ano, mes) {
-            const participantes = getTodosParticipantes();
-            const grupos = [[], [], []];
-            participantes.forEach((nome, idx) => {
-                grupos[idx % 3].push(nome);
-            });
-            return {
-                dia15_1: mes % 2 === 1 ? grupos[0] : grupos[1],
-                dia15_2: mes % 2 === 1 ? grupos[1] : grupos[0],
-                dia16: grupos[2],
-                mes
-            };
-        }
-
-        function extrairPrimeiroNome(nome) {
-            return nome.split(' ')[0];
-        }
-
-        function extrairSobrenome(nome) {
-            const partes = nome.split(' ').filter(Boolean);
-            if (partes.length <= 1) return nome;
-            return partes[partes.length - 1];
-        }
-
-        function formatarNome(nome, allNomes = []) {
-            const primeiro = extrairPrimeiroNome(nome);
-            const duplicados = allNomes.filter(n => extrairPrimeiroNome(n) === primeiro);
-            const exibicao = duplicados.length > 1 ? nome : primeiro;
-
-            const destaque = ["Rafael", "Tânia", "Larissa"];
-            if (destaque.includes(primeiro)) {
-                return `<strong>${exibicao}</strong>`;
-            }
-            return exibicao;
-        }
-
         function renderVigilias(ano = vigiliaAnoAtual, mes = vigiliaMesAtual) {
-            vigiliaAnoAtual = ano;
-            vigiliaMesAtual = mes;
-
             const container = document.getElementById('tab-vigilias-content');
             if (!container) return;
-
             document.getElementById('tab-vigilias-period').innerHTML = `Escala de ${nomeDoMes(mes)} de ${ano}`;
-
-
-            const alertaLink = `
-                <div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded flex items-center gap-2 shadow-sm">
-                    <span class="text-lg">⚠️</span>
-                    <a href="https://vigiliash.web.app/app/pages/home.html?t=YzJoaGJHOXRYMkp5WVhOcGJHbGg7CgkJCVUyaGhiRzl0SUVKeVlYUHRiR2xoOwoJCQliV2x6YzJGdg==" 
-                       target="_blank" 
-                       class="text-amber-800 font-bold text-xs uppercase hover:underline">
-                       Clique aqui para acesso ao link das vigilias
-                    </a>
-                </div>
-`;
-
-            // Grupos fixos conforme solicitado
-            const grupoA = `
-                <span class="name-balloon"><strong>Larissa</strong></span>
-                <span class="name-balloon">Pedro</span><span class="name-balloon">Miguel</span>
-                <span class="name-balloon">Érika</span><span class="name-balloon">Bartholomeu</span>
-                <span class="name-balloon">Luís</span><span class="name-balloon">Bianca Vidal</span>
-                <span class="name-balloon">Joalyne</span><span class="name-balloon">Julia</span>
-                <span class="name-balloon">Rafaela</span>`;
-
-            const grupoB = `
-                <span class="name-balloon"><strong>Tânia</strong></span>
-                <span class="name-balloon">Alex</span><span class="name-balloon">Kelly</span>
-                <span class="name-balloon">Flávia</span><span class="name-balloon">Walkner</span>
-                <span class="name-balloon">Sabrina</span><span class="name-balloon">Bianca</span>
-                <span class="name-balloon">João Felipe</span>`;
-
-            const grupoC = `
-                <span class="name-balloon"><strong>Rafael</strong></span>
-                <span class="name-balloon">Lilian</span><span class="name-balloon">Raissa</span>
-                <span class="name-balloon">Edivaldo</span><span class="name-balloon">Maria Helena</span>
-                <span class="name-balloon">Laura</span><span class="name-balloon">Caio</span>
-                <span class="name-balloon">Julio</span>`;
-
-            // Lógica: Em Abril (mês par), Larissa (Grupo A) inicia no 1º h do dia 8
-            // e Rafael (Grupo C) inicia no 1º h do dia 7.
+            const alertaLink = `<div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded flex items-center gap-2 shadow-sm"><span class="text-lg">⚠️</span><a href="https://vigiliash.web.app/" target="_blank" class="text-amber-800 font-bold text-xs uppercase hover:underline">Link oficial das vigílias</a></div>`;
+            const grupoA = `<span class="name-balloon"><strong>Larissa</strong></span><span class="name-balloon">Pedro</span><span class="name-balloon">Miguel</span><span class="name-balloon">Érika</span><span class="name-balloon">Bartholomeu</span><span class="name-balloon">Luís</span><span class="name-balloon">Bianca Vidal</span><span class="name-balloon">Joalyne</span><span class="name-balloon">Julia</span><span class="name-balloon">Rafaela</span>`;
+            const grupoB = `<span class="name-balloon"><strong>Tânia</strong></span><span class="name-balloon">Alex</span><span class="name-balloon">Kelly</span><span class="name-balloon">Flávia</span><span class="name-balloon">Walkner</span><span class="name-balloon">Sabrina</span><span class="name-balloon">Bianca</span><span class="name-balloon">João Felipe</span>`;
+            const grupoC = `<span class="name-balloon"><strong>Rafael</strong></span><span class="name-balloon">Lilian</span><span class="name-balloon">Raissa</span><span class="name-balloon">Edivaldo</span><span class="name-balloon">Maria Helena</span><span class="name-balloon">Laura</span><span class="name-balloon">Caio</span><span class="name-balloon">Julio</span>`;
             const isPar = mes % 2 === 0;
-            
             const h1_dia8 = isPar ? grupoA : grupoB;
             const h2_dia8 = isPar ? grupoB : grupoA;
-            
-            // Ajuste do Dia 7: No mês par (Abril) vira 1º horário
             const label_dia7 = isPar ? "1º horário (22:00 - 02:00)" : "2º horário (02:00 - 06:00)";
-
-            container.innerHTML = alertaLink + `
-                <div class="mb-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <div class="space-y-6">
-                        <div>
-                            <p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 7</p>
-                            <p class="text-xs font-bold text-red-600 uppercase mb-2">${label_dia7}:</p>
-                            <div class="flex flex-wrap gap-1">${grupoC}</div>
-                        </div>
-
-                        <div>
-                            <p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 8</p>
-                            <p class="text-xs font-bold text-red-600 uppercase mb-2">1º horário (22:00 - 02:00):</p>
-                            <div class="flex flex-wrap gap-1 mb-4">${h1_dia8}</div>
-                            
-                            <p class="text-xs font-bold text-red-600 uppercase mb-2">2º horário (02:00 - 06:00):</p>
-                            <div class="flex flex-wrap gap-1">${h2_dia8}</div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-4 border-t border-slate-100 text-[13px] text-slate-500 italic space-y-1">
-                        <p>• Mara - Fará em horário especial;</p>
-                        <p>• Agnes - Fará em horário especial; e</p>
-                        <p>• Gustavo - Fará em horário especial.</p>
-                    </div>
-                </div>
-            `;
+            container.innerHTML = alertaLink + `<div class="mb-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm"><div class="space-y-6"><div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 7</p><p class="text-xs font-bold text-red-600 uppercase mb-2">${label_dia7}:</p><div class="flex flex-wrap gap-1">${grupoC}</div></div><div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 8</p><p class="text-xs font-bold text-red-600 uppercase mb-2">1º horário (22:00 - 02:00):</p><div class="flex flex-wrap gap-1 mb-4">${h1_dia8}</div><p class="text-xs font-bold text-red-600 uppercase mb-2">2º horário (02:00 - 06:00):</p><div class="flex flex-wrap gap-1">${h2_dia8}</div></div></div><div class="mt-8 pt-4 border-t border-slate-100 text-[13px] text-slate-500 italic"><p>• Mara, Agnes e Gustavo em horários especiais.</p></div></div>`;
         }
 
         function mudarMesVigilias(delta) {
-            let mes = vigiliaMesAtual + delta;
-            let ano = vigiliaAnoAtual;
-            if (mes < 1) { mes = 12; ano -= 1; }
-            if (mes > 12) { mes = 1; ano += 1; }
-
-            vigiliaAnoAtual = ano;
-            vigiliaMesAtual = mes;
-            renderVigilias(ano, mes);
+            vigiliaMesAtual += delta;
+            if (vigiliaMesAtual < 1) { vigiliaMesAtual = 12; vigiliaAnoAtual -= 1; }
+            if (vigiliaMesAtual > 12) { vigiliaMesAtual = 1; vigiliaAnoAtual += 1; }
+            renderVigilias();
         }
 
         function renderCards(data, targetId, badgeClass, cardTypeClass) {
@@ -526,29 +547,7 @@
             container.innerHTML = ''; 
             data.forEach(f => {
                 const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
-                container.innerHTML += `
-                    <div class="formando-card ${cardTypeClass}">
-                        <span class="badge ${badgeClass}">${cardTypeClass === 'card-p1' ? 'P1' : 'P2'}</span>
-                        <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
-                        <div class="mb-3">
-                            <span class="info-label">Ministério</span>
-                            <p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
-                            <div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div>
-                            <div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div>
-                        </div>
-                        <div class="mt-3 pt-3 border-t border-dashed border-slate-100">
-                            <span class="info-label">📧 E-mail</span>
-                            <p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p>
-                        </div>
-                        <div class="mt-auto pt-4">
-                            <div class="bg-red-50 p-3 rounded-xl border border-red-100">
-                                <span class="info-label text-red-400">Acompanhamento (FP)</span>
-                                <p class="info-value text-red-800 font-bold">${f.fap}</p>
-                            </div>
-                        </div>
-                    </div>`;
+                container.innerHTML += `<div class="formando-card ${cardTypeClass}"><span class="badge ${badgeClass}">${cardTypeClass === 'card-p1' ? 'P1' : 'P2'}</span><h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4><div class="mb-3"><span class="info-label">Ministério</span><p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p></div><div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3"><div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div><div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div></div><div class="mt-3 pt-3 border-t border-dashed border-slate-100"><span class="info-label">📧 E-mail</span><p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p></div><div class="mt-auto pt-4"><div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="info-label text-red-400">Acompanhamento (FP)</span><p class="info-value text-red-800 font-bold">${f.fap}</p></div></div></div>`;
             });
         }
 
