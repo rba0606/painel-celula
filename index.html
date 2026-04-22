@@ -432,7 +432,7 @@
 
         // CONFIGURAÇÕES DO TESTE 2
         const API_URL = "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec"; 
-        const SENHA_MESTRA = "jp2_2026";
+        const SENHA_MESTRA = "jp2";
         const listaFormandosMatriz = [
             "Agnes Caroline", "Alex Fernando Viana", "Bartholomeu Francisco", "Bianca Cristina Cunha", "Bianca Cristina Vidal",
             "Caio Eduardo", "Edivaldo José", "Érika Pereira", "Flávia Maria Fialho", "Gustavo Teixeira", "Joalyne Viana",
@@ -452,18 +452,46 @@
         }
 
         /* LÓGICA DO TESTE 2 (LOGIN E MATRIZ) */
-        function login() {
-            if(document.getElementById('pass').value === SENHA_MESTRA) {
-                document.getElementById('auth-section').classList.add('hidden');
-                document.getElementById('protected-content').classList.remove('hidden');
-                
-                // Limpeza solicitada para Agnes e Alex no teste anterior
-                dbLocal = dbLocal.filter(r => r.formando !== "Agnes Caroline" && r.formando !== "Alex Fernando Viana");
-                localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
-                
-                renderMatrix();
-            } else { alert("Senha incorreta!"); }
+        async function login() {
+    const senhaDigitada = document.getElementById('pass').value;
+    
+    if(senhaDigitada === SENHA_MESTRA) {
+        const btn = document.querySelector('#auth-section button');
+        const originalText = btn.innerText;
+        btn.innerText = "Sincronizando com a nuvem...";
+        btn.disabled = true;
+
+        try {
+            // 1. Busca os dados reais da planilha (GET)
+            const response = await fetch(API_URL);
+            const dadosPlanilha = await response.json();
+            
+            // 2. Filtra apenas os registros que estão como "MARCADO"
+            dbLocal = dadosPlanilha.filter(item => item.acao === "MARCADO");
+            
+            // 3. Salva no cache do navegador para performance
+            localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
+
+            // 4. Libera o acesso
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('protected-content').classList.remove('hidden');
+            
+            renderMatrix();
+        } catch (error) {
+            console.error("Erro ao carregar:", error);
+            alert("Atenção: Não foi possível baixar os dados da planilha. Exibindo dados locais.");
+            // Entra mesmo com erro, usando o que tiver no localStorage
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('protected-content').classList.remove('hidden');
+            renderMatrix();
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
+    } else { 
+        alert("Senha incorreta!"); 
+    }
+}
 
         function gerarIdSeguro(nome) {
             return "total-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '');
