@@ -1,736 +1,1090 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Célula São João Paulo II - Oficial 2026</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-	    .formando-card { background: white !important; border: 2px solid #e2e8f0; transition: all 0.3s ease; }
-	    .formando-card:hover { transform: translateY(-5px); border-color: #b91c1c; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Célula São João Paulo II · Postulantado 2026</title>
+<link rel="icon" href="https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+<style>
+  :root{
+    --crimson:#9f1c2e;
+    --crimson-dark:#7a1522;
+    --crimson-light:#fdf1ee;
+    --gold:#c99a3a;
+    --ink:#241c1a;
+    --paper:#faf6f0;
+  }
+  body{ font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); }
+  .font-display{ font-family:'Fraunces',serif; }
+  .tab-content{ display:none; }
+  .tab-content.active{ display:block; animation:riseIn .35s cubic-bezier(.16,1,.3,1); }
+  @keyframes riseIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  ::selection{ background:var(--crimson); color:#fff; }
 
-        .formando-card { 
-            background: white !important; border: 2px solid #e2e8f0 !important; 
-            border-radius: 16px !important; padding: 1.25rem !important; 
-            transition: all 0.3s ease !important; position: relative !important;
-            display: flex !important; flex-direction: column !important; 
-            height: 100% !important; box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-        }
-        .formando-card:hover { border-color: #b91c1c !important; transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
-        .card-p2 { border-left: 8px solid #16a34a !important; }
-        .card-p1 { border-left: 8px solid #2563eb !important; }
+  .brand-rule{ height:3px; background:linear-gradient(90deg,var(--crimson),var(--gold),var(--crimson)); border-radius:99px; }
 
-        .info-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: #94a3b8; margin-bottom: 2px; display: block; }
-        .info-value { font-size: 0.8rem; color: #334155; font-weight: 600; line-height: 1.2; }
+  .home-card{ background:#fff; padding:1.35rem 1rem; border-radius:18px; border:1px solid #ece3d8; cursor:pointer;
+    transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s, border-color .25s;
+    display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .home-card:hover{ transform:translateY(-4px); border-color:var(--crimson); box-shadow:0 14px 28px -12px rgba(159,28,46,.28); }
+  .home-card .icon-box{ width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; margin-bottom:.65rem; background:var(--crimson-light); color:var(--crimson); }
+  .home-card.admin{ border-style:dashed; border-color:#d8cdbe; }
+  .home-card.admin .icon-box{ background:#f1eee8; color:#7d746a; }
 
-        .table-container { overflow-x: auto; background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
-        .styled-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .styled-table thead tr { background-color: #b91c1c; color: #ffffff; text-align: left; }
-        .styled-table th, .styled-table td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; }
-        
-        .badge { padding: 2px 6px; border-radius: 9999px; font-weight: 700; font-size: 0.6rem; display: inline-block; text-transform: uppercase; }
-        .badge-p1 { background-color: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
-        .badge-p2 { background-color: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
-        
-        .name-balloon { display: inline-block; background-color: #f1f5f9; color: #475569; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; margin: 2px; border: 1px solid #e2e8f0; font-weight: 500; }
-        .coordinator-label { background-color: #fee2e2; color: #991b1b; border-color: #fecaca; font-weight: 700; }
+  .back-btn{ margin-bottom:1.4rem; display:inline-flex; align-items:center; gap:.4rem; color:var(--crimson); font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; cursor:pointer; }
+  .back-btn:hover{ text-decoration:underline; }
 
-        .home-card { background: white; padding: 1.25rem; border-radius: 16px; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; }
-        .home-card:hover { transform: translateY(-4px); border-color: #b91c1c; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); }
-        .home-card .icon-box { width: 48px; height: 48px; background: #fff1f2; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.75rem; color: #b91c1c; }
-        
-        .back-btn { margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; color: #b91c1c; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; }
+  .formando-card{ background:#fff; border:1px solid #ece3d8; border-radius:18px; padding:1.15rem;
+    transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s; position:relative;
+    display:flex; flex-direction:column; height:100%; box-shadow:0 1px 2px rgba(36,28,26,.04); }
+  .formando-card:hover{ transform:translateY(-3px); box-shadow:0 16px 28px -14px rgba(36,28,26,.18); }
+  .card-p2{ border-left:5px solid #1f7a4d; }
+  .card-p1{ border-left:5px solid #2f5fa8; }
 
-        /* ESTILOS ESPECÍFICOS DO TESTE 2 (MATRIZ DE CONTROLE) */
-        .matrix-container { overflow-x: auto; background: white; border-radius: 16px; border: 1px solid #e2e8f0; }
-        .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
-        .matrix-table th, .matrix-table td { padding: 10px; border-bottom: 1px solid #f1f5f9; text-align: center; }
-        .name-cell { text-align: left !important; font-weight: 700; position: sticky; left: 0; background: white; border-right: 1px solid #e2e8f0; min-width: 160px; z-index: 10; }
-        .total-cell { font-weight: 800; color: #b91c1c; background: #fff1f2 !important; border-left: 1px solid #e2e8f0; width: 50px; }
-        .cb-fap { 
-            appearance: none; width: 20px; height: 20px; border: 2px solid #dc2626; 
-            border-radius: 6px; cursor: pointer; transition: all 0.2s; position: relative;
-            display: inline-block; vertical-align: middle;
-        }
-        .cb-fap:checked { background-color: #16a34a; border-color: #16a34a; }
-        .cb-fap:checked::after { content: '✓'; color: white; position: absolute; top: -2px; left: 4px; font-size: 13px; font-weight: bold; }
-        .btn-primary { background-color: #b91c1c; color: white; font-weight: 700; padding: 1rem; border-radius: 12px; transition: all 0.2s; width: 100%; cursor: pointer; border: none; }
-    	
-    </style>
+  .info-label{ font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:#a79c8d; margin-bottom:2px; display:block; }
+  .info-value{ font-size:.8rem; color:#3a322d; font-weight:600; line-height:1.25; }
+
+  .table-container{ overflow-x:auto; background:#fff; border-radius:14px; border:1px solid #ece3d8; }
+  .styled-table{ width:100%; border-collapse:collapse; font-size:.8rem; }
+  .styled-table thead tr{ background:var(--crimson); color:#fff; text-align:left; }
+  .styled-table th, .styled-table td{ padding:10px 12px; border-bottom:1px solid #f3ede4; }
+
+  .badge{ padding:2px 8px; border-radius:99px; font-weight:800; font-size:.58rem; display:inline-block; text-transform:uppercase; letter-spacing:.04em; }
+  .badge-p1{ background:#eaf1fb; color:#2f5fa8; border:1px solid #d7e5f7; }
+  .badge-p2{ background:#eaf6ee; color:#1f7a4d; border:1px solid #d6ecdd; }
+
+  .name-balloon{ display:inline-flex; align-items:center; background:#f4efe6; color:#5b5248; padding:4px 11px; border-radius:99px; font-size:.74rem; margin:2px; border:1px solid #e9e0d2; font-weight:500; }
+  .coordinator-label{ background:var(--crimson-light); color:var(--crimson-dark); border-color:#f6d9d3; font-weight:800; }
+
+  .section-title{ display:flex; align-items:center; gap:.6rem; font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem; margin-bottom:1.2rem; color:#2b221f; }
+  .section-title .dot{ width:9px; height:9px; border-radius:99px; background:var(--crimson); }
+
+  .btn-ghost{ background:#f4efe6; color:#5b5248; padding:.5rem 1rem; border-radius:10px; font-weight:700; font-size:.75rem; border:1px solid #e9e0d2; cursor:pointer; transition:all .2s; }
+  .btn-ghost:hover{ background:#ece5d8; }
+  .btn-primary{ background:var(--crimson); color:#fff; font-weight:700; padding:.85rem 1.2rem; border-radius:12px; transition:all .2s; cursor:pointer; border:none; }
+  .btn-primary:hover{ background:var(--crimson-dark); }
+  .btn-primary:disabled{ opacity:.6; cursor:progress; }
+  .btn-danger{ background:#fdeceb; color:#b3261e; font-weight:700; padding:.4rem .8rem; border-radius:9px; font-size:.72rem; border:1px solid #f7d3d0; cursor:pointer; }
+  .btn-danger:hover{ background:#fadbd8; }
+
+  .field-label{ font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.03em; color:#8a8074; margin-bottom:4px; display:block; }
+  .field-input, .field-select, .field-textarea{ width:100%; border:1px solid #e5ddd0; background:#fdfbf7; border-radius:10px; padding:.55rem .7rem; font-size:.85rem; color:var(--ink); outline:none; transition:border-color .2s; }
+  .field-input:focus, .field-select:focus, .field-textarea:focus{ border-color:var(--crimson); background:#fff; }
+  .field-check{ width:17px; height:17px; accent-color:var(--crimson); cursor:pointer; }
+
+  .modal-backdrop{ position:fixed; inset:0; background:rgba(36,28,26,.55); backdrop-filter:blur(2px); z-index:60; display:flex; align-items:flex-start; justify-content:center; padding:2rem 1rem; overflow-y:auto; }
+  .modal-backdrop.hidden{ display:none !important; }
+
+  .matrix-container{ overflow-x:auto; background:#fff; border-radius:16px; border:1px solid #ece3d8; }
+  .matrix-table{ width:100%; border-collapse:collapse; font-size:.72rem; }
+  .matrix-table th, .matrix-table td{ padding:9px; border-bottom:1px solid #f3ede4; text-align:center; }
+  .name-cell{ text-align:left !important; font-weight:700; position:sticky; left:0; background:#fff; border-right:1px solid #ece3d8; min-width:150px; z-index:10; }
+  .total-cell{ font-weight:800; color:var(--crimson); background:var(--crimson-light) !important; border-left:1px solid #ece3d8; width:46px; }
+  .cb-fap{ appearance:none; width:19px; height:19px; border:2px solid #d24a4a; border-radius:6px; cursor:pointer; transition:all .15s; position:relative; display:inline-block; vertical-align:middle; }
+  .cb-fap:checked{ background:#1f7a4d; border-color:#1f7a4d; }
+  .cb-fap:checked::after{ content:'✓'; color:#fff; position:absolute; top:-2px; left:3px; font-size:12px; font-weight:800; }
+
+  .toast{ position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:.7rem 1.3rem; border-radius:99px; font-size:.8rem; font-weight:600; z-index:80; opacity:0; transition:all .3s; pointer-events:none; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .admin-tabs button{ font-size:.75rem; font-weight:700; padding:.55rem 1rem; border-radius:10px; color:#8a8074; }
+  .admin-tabs button.active{ background:var(--crimson); color:#fff; }
+</style>
 </head>
 <body class="p-4 md:p-8">
-    <div class="container mx-auto max-w-6xl">
-        
-        <header class="mb-10 text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight">
-                Célula Comunitária <br><span class="text-red-700">São João Paulo II</span>
-            </h1>
-            <p class="text-slate-500 text-sm font-medium mt-2">Postulantado 2026</p>
-        </header>
+<div class="container mx-auto max-w-6xl">
 
-        <div id="tab-home" class="tab-content active">
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-8 flex flex-col items-center text-center">
-                <div class="w-44 md:w-56 mb-6">
-                    <img src="Papa João Paulo II em reflexão.jpg" alt="São João Paulo II" class="rounded-xl shadow-md border-2 border-slate-50 w-full" onerror="this.src='https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg'">
-                </div>
-                <h2 class="font-serif italic text-2xl md:text-4xl text-red-900 leading-tight">
-                    "Não tenhais medo! <br>Abri, melhor, escancarai as portas a Cristo!"
-                </h2>
-            </div>
+  <header class="mb-8 text-center">
+    <p class="text-[11px] font-bold tracking-[.2em] uppercase text-[var(--crimson)] mb-2">Postulantado 2026</p>
+    <h1 class="text-3xl md:text-4xl font-display font-bold text-[var(--ink)] tracking-tight leading-tight">
+      Célula Comunitária<br><span class="text-[var(--crimson)]">São João Paulo II</span>
+    </h1>
+    <div class="brand-rule w-16 mx-auto mt-4"></div>
+  </header>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-                <div class="home-card" onclick="openTab('tab-alertas')">
-                    <div class="icon-box">🔔</div>
-                    <h3 class="font-bold text-sm">Aniversariantes do Mês</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-lista')">
-                    <div class="icon-box">👥</div>
-                    <h3 class="font-bold text-sm">Formandos</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-formadores-detalhe')">
-                    <div class="icon-box">📖</div>
-                    <h3 class="font-bold text-sm">Formadores</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-acompanhamento')">
-                    <div class="icon-box">❤️</div>
-                    <h3 class="font-bold text-sm">Acompanhamento</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-equipes')">
-                    <div class="icon-box">✝️</div>
-                    <h3 class="font-bold text-sm">Equipes</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-grupos')">
-                    <div class="icon-box">💬</div>
-                    <h3 class="font-bold text-sm">Partilha</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-retiro')">
-                    <div class="icon-box">📅</div>
-                    <h3 class="font-bold text-sm">Retiro</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-vigilias')">
-                    <div class="icon-box">🕯️</div>
-                    <h3 class="font-bold text-sm">Vigílias</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-pagamentos')">
-                    <div class="icon-box">💰</div>
-                    <h3 class="font-bold text-sm">Pagamentos</h3>
-                </div>
-                <div class="home-card" onclick="openTab('tab-controle')">
-                    <div class="icon-box">🔐</div>
-                    <h3 class="font-bold text-sm">Controle Formadores</h3>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-controle" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            
-            <div id="auth-section" class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-slate-200 shadow-xl text-center">
-                <h2 class="text-xl font-bold mb-4 text-slate-800">Registro Formador</h2>
-                <p class="text-sm text-slate-500 mb-6">Insira a senha para gerenciar os acompanhamentos.</p>
-                <input type="password" id="pass" placeholder="Senha de Segurança" class="w-full p-4 border rounded-xl mb-4 text-center bg-slate-50 outline-red-700">
-                <button onclick="login()" class="btn-primary shadow-lg shadow-red-900/20">Entrar no Painel</button>
-            </div>
-
-            <div id="protected-content" class="hidden space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl border border-slate-100 gap-4 shadow-sm">
-                    <h2 class="text-lg font-bold text-slate-800 italic">Mapa de Acompanhamento Anual</h2>
-                    <div class="flex gap-4 text-[10px] font-bold uppercase">
-                        <span class="flex items-center gap-2"><span class="w-4 h-4 bg-green-600 rounded"></span> Realizado</span>
-                        <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-red-600 rounded"></span> Pendente</span>
-                    </div>
-                </div>
-
-                <div class="bg-white p-2 md:p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="matrix-container">
-                        <table class="matrix-table">
-                            <thead>
-                                <tr class="bg-slate-50">
-                                    <th class="name-cell">Formando</th>
-                                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
-                                    <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
-                                    <th class="total-cell">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="matrix-body"></tbody>
-                        </table>
-                    </div>
-                    <p class="text-center text-[10px] text-slate-400 mt-4 italic">As alterações são sincronizadas automaticamente com a planilha.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-alertas" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="flex items-center justify-between mb-4">
-                <h2 id="alertas-titulo" class="text-2xl font-bold text-slate-800">Celebrações</h2>
-                <div class="flex gap-2">
-                    <button onclick="mudarMesAlertas(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">◀ Mês anterior</button>
-                    <button onclick="mudarMesAlertas(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">Próximo mês ▶</button>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">🎂 Aniversariantes</h3>
-                    <div id="lista-aniversarios" class="space-y-3"></div>
-                </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-blue-700 mb-4 flex items-center gap-2">💍 Casamentos</h3>
-                    <div id="lista-casamentos" class="space-y-3"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-lista" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <span class="w-2 h-8 bg-green-600 rounded-full"></span> P2 - Nível de Discipulado
-            </h3>
-            <div id="container-p2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
-
-            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <span class="w-2 h-8 bg-blue-600 rounded-full"></span> P1 - Nível de Ingresso
-            </h3>
-            <div id="container-p1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
-        </div>
-
-        <div id="tab-acompanhamento" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="grid gap-4">
-                <div class="bg-white p-5 rounded-xl border-l-4 border-red-600 shadow-sm">
-                    <p class="font-bold text-red-700 mb-2 uppercase text-xs">Tânia:</p>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Sabrina</span><span class="name-balloon">Lilian</span><span class="name-balloon">Laura</span><span class="name-balloon">Bianca Vidal</span><span class="name-balloon">Mara</span><span class="name-balloon">Nayara</span><span class="name-balloon">Raissa</span><span class="name-balloon">Bianca Cunha</span>
-                        <span class="name-balloon font-bold border-red-200 bg-red-50">Rafael</span>
-                        <span class="name-balloon font-bold border-red-200 bg-red-50">Larissa</span>
-                        <span class="name-balloon font-bold border-red-200 bg-red-50">Joalyne</span>
-                    </div>
-                </div>
-                <div class="bg-white p-5 rounded-xl border-l-4 border-red-600 shadow-sm">
-                    <p class="font-bold text-red-700 mb-2 uppercase text-xs">Larissa:</p>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Maria Helena</span><span class="name-balloon">Flávia</span><span class="name-balloon">Rafaela</span><span class="name-balloon">Júlia</span>
-                        <span class="name-balloon font-bold border-red-200 bg-red-50">Érika</span>
-                    </div>
-                </div>
-                <div class="bg-white p-5 rounded-xl border-l-4 border-red-600 shadow-sm">
-                    <p class="font-bold text-red-700 mb-2 uppercase text-xs">Rafael:</p>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Luis</span><span class="name-balloon">Bartho</span><span class="name-balloon">Edivaldo</span><span class="name-balloon">Walkner</span><span class="name-balloon">Pedro</span><span class="name-balloon">Caio</span><span class="name-balloon">Gustavo</span><span class="name-balloon">João</span><span class="name-balloon">Júlio</span><span class="name-balloon">Miguel</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-equipes" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Música</h4>
-                    <div class="mb-2">
-                        <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenador</span>
-                        <span class="name-balloon coordinator-label">Walkner</span>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Maria Helena</span><span class="name-balloon">Edvaldo</span><span class="name-balloon">Rafaela</span>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Liturgia</h4>
-                    <div class="mb-2">
-                        <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenador</span>
-                        <span class="name-balloon coordinator-label">João</span>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Luis</span><span class="name-balloon">Pedro</span><span class="name-balloon">Sabrina</span><span class="name-balloon">Joalyne</span><span class="name-balloon">Miguel</span>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Fraternidade</h4>
-                    <div class="mb-2">
-                        <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenadoras</span>
-                        <span class="name-balloon coordinator-label">Nayara</span><span class="name-balloon coordinator-label">Julia</span>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Bianca Vidal</span><span class="name-balloon">Flávia</span><span class="name-balloon">Bartho</span><span class="name-balloon">Gustavo</span><span class="name-balloon">Caio</span><span class="name-balloon">Raissa</span><span class="name-balloon">Laura</span>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-red-800 mb-4 border-b pb-2">Intercessão / Amor em Atos</h4>
-                    <div class="mb-2">
-                        <span class="coordinator-tag font-bold text-xs uppercase text-slate-400 block mb-1">Coordenadora</span>
-                        <span class="name-balloon coordinator-label">Mara</span>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <span class="name-balloon">Bianca Cristina</span><span class="name-balloon">Érika</span><span class="name-balloon">Lilian</span><span class="name-balloon">Júlio</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-grupos" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <p class="font-bold text-red-700 text-xs mb-2">Grupo 1</p>
-                    <span class="name-balloon coordinator-label">Júlio</span><span class="name-balloon">Rafael</span><span class="name-balloon">João Felipe</span><span class="name-balloon">Walkner</span><span class="name-balloon">Francisco Jr</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <p class="font-bold text-red-700 text-xs mb-2">Grupo 2</p>
-                <span class="name-balloon coordinator-label">Miguel</span><span class="name-balloon">Bartholomeu</span><span class="name-balloon">Edvaldo</span><span class="name-balloon">Gustavo</span><span class="name-balloon">Júlio</span><span class="name-balloon">Pedro</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <p class="font-bold text-red-700 text-xs mb-2">Grupo 3</p>
-                    <span class="name-balloon coordinator-label">Érika</span><span class="name-balloon">Tânia</span><span class="name-balloon">Nayara</span><span class="name-balloon">Júlia</span><span class="name-balloon">Maria Helena</span><span class="name-balloon">Sabrina</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <p class="font-bold text-red-700 text-xs mb-2">Grupo 4</p>
-                    <span class="name-balloon coordinator-label">Flávia</span><span class="name-balloon">Larissa</span><span class="name-balloon">Bianca Cristina</span><span class="name-balloon">Laura</span><span class="name-balloon">Rafaela</span><span class="name-balloon">Mayra</span>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200">
-                    <p class="font-bold text-red-700 text-xs mb-2">Grupo 5</p>
-                    <span class="name-balloon coordinator-label">Bianca Vidal</span><span class="name-balloon">Mara</span><span class="name-balloon">Joalyne</span><span class="name-balloon">Lilian</span><span class="name-balloon">Raissa</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-retiro" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="bg-white p-12 rounded-2xl border border-slate-200 text-center">
-                <h3 class="text-xl font-bold">Retiro de Ingresso P1</h3>
-                <p class="text-3xl text-red-700 font-black mt-2">18 e 19 de Abril</p>
-            </div>
-        </div>
-
-        <div id="tab-vigilias" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div id="tab-vigilias-actions" class="mb-4 flex items-center justify-between gap-2">
-                <p id="tab-vigilias-period" class="text-lg font-bold text-red-700">Escala do mês</p>
-                <div class="flex gap-2">
-                    <button onclick="mudarMesVigilias(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">◀ Anterior</button>
-                    <button onclick="mudarMesVigilias(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded">Próximo ▶</button>
-                </div>
-            </div>
-            <div id="tab-vigilias-content" class="space-y-4"></div>
-        </div>
-
-        <div id="tab-formadores-detalhe" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="p-5 bg-red-50 rounded-2xl border border-red-100">
-                    <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mb-1">Comunitária</p>
-                    <h4 class="text-lg font-bold text-slate-800">Tânia Andréia Gentil Goulart</h4>
-                    <div class="mt-4 space-y-2 text-sm text-slate-600">
-                        <p>🎂 <strong>Nascimento:</strong> 23/07/1971</p>
-                        <p>💍 <strong>Casamento:</strong> 09/06/2000</p>
-                        <p>📧 <strong>Email:</strong> e.taniaandreia@gmail.com</p>
-                    </div>
-                </div>
-                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Assistente</p>
-                    <h4 class="text-lg font-bold text-slate-800">Larissa Torres de Olinda Silva</h4>
-                    <div class="mt-4 space-y-2 text-sm text-slate-600">
-                        <p>🎂 <strong>Nascimento:</strong> 05/02/1999</p>
-                        <p>💍 <strong>Casamento:</strong> 04/10/2025</p>
-                        <p>📧 <strong>Email:</strong> larissatorres.olinda@gmail.com</p>
-                    </div>
-                </div>
-                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Assistente</p>
-                    <h4 class="text-lg font-bold text-slate-800">Rafael de Brito Albuquerque</h4>
-                    <div class="mt-4 space-y-2 text-sm text-slate-600">
-                        <p>🎂 <strong>Nascimento:</strong> 06/06/1982</p>
-                        <p>💍 <strong>Casamento:</strong> 14/11/2007</p>
-                        <p>📧 <strong>Email:</strong> rba0606@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-pagamentos" class="tab-content">
-            <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao Início</div>
-            <div class="table-container">
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>Evento / Descrição</th>
-                            <th>Data Prevista</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Pagamento da Plataforma 2026</td><td>18/03/2026</td><td>R$ 15,00</td><td>Aberto</td></tr>
-                        <tr><td>Retiro de Ingresso P1 </td><td>18 e 19/04/2026</td><td>R$ </td><td>Aberto</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-xs text-yellow-800">
-                <strong>Nota:</strong> Os pagamentos devem ser realizados via PIX da Célula ou diretamente aos coordenadores financeiros.
-            </div>
-        </div>
-
+  <!-- HOME -->
+  <div id="tab-home" class="tab-content active">
+    <div class="bg-white p-6 rounded-3xl border border-[#ece3d8] shadow-sm mb-8 flex flex-col items-center text-center">
+      <div class="w-40 md:w-52 mb-6">
+        <img src="https://sanctamaria.org.br/wp-content/uploads/2021/10/Sao-Joao-Paulo-II.jpg" alt="São João Paulo II" class="rounded-2xl shadow-md border-2 border-[#faf6f0] w-full">
+      </div>
+      <h2 id="home-citacao" class="font-display italic text-2xl md:text-3xl text-[var(--crimson-dark)] leading-snug max-w-2xl"></h2>
+      <p id="home-citacao-autor" class="text-xs font-bold uppercase tracking-widest text-[#a79c8d] mt-4"></p>
     </div>
 
-	<div id="modal-alerta-dia" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/60 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-300">
-            <div class="bg-red-700 p-6 text-center text-white">
-                <div class="text-4xl mb-2">🎉</div>
-                <h2 class="font-bold text-lg uppercase tracking-wider text-white">Celebrações de Hoje!</h2>
-                <p id="data-hoje-modal" class="text-red-100 text-[10px] font-bold uppercase"></p>
-            </div>
-            <div id="conteudo-alerta-dia" class="p-6 space-y-4 text-left"></div>
-            <div class="p-4 bg-slate-50 flex justify-center border-t border-slate-100">
-                <button onclick="fecharModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-10 py-2 rounded-full font-bold text-sm transition-colors cursor-pointer">
-                    Amém!
-                </button>
-            </div>
+    <div id="home-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+  </div>
+
+  <!-- ALERTAS -->
+  <div id="tab-alertas" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <h2 id="alertas-titulo" class="section-title"><span class="dot"></span>Celebrações</h2>
+      <div class="flex gap-2">
+        <button onclick="mudarMesAlertas(-1)" class="btn-ghost">◀ Mês anterior</button>
+        <button onclick="mudarMesAlertas(1)" class="btn-ghost">Próximo mês ▶</button>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+        <h3 class="text-base font-bold text-[var(--crimson)] mb-4 flex items-center gap-2">🎂 Aniversariantes</h3>
+        <div id="lista-aniversarios" class="space-y-3"></div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+        <h3 class="text-base font-bold text-[#2f5fa8] mb-4 flex items-center gap-2">💍 Casamentos</h3>
+        <div id="lista-casamentos" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA FORMANDOS -->
+  <div id="tab-lista" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot" style="background:#1f7a4d"></span>P2 — Nível de Discipulado</h3>
+    <div id="container-p2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
+    <h3 class="section-title"><span class="dot" style="background:#2f5fa8"></span>P1 — Nível de Ingresso</h3>
+    <div id="container-p1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
+  </div>
+
+  <!-- ACOMPANHAMENTO -->
+  <div id="tab-acompanhamento" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot"></span>Acompanhamento</h3>
+    <div id="lista-acompanhamento" class="grid gap-4"></div>
+  </div>
+
+  <!-- EQUIPES -->
+  <div id="tab-equipes" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot"></span>Equipes de Serviço</h3>
+    <div id="lista-equipes" class="grid md:grid-cols-2 gap-4"></div>
+  </div>
+
+  <!-- GRUPOS -->
+  <div id="tab-grupos" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot"></span>Grupos de Partilha</h3>
+    <div id="lista-grupos" class="grid md:grid-cols-3 gap-4"></div>
+  </div>
+
+  <!-- RETIRO -->
+  <div id="tab-retiro" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <div class="bg-white p-12 rounded-3xl border border-[#ece3d8] text-center">
+      <h3 id="retiro-titulo" class="text-lg font-bold text-[#5b5248]"></h3>
+      <p id="retiro-data" class="text-3xl font-display font-bold text-[var(--crimson)] mt-2"></p>
+    </div>
+  </div>
+
+  <!-- VIGILIAS -->
+  <div id="tab-vigilias" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+      <h2 id="tab-vigilias-period" class="section-title mb-0"><span class="dot"></span>Escala do mês</h2>
+      <div class="flex gap-2">
+        <button onclick="mudarMesVigilias(-1)" class="btn-ghost">◀ Anterior</button>
+        <button onclick="mudarMesVigilias(1)" class="btn-ghost">Próximo ▶</button>
+      </div>
+    </div>
+    <div id="tab-vigilias-content" class="space-y-4"></div>
+  </div>
+
+  <!-- FORMADORES -->
+  <div id="tab-formadores-detalhe" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot"></span>Formadores</h3>
+    <div id="lista-formadores" class="grid md:grid-cols-1 lg:grid-cols-3 gap-6"></div>
+  </div>
+
+  <!-- PAGAMENTOS -->
+  <div id="tab-pagamentos" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <h3 class="section-title"><span class="dot"></span>Pagamentos</h3>
+    <div class="table-container">
+      <table class="styled-table">
+        <thead><tr><th>Evento / Descrição</th><th>Data prevista</th><th>Valor</th><th>Status</th></tr></thead>
+        <tbody id="pagamentos-body"></tbody>
+      </table>
+    </div>
+    <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
+      <strong>Nota:</strong> Os pagamentos devem ser realizados via PIX da Célula ou diretamente aos coordenadores financeiros.
+    </div>
+  </div>
+
+  <!-- CONTROLE FORMADORES (matriz FAP + sync planilha) -->
+  <div id="tab-controle" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+    <div id="controle-auth" class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-[#ece3d8] text-center">
+      <h2 class="text-xl font-bold mb-2 font-display">Registro Formador</h2>
+      <p class="text-sm text-[#8a8074] mb-6">Insira a senha para gerenciar os acompanhamentos.</p>
+      <input type="password" id="controle-pass" placeholder="Senha de segurança" class="field-input text-center mb-4">
+      <button onclick="loginControle()" class="btn-primary w-full">Entrar no painel</button>
+    </div>
+    <div id="controle-content" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl border border-[#ece3d8] gap-4">
+        <h2 class="text-lg font-bold font-display italic">Mapa de acompanhamento anual</h2>
+        <div class="flex gap-4 text-[10px] font-bold uppercase text-[#8a8074]">
+          <span class="flex items-center gap-2"><span class="w-4 h-4 bg-[#1f7a4d] rounded"></span> Realizado</span>
+          <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-[#d24a4a] rounded"></span> Pendente</span>
         </div>
+      </div>
+      <div class="bg-white p-2 md:p-6 rounded-2xl border border-[#ece3d8]">
+        <div class="matrix-container">
+          <table class="matrix-table">
+            <thead><tr class="bg-[#faf6f0]">
+              <th class="name-cell">Formando</th>
+              <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+              <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+              <th class="total-cell">Total</th>
+            </tr></thead>
+            <tbody id="matrix-body"></tbody>
+          </table>
+        </div>
+        <p class="text-center text-[10px] text-[#a79c8d] mt-4 italic">As alterações são sincronizadas automaticamente com a planilha.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDITAR DADOS (painel de administração) -->
+  <div id="tab-editar" class="tab-content">
+    <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
+
+    <div id="editar-auth" class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-[#ece3d8] text-center">
+      <h2 class="text-xl font-bold mb-2 font-display">Editar dados da célula</h2>
+      <p class="text-sm text-[#8a8074] mb-6">Insira a senha de edição para adicionar, corrigir ou remover informações — sem precisar mexer em código.</p>
+      <input type="password" id="editar-pass" placeholder="Senha de edição" class="field-input text-center mb-4">
+      <button onclick="loginEditar()" class="btn-primary w-full">Entrar no painel de edição</button>
     </div>
 
-    <script>
-        // BANCO DE DADOS (INDEX ORIGINAL)
-        const formandosP2 = [
-            { nome: "Bartholomeu Francisco de Souza Neto", min: "Coord. Pastoreio Adulto", nasc: "11/09/1990", casam: "12/07/2025", email: "bartho.neto1@hotmail.com", fap: "Jacob" },
-            { nome: "Bianca Cristina da Cunha Conceição", min: "Pastoreio de Casais", nasc: "12/05/1984", casam: "18/06/2005", email: "anapauloedy@gmail.com", fap: "Thais (Marcelo)" },
-            { nome: "Edivaldo José Da Conceição da Cunha", min: "Pastoreio de Casais", nasc: "31/07/1979", casam: "18/06/2005", email: "ejcpd2012@gmail.com", fap: "Marcelo (Tânia)" },
-            { nome: "Bianca Cristina Vidal da Cunha", min: "Comunicação", nasc: "02/10/2003", casam: "-", email: "biancacunha210@gmail.com", fap: "Leticia Moreschi" },
-            { nome: "Érika Pereira do Prado", min: "Comunicação", nasc: "22/10/1996", casam: "-", email: "erika.prado@sempreceub.com", fap: "Renata Ribas" },
-            { nome: "Flávia Maria Fialho de Oliveira", min: "PJJ e Comunicação", nasc: "25/02/1999", casam: "-", email: "flaviam.fialho@hotmail.com", fap: "Barbara Mendes" },
-            { nome: "Lilian Beatriz de Lima Peters", min: "Livraria", nasc: "10/03/1988", casam: "13/10/2019", email: "liriopeters@hotmail.com", fap: "Thais (Marcelo)" },
-            { nome: "Luis Alexandre Macedo Nepomuceno", min: "Liturgia", nasc: "28/10/1984", casam: "18/12/2021", email: "luisalexandre6533@gmail.com", fap: "Marcelo (Tânia)" },
-            { nome: "Mara Rúbia Araújo do Nascimento Silva", min: "Coordenadoção da Livraria", nasc: "29/04/1975", casam: "29/07/1995", email: "mararubiabr@yahoo.com.br", fap: "Thais (Marcelo)" },
-            { nome: "Maria Helena Nunes Silva", min: "Kerigma", nasc: "27/12/2004", casam: "-", email: "mariahelenanunessilva27@gmail.com", fap: "Leticia Moreschi" },
-            { nome: "Pedro Francisco de Souza Teixeira", min: "PJJ e Liturgia", nasc: "22/12/2004", casam: "-", email: "pedrosouzadf075@gmail.com", fap: "Pedrão (Priscila)" },
-            { nome: "Raissa Souza Alabarce", min: "Kerigma (Asa Sul)", nasc: "06/09/1990", casam: "-", email: "raissaalabarce.souza@gmail.com", fap: "Milena Brito" },
-            { nome: "Walkner Pinheiro Melo de Almeida", min: "Música", nasc: "22/08/1980", casam: "-", email: "walkner.almeida@yahoo.com.br", fap: "Marcelo (Tânia)" },
-            { nome: "Agnes Caroline Serafim Cardoso", min: "-", nasc: "19/12/1999", casam: "25/11/2023", email: "agneserafimcardosoreis@gmail.com", fap: "Jenisangêla - CV" },
-            { nome: "Gustavo Teixeira Reis", min: "Sem ministério", nasc: "06/01/2000", casam: "25/11/2023", email: "gustavoreis2302@gmail.com", fap: "Marcelo Vieira" },
-            { nome: "Caio Eduardo Dos Santos Ferreira", min: "Promoção humana", nasc: "25/09/1999", casam: "-", email: "caiodudu10@gmail.com", fap: "Matheus Tonhá" },
-            { nome: "Nayara Monteiro Ferreira", min: "Promoção humana", nasc: "27/10/1988", casam: "-", email: "nayaramonteferreira@gmail.com", fap: "Camila Oka" }
+    <div id="editar-content" class="hidden space-y-6">
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-800">
+        <strong>Importante:</strong> as edições ficam salvas neste navegador/dispositivo (armazenamento local). Para levar os dados para outro computador, ou fazer backup, use "Exportar backup" na aba Configurações e depois "Importar backup" no outro dispositivo.
+      </div>
 
-        ];
+      <div class="flex gap-2 admin-tabs bg-white p-1.5 rounded-2xl border border-[#ece3d8] w-fit flex-wrap">
+        <button id="admin-tab-btn-pessoas" class="active" onclick="setAdminTab('pessoas')">👥 Pessoas</button>
+        <button id="admin-tab-btn-config" onclick="setAdminTab('config')">⚙️ Configurações</button>
+        <button id="admin-tab-btn-backup" onclick="setAdminTab('backup')">💾 Backup</button>
+      </div>
 
-        const formandosP1 = [
-            { nome: "Laura Dias Marques Braz", min: "Celeiro de Pastores", nasc: "30/09/2003", casam: "-", email: "lauravoc2024@gmail.com", fap: "Renata Ribas" },
-            { nome: "Sabrina Magalhães Vieira", min: "1° anúncio", nasc: "21/08/1996", casam: "-", email: "sabrinavieirapsi@gmail.com", fap: "Barbara Mendes" },
-            { nome: "Júlia Cordeiro Lucas Barbosa", min: "Pastoreio Jovem", nasc: "27/04/2007", casam: "-", email: "juliacordeirolucas@gmail.com", fap: "Laura Chaves" },
-            { nome: "João Felipe Machado Cantanhede", min: "Pastoreio jovem", nasc: "04/03/2002", casam: "-", email: "jfcantanhedecod@gmail.com", fap: "Weider" },
-            { nome: "Júlio Viana de Carvalho", min: "Pastoreio Jovem", nasc: "19/10/2003", casam: "-", email: "juliovianadecarvalho@gmail.com", fap: "Weider" },
-            { nome: "Miguel Pedro da Cunha Doroteu", min: "Núcleo PJJ e Celeiro de Pastores", nasc: "05/09/2005", casam: "-", email: "migueldoroteu55@gmail.com", fap: "Weider" },
-            { nome: "Rafaela Aiala Fernandes Correia", min: "Pastoreio Jovem e Turma de Lideres", nasc: "15/07/2006", casam: "-", email: "rafaelaaiala.sh@gmail.com", fap: "Cristina" },
-            { nome: "Joalyne Viana Ribeiro", min: "Coordenação Projeto Criança", nasc: "24/08/1990", casam: "-", email: "joalyneviana@gmail.com", fap: "Marcia" }
-        ];
+      <!-- ADMIN: PESSOAS -->
+      <div id="admin-tab-pessoas" class="admin-tab">
+        <div class="flex flex-wrap gap-3 items-center justify-between mb-4">
+          <input type="text" id="admin-busca" oninput="renderAdminPessoas()" placeholder="Buscar por nome..." class="field-input max-w-xs">
+          <button onclick="abrirModalPessoa()" class="btn-primary">+ Nova pessoa</button>
+        </div>
+        <div class="table-container">
+          <table class="styled-table">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Ministério / Papel</th><th>FAP</th><th></th></tr></thead>
+            <tbody id="admin-pessoas-body"></tbody>
+          </table>
+        </div>
+      </div>
 
-        const formadores = [
-            { nome: "Tânia Andréia Gentil Goulart", nasc: "23/07/1971", casam: "09/06/2000" },
-            { nome: "Larissa Torres de Olinda Silva", nasc: "05/02/1999", casam: "04/10/2025" },
-            { nome: "Rafael de Brito Albuquerque", nasc: "06/06/1982", casam: "14/11/2007" }
-        ];
+      <!-- ADMIN: CONFIG -->
+      <div id="admin-tab-config" class="admin-tab hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-4 font-display text-lg">Citação da página inicial</h4>
+          <label class="field-label">Texto</label>
+          <textarea id="cfg-citacao-texto" class="field-textarea mb-3" rows="2"></textarea>
+          <label class="field-label">Autor</label>
+          <input type="text" id="cfg-citacao-autor" class="field-input">
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-4 font-display text-lg">Retiro</h4>
+          <div class="grid md:grid-cols-2 gap-3">
+            <div><label class="field-label">Título</label><input type="text" id="cfg-retiro-titulo" class="field-input"></div>
+            <div><label class="field-label">Data</label><input type="text" id="cfg-retiro-data" class="field-input"></div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-4 font-display text-lg">Vigílias</h4>
+          <label class="field-label">Aviso / observação (opcional)</label>
+          <textarea id="cfg-vigilia-nota" class="field-textarea mb-3" rows="2"></textarea>
+          <label class="field-label">Link oficial da escala</label>
+          <input type="text" id="cfg-vigilia-link" class="field-input">
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-bold font-display text-lg">Pagamentos</h4>
+            <button onclick="addPagamentoRow()" class="btn-ghost">+ Linha</button>
+          </div>
+          <div id="cfg-pagamentos-list" class="space-y-2"></div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-4 font-display text-lg">Senha de acesso</h4>
+          <p class="text-xs text-[#8a8074] mb-3">Usada tanto para "Editar Dados" quanto para "Controle Formadores". Isso é uma trava simples para evitar edições por engano — não é uma proteção de segurança forte, pois o código roda no navegador.</p>
+          <input type="text" id="cfg-senha" class="field-input max-w-xs">
+        </div>
+        <button onclick="salvarConfig()" class="btn-primary">Salvar configurações</button>
+      </div>
 
-        // CONFIGURAÇÕES DO TESTE 2
-        const API_URL = "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec"; 
-        const SENHA_MESTRA = "jp2";
-        const listaFormandosMatriz = [
-            "Agnes Caroline", "Alex Fernando Viana", "Bartholomeu Francisco", "Bianca Cristina Cunha", "Bianca Cristina Vidal",
-            "Caio Eduardo", "Edivaldo José", "Érika Pereira", "Flávia Maria Fialho", "Gustavo Teixeira", "Joalyne Viana",
-            "João Felipe Machado", "Júlia Cordeiro", "Júlio Viana", "Kelly Cristina Viana", "Laura Dias Marques",
-            "Lilian Beatriz", "Luis Alexandre Macedo", "Mara Rúbia Araújo", "Maria Helena Nunes", "Miguel Pedro",
-            "Nayara Monteiro Ferreira", "Pedro Francisco", "Rafaela Aiala", "Raissa Souza", "Sabrina Magalhães", "Walkner Pinheiro"
-        ];
-        const nomesMesesMatriz = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-        let dbLocal = JSON.parse(localStorage.getItem('fap_db_2026')) || [];
+      <!-- ADMIN: BACKUP -->
+      <div id="admin-tab-backup" class="admin-tab hidden space-y-4">
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-2 font-display text-lg">Exportar backup</h4>
+          <p class="text-xs text-[#8a8074] mb-4">Baixa um arquivo .json com todos os dados atuais. Guarde esse arquivo — ele pode ser usado para restaurar ou para levar os dados a outro dispositivo.</p>
+          <button onclick="exportarBackup()" class="btn-primary">Baixar backup (.json)</button>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-2 font-display text-lg">Importar backup</h4>
+          <p class="text-xs text-[#8a8074] mb-4">Substitui todos os dados atuais deste navegador pelos dados do arquivo importado.</p>
+          <input type="file" id="input-importar" accept="application/json" class="field-input mb-3">
+          <button onclick="importarBackup()" class="btn-ghost">Importar arquivo</button>
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#f7d3d0]">
+          <h4 class="font-bold mb-2 font-display text-lg text-[#b3261e]">Restaurar dados originais</h4>
+          <p class="text-xs text-[#8a8074] mb-4">Apaga tudo que foi editado neste navegador e volta para os dados originais de fábrica.</p>
+          <button onclick="restaurarOriginal()" class="btn-danger">Restaurar dados de fábrica</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
+</div>
 
-        /* LÓGICA DE TRANSIÇÃO E INTERFACE */
-        function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            window.scrollTo(0,0);
-        }
+<!-- MODAL: pessoa -->
+<div id="modal-pessoa" class="modal-backdrop hidden">
+  <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full my-6 overflow-hidden">
+    <div class="bg-[var(--crimson)] p-5 text-white flex items-center justify-between">
+      <h3 id="modal-pessoa-titulo" class="font-bold font-display text-lg">Nova pessoa</h3>
+      <button onclick="fecharModalPessoa()" class="text-white/80 hover:text-white text-xl leading-none">✕</button>
+    </div>
+    <div class="p-6 space-y-5 max-h-[75vh] overflow-y-auto">
+      <input type="hidden" id="pf-id">
 
-        /* LÓGICA DO TESTE 2 (LOGIN E MATRIZ) */
-        async function login() {
-    const senhaDigitada = document.getElementById('pass').value;
-    
-    if(senhaDigitada === SENHA_MESTRA) {
-        const btn = document.querySelector('#auth-section button');
-        const originalText = btn.innerText;
-        btn.innerText = "Sincronizando com a nuvem...";
-        btn.disabled = true;
+      <div>
+        <p class="text-[11px] font-black uppercase tracking-widest text-[var(--crimson)] mb-3">Dados pessoais</p>
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="md:col-span-2"><label class="field-label">Nome completo</label><input type="text" id="pf-nome" class="field-input"></div>
+          <div><label class="field-label">Tipo</label>
+            <select id="pf-tipo" class="field-select" onchange="onTipoChange()">
+              <option value="P2">Formando · P2 (Discipulado)</option>
+              <option value="P1">Formando · P1 (Ingresso)</option>
+              <option value="Formador">Formador</option>
+            </select>
+          </div>
+          <div id="pf-wrap-papel"><label class="field-label">Papel (formador)</label>
+            <select id="pf-papel" class="field-select">
+              <option value="Comunitária">Comunitária</option>
+              <option value="Assistente">Assistente</option>
+            </select>
+          </div>
+          <div><label class="field-label">Nascimento (dd/mm/aaaa)</label><input type="text" id="pf-nasc" placeholder="00/00/0000" class="field-input"></div>
+          <div><label class="field-label">Casamento (dd/mm/aaaa ou -)</label><input type="text" id="pf-casam" placeholder="- " class="field-input"></div>
+          <div class="md:col-span-2"><label class="field-label">E-mail</label><input type="email" id="pf-email" class="field-input"></div>
+        </div>
+      </div>
 
-        try {
-            // 1. Busca os dados reais da planilha (GET)
-            const response = await fetch(API_URL);
-            const dadosPlanilha = await response.json();
-            
-            // 2. Filtra apenas os registros que estão como "MARCADO"
-            dbLocal = dadosPlanilha.filter(item => item.acao === "MARCADO");
-            
-            // 3. Salva no cache do navegador para performance
-            localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
+      <div>
+        <p class="text-[11px] font-black uppercase tracking-widest text-[var(--crimson)] mb-3">Formação e acompanhamento</p>
+        <div class="grid md:grid-cols-2 gap-3">
+          <div class="md:col-span-2"><label class="field-label">Ministério</label><input type="text" id="pf-ministerio" class="field-input"></div>
+          <div><label class="field-label">FAP (acompanhante externo)</label><input type="text" id="pf-fap" class="field-input"></div>
+          <div><label class="field-label">Acompanhado(a) diretamente por</label>
+            <select id="pf-acompanhadopor" class="field-select">
+              <option value="">—</option><option value="Tânia">Tânia</option><option value="Larissa">Larissa</option><option value="Rafael">Rafael</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-            // 4. Libera o acesso
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('protected-content').classList.remove('hidden');
-            
-            renderMatrix();
-        } catch (error) {
-            console.error("Erro ao carregar:", error);
-            alert("Atenção: Não foi possível baixar os dados da planilha. Exibindo dados locais.");
-            // Entra mesmo com erro, usando o que tiver no localStorage
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('protected-content').classList.remove('hidden');
-            renderMatrix();
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
-        }
-    } else { 
-        alert("Senha incorreta!"); 
-    }
+      <div>
+        <p class="text-[11px] font-black uppercase tracking-widest text-[var(--crimson)] mb-3">Grupos e equipes</p>
+        <div class="grid md:grid-cols-2 gap-3">
+          <div><label class="field-label">Grupo de partilha</label>
+            <select id="pf-grupopartilha" class="field-select"><option value="">—</option><option value="1">Grupo 1</option><option value="2">Grupo 2</option><option value="3">Grupo 3</option></select>
+          </div>
+          <div class="flex items-end gap-2 pb-1"><input type="checkbox" id="pf-coordpartilha" class="field-check"><label for="pf-coordpartilha" class="text-xs font-semibold">Coordena o grupo de partilha</label></div>
+
+          <div><label class="field-label">Equipe de serviço</label>
+            <select id="pf-equipe" class="field-select">
+              <option value="">—</option><option>Música</option><option>Liturgia</option><option>Fraternidade</option><option>Intercessão</option>
+            </select>
+          </div>
+          <div class="flex items-end gap-2 pb-1"><input type="checkbox" id="pf-coordequipe" class="field-check"><label for="pf-coordequipe" class="text-xs font-semibold">Coordena a equipe</label></div>
+
+          <div><label class="field-label">Grupo de vigília</label>
+            <select id="pf-grupovigilia" class="field-select"><option value="">—</option><option value="A">Grupo A</option><option value="B">Grupo B</option><option value="C">Grupo C</option></select>
+          </div>
+          <div class="flex items-end gap-2 pb-1"><input type="checkbox" id="pf-coordvigilia" class="field-check"><label for="pf-coordvigilia" class="text-xs font-semibold">Coordena a vigília</label></div>
+
+          <div class="md:col-span-2"><label class="field-label">Nome curto na planilha de Controle (não altere sem necessidade — usado para sincronizar com o Google Sheets)</label><input type="text" id="pf-nomematriz" class="field-input"></div>
+        </div>
+      </div>
+    </div>
+    <div class="p-5 bg-[#faf6f0] flex items-center justify-between border-t border-[#ece3d8]">
+      <button id="modal-pessoa-excluir" onclick="excluirPessoaModal()" class="btn-danger">Excluir</button>
+      <div class="flex gap-2">
+        <button onclick="fecharModalPessoa()" class="btn-ghost">Cancelar</button>
+        <button onclick="salvarPessoaModal()" class="btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: celebrações de hoje -->
+<div id="modal-alerta-dia" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/60 backdrop-blur-sm p-4">
+  <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden border border-[#ece3d8]">
+    <div class="bg-[var(--crimson)] p-6 text-center text-white">
+      <div class="text-4xl mb-2">🎉</div>
+      <h2 class="font-bold text-lg uppercase tracking-wider">Celebrações de hoje!</h2>
+      <p id="data-hoje-modal" class="text-white/80 text-[10px] font-bold uppercase"></p>
+    </div>
+    <div id="conteudo-alerta-dia" class="p-6 space-y-4 text-left"></div>
+    <div class="p-4 bg-[#faf6f0] flex justify-center border-t border-[#ece3d8]">
+      <button onclick="fecharModal()" class="bg-[var(--ink)] hover:bg-black text-white px-10 py-2 rounded-full font-bold text-sm">Amém!</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* =========================================================================
+   DADOS — fonte única. Tudo (cards, equipes, grupos, vigílias, matriz,
+   aniversários) é derivado deste array. Editável pela aba "Editar Dados".
+   ========================================================================= */
+const DEFAULT_DB = {
+  config: {
+    citacaoTexto: "Não tenhais medo! Abri, melhor, escancarai as portas a Cristo!",
+    citacaoAutor: "São João Paulo II",
+    retiroTitulo: "Retiro de Ingresso P1",
+    retiroData: "18 e 19 de Abril",
+    vigiliaNota: "Mara em horários especiais.",
+    vigiliaLink: "https://vigiliash.web.app/",
+    senha: "jp2",
+    pagamentos: [
+      { descricao: "Pagamento da Plataforma 2026", data: "18/03/2026", valor: "R$ 15,00", status: "Aberto" },
+      { descricao: "Retiro de Ingresso P1", data: "18 e 19/04/2026", valor: "R$ —", status: "Aberto" }
+    ],
+    apiUrlPlanilha: "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec"
+  },
+  pessoas: [
+    // ---- P2 ----
+    { id:"p1", nome:"Bartholomeu Francisco de Souza Neto", tipo:"P2", ministerio:"Coord. Pastoreio Adulto", nasc:"11/09/1990", casam:"12/07/2025", email:"bartho.neto1@hotmail.com", fap:"Jacob", acompanhadoPor:"Rafael", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Bartholomeu Francisco" },
+    { id:"p2", nome:"Bianca Cristina da Cunha Conceição", tipo:"P2", ministerio:"Pastoreio de Casais", nasc:"12/05/1984", casam:"18/06/2005", email:"anapauloedy@gmail.com", fap:"Thais (Marcelo)", acompanhadoPor:"Tânia", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:false, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Bianca Cristina Cunha" },
+    { id:"p3", nome:"Edivaldo José Da Conceição da Cunha", tipo:"P2", ministerio:"Pastoreio de Casais", nasc:"31/07/1979", casam:"18/06/2005", email:"ejcpd2012@gmail.com", fap:"Marcelo (Tânia)", acompanhadoPor:"Rafael", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Música", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Edivaldo José" },
+    { id:"p4", nome:"Bianca Cristina Vidal da Cunha", tipo:"P2", ministerio:"Comunicação", nasc:"02/10/2003", casam:"-", email:"biancacunha210@gmail.com", fap:"Leticia Moreschi", acompanhadoPor:"Tânia", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Bianca Cristina Vidal" },
+    { id:"p5", nome:"Érika Pereira do Prado", tipo:"P2", ministerio:"Comunicação", nasc:"22/10/1996", casam:"-", email:"erika.prado@sempreceub.com", fap:"Renata Ribas", acompanhadoPor:"Larissa", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Érika Pereira" },
+    { id:"p6", nome:"Flávia Maria Fialho de Oliveira", tipo:"P2", ministerio:"PJJ e Comunicação", nasc:"25/02/1999", casam:"-", email:"flaviam.fialho@hotmail.com", fap:"Barbara Mendes", acompanhadoPor:"Larissa", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"", coordEquipe:false, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Flávia Maria Fialho" },
+    { id:"p7", nome:"Lilian Beatriz de Lima Peters", tipo:"P2", ministerio:"Livraria", nasc:"10/03/1988", casam:"13/10/2019", email:"liriopeters@hotmail.com", fap:"Thais (Marcelo)", acompanhadoPor:"Tânia", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Lilian Beatriz" },
+    { id:"p8", nome:"Luis Alexandre Macedo Nepomuceno", tipo:"P2", ministerio:"Liturgia", nasc:"28/10/1984", casam:"18/12/2021", email:"luisalexandre6533@gmail.com", fap:"Marcelo (Tânia)", acompanhadoPor:"Rafael", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Luis Alexandre Macedo" },
+    { id:"p9", nome:"Mara Rúbia Araújo do Nascimento Silva", tipo:"P2", ministerio:"Coordenação da Livraria", nasc:"29/04/1975", casam:"29/07/1995", email:"mararubiabr@yahoo.com.br", fap:"Thais (Marcelo)", acompanhadoPor:"Tânia", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:false, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Mara Rúbia Araújo" },
+    { id:"p10", nome:"Maria Helena Nunes Silva", tipo:"P2", ministerio:"Kerigma", nasc:"27/12/2004", casam:"-", email:"mariahelenanunessilva27@gmail.com", fap:"Leticia Moreschi", acompanhadoPor:"Larissa", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Música", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Maria Helena Nunes" },
+    { id:"p11", nome:"Pedro Francisco de Souza Teixeira", tipo:"P2", ministerio:"PJJ e Liturgia", nasc:"22/12/2004", casam:"-", email:"pedrosouzadf075@gmail.com", fap:"Pedrão (Priscila)", acompanhadoPor:"Rafael", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Pedro Francisco" },
+    { id:"p12", nome:"Raissa Souza Alabarce", tipo:"P2", ministerio:"Kerigma (Asa Sul)", nasc:"06/09/1990", casam:"-", email:"raissaalabarce.souza@gmail.com", fap:"Milena Brito", acompanhadoPor:"Tânia", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Raissa Souza" },
+    { id:"p13", nome:"Walkner Pinheiro Melo de Almeida", tipo:"P2", ministerio:"Música", nasc:"22/08/1980", casam:"-", email:"walkner.almeida@yahoo.com.br", fap:"Marcelo (Tânia)", acompanhadoPor:"Rafael", grupoPartilha:"", coordGrupoPartilha:false, equipe:"Música", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Walkner Pinheiro" },
+    { id:"p14", nome:"Agnes Caroline Serafim Cardoso", tipo:"P2", ministerio:"—", nasc:"19/12/1999", casam:"25/11/2023", email:"agneserafimcardosoreis@gmail.com", fap:"Jenisangêla - CV", acompanhadoPor:"", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:true, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Agnes Caroline" },
+    { id:"p15", nome:"Gustavo Teixeira Reis", tipo:"P2", ministerio:"Sem ministério", nasc:"06/01/2000", casam:"25/11/2023", email:"gustavoreis2302@gmail.com", fap:"Marcelo Vieira", acompanhadoPor:"Rafael", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Gustavo Teixeira" },
+    { id:"p16", nome:"Caio Eduardo Dos Santos Ferreira", tipo:"P2", ministerio:"Promoção humana", nasc:"25/09/1999", casam:"-", email:"caiodudu10@gmail.com", fap:"Matheus Tonhá", acompanhadoPor:"Rafael", grupoPartilha:"", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Caio Eduardo" },
+    { id:"p17", nome:"Nayara Monteiro Ferreira", tipo:"P2", ministerio:"Promoção humana", nasc:"27/10/1988", casam:"-", email:"nayaramonteferreira@gmail.com", fap:"Camila Oka", acompanhadoPor:"Tânia", grupoPartilha:"", coordGrupoPartilha:false, equipe:"", coordEquipe:false, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Nayara Monteiro Ferreira" },
+    { id:"p18", nome:"Alex Fernando Viana Couto da Silva", tipo:"P2", ministerio:"Música", nasc:"05/08/1984", casam:"02/09/2017", email:"axfdsl@gmail.com", fap:"Marcelo (Tânia)", acompanhadoPor:"", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Alex Fernando Viana" },
+    { id:"p19", nome:"Kelly Cristina Viana Couto da Silva", tipo:"P2", ministerio:"Centro de Formação", nasc:"29/07/1984", casam:"02/09/2017", email:"kellyvcouto@gmail.com", fap:"Thais (Marcelo)", acompanhadoPor:"", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Kelly Cristina Viana" },
+    // ---- P1 ----
+    { id:"p20", nome:"Laura Dias Marques Braz", tipo:"P1", ministerio:"Celeiro de Pastores", nasc:"30/09/2003", casam:"-", email:"lauravoc2024@gmail.com", fap:"Renata Ribas", acompanhadoPor:"Tânia", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Laura Dias Marques" },
+    { id:"p21", nome:"Sabrina Magalhães Vieira", tipo:"P1", ministerio:"1° anúncio", nasc:"21/08/1996", casam:"-", email:"sabrinavieirapsi@gmail.com", fap:"Barbara Mendes", acompanhadoPor:"Tânia", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Sabrina Magalhães" },
+    { id:"p22", nome:"Júlia Cordeiro Lucas Barbosa", tipo:"P1", ministerio:"Pastoreio Jovem", nasc:"27/04/2007", casam:"-", email:"juliacordeirolucas@gmail.com", fap:"Laura Chaves", acompanhadoPor:"Larissa", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:true, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Júlia Cordeiro" },
+    { id:"p23", nome:"João Felipe Machado Cantanhede", tipo:"P1", ministerio:"Pastoreio jovem", nasc:"04/03/2002", casam:"-", email:"jfcantanhedecod@gmail.com", fap:"Weider", acompanhadoPor:"Rafael", grupoPartilha:"", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"João Felipe Machado" },
+    { id:"p24", nome:"Júlio Viana de Carvalho", tipo:"P1", ministerio:"Pastoreio Jovem", nasc:"19/10/2003", casam:"-", email:"juliovianadecarvalho@gmail.com", fap:"Weider", acompanhadoPor:"Rafael", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Júlio Viana" },
+    { id:"p25", nome:"Miguel Pedro da Cunha Doroteu", tipo:"P1", ministerio:"Núcleo PJJ e Celeiro de Pastores", nasc:"05/09/2005", casam:"-", email:"migueldoroteu55@gmail.com", fap:"Weider", acompanhadoPor:"Rafael", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Miguel Pedro" },
+    { id:"p26", nome:"Rafaela Aiala Fernandes Correia", tipo:"P1", ministerio:"Pastoreio Jovem e Turma de Líderes", nasc:"15/07/2006", casam:"-", email:"rafaelaaiala.sh@gmail.com", fap:"Cristina", acompanhadoPor:"Larissa", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Música", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Rafaela Aiala" },
+    { id:"p27", nome:"Joalyne Viana Ribeiro", tipo:"P1", ministerio:"Coordenação Projeto Criança", nasc:"24/08/1990", casam:"-", email:"joalyneviana@gmail.com", fap:"Marcia", acompanhadoPor:"Tânia", destaqueAcompanhamento:true, grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Joalyne Viana" },
+    // ---- FORMADORES ----
+    { id:"p28", nome:"Tânia Andréia Gentil Goulart", tipo:"Formador", papelFormador:"Comunitária", ministerio:"", nasc:"23/07/1971", casam:"09/06/2000", email:"e.taniaandreia@gmail.com", fap:"", acompanhadoPor:"", grupoPartilha:"1", coordGrupoPartilha:true, equipe:"", coordEquipe:false, grupoVigilia:"B", coordVigilia:true, nomeMatriz:"" },
+    { id:"p29", nome:"Larissa Torres de Olinda Silva", tipo:"Formador", papelFormador:"Assistente", ministerio:"", nasc:"05/02/1999", casam:"04/10/2025", email:"larissatorres.olinda@gmail.com", fap:"", acompanhadoPor:"Tânia", destaqueAcompanhamento:true, grupoPartilha:"3", coordGrupoPartilha:true, equipe:"", coordEquipe:false, grupoVigilia:"A", coordVigilia:true, nomeMatriz:"" },
+    { id:"p30", nome:"Rafael de Brito Albuquerque", tipo:"Formador", papelFormador:"Assistente", ministerio:"", nasc:"06/06/1982", casam:"14/11/2007", email:"rba0606@gmail.com", fap:"", acompanhadoPor:"Tânia", destaqueAcompanhamento:true, grupoPartilha:"2", coordGrupoPartilha:true, equipe:"", coordEquipe:false, grupoVigilia:"C", coordVigilia:true, nomeMatriz:"" }
+  ]
+};
+// Érika teve destaque no acompanhamento original — marcar:
+DEFAULT_DB.pessoas.find(p=>p.id==="p5").destaqueAcompanhamento = true;
+
+const STORAGE_KEY = "celula_sjp2_db_v1";
+let DB = carregarDB();
+
+function carregarDB(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){ console.warn("Falha ao carregar dados locais, usando padrão.", e); }
+  return JSON.parse(JSON.stringify(DEFAULT_DB));
+}
+function salvarDB(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(DB)); }
+function uid(){ return "p_" + Math.random().toString(36).slice(2,9); }
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 2600);
 }
 
-        function gerarIdSeguro(nome) {
-            return "total-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '');
-        }
-
-        function renderMatrix() {
-            const body = document.getElementById('matrix-body');
-            body.innerHTML = "";
-            listaFormandosMatriz.forEach(formando => {
-                const registrosDesteFormando = dbLocal.filter(r => r.formando === formando);
-                let row = `<tr><td class="name-cell">${formando}</td>`;
-                nomesMesesMatriz.forEach((mesNome) => {
-                    const jaExiste = registrosDesteFormando.some(r => r.mes === mesNome);
-                    row += `<td>
-                        <input type="checkbox" class="cb-fap" ${jaExiste ? 'checked' : ''} 
-                               onchange="sincronizarFap('${formando}', '${mesNome}', this)">
-                    </td>`;
-                });
-                row += `<td class="total-cell" id="${gerarIdSeguro(formando)}">${registrosDesteFormando.length}</td></tr>`;
-                body.innerHTML += row;
-            });
-        }
-
-        async function sincronizarFap(formando, mesNome, checkbox) {
-            const estaAtivo = checkbox.checked;
-            const idElementoTotal = gerarIdSeguro(formando);
-            if (estaAtivo) {
-                if (!dbLocal.some(r => r.formando === formando && r.mes === mesNome)) {
-                    dbLocal.push({ formando, mes: mesNome });
-                }
-            } else {
-                dbLocal = dbLocal.filter(r => !(r.formando === formando && r.mes === mesNome));
-            }
-            localStorage.setItem('fap_db_2026', JSON.stringify(dbLocal));
-            const novoTotal = dbLocal.filter(r => r.formando === formando).length;
-            const campoTotal = document.getElementById(idElementoTotal);
-            if (campoTotal) campoTotal.innerText = novoTotal;
-            try {
-                checkbox.style.opacity = "0.4";
-                await fetch(API_URL, { 
-                    method: 'POST', mode: 'no-cors', 
-                    body: JSON.stringify({ formando, mes: mesNome, acao: estaAtivo ? "MARCADO" : "DESMARCADO" }) 
-                });
-                checkbox.style.opacity = "1";
-            } catch (error) { checkbox.style.opacity = "1"; }
-        }
-
-
-        /* LÓGICA DO INDEX ORIGINAL (RENDERIZAÇÕES) */
-        let vigiliaMesAtual = new Date().getMonth() + 1;
-        let vigiliaAnoAtual = new Date().getFullYear();
-
-        function nomeDoMes(mes) {
-            return ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"][mes - 1] || "";
-        }
-
-        function renderVigilias(ano = vigiliaAnoAtual, mes = vigiliaMesAtual) {
-            const container = document.getElementById('tab-vigilias-content');
-            if (!container) return;
-            document.getElementById('tab-vigilias-period').innerHTML = `Escala de ${nomeDoMes(mes)} de ${ano}`;
-            const alertaLink = `<div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded flex items-center gap-2 shadow-sm"><span class="text-lg">⚠️</span><a href="https://vigiliash.web.app/" target="_blank" class="text-amber-800 font-bold text-xs uppercase hover:underline">Link oficial das vigílias</a></div>`;
-            const grupoA = `<span class="name-balloon"><strong>Larissa</strong></span><span class="name-balloon">Pedro</span><span class="name-balloon">Miguel</span><span class="name-balloon">Érika</span><span class="name-balloon">Bartholomeu</span><span class="name-balloon">Luís</span><span class="name-balloon">Bianca Vidal</span><span class="name-balloon">Joalyne</span><span class="name-balloon">Julia</span><span class="name-balloon">Rafaela</span>`;
-            const grupoB = `<span class="name-balloon"><strong>Tânia</strong></span><span class="name-balloon">Alex</span><span class="name-balloon">Kelly</span><span class="name-balloon">Flávia</span><span class="name-balloon">Walkner</span><span class="name-balloon">Sabrina</span><span class="name-balloon">Bianca</span><span class="name-balloon">João Felipe</span>`;
-            const grupoC = `<span class="name-balloon"><strong>Rafael</strong></span><span class="name-balloon">Lilian</span><span class="name-balloon">Raissa</span><span class="name-balloon">Edivaldo</span><span class="name-balloon">Maria Helena</span><span class="name-balloon">Laura</span><span class="name-balloon">Caio</span><span class="name-balloon">Julio</span>`;
-            const isPar = mes % 2 === 0;
-            const h1_dia8 = isPar ? grupoA : grupoB;
-            const h2_dia8 = isPar ? grupoB : grupoA;
-            const label_dia7 = isPar ? "1º horário (22:00 - 02:00)" : "2º horário (02:00 - 06:00)";
-            container.innerHTML = alertaLink + `<div class="mb-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm"><div class="space-y-6"><div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 7</p><p class="text-xs font-bold text-red-600 uppercase mb-2">${label_dia7}:</p><div class="flex flex-wrap gap-1">${grupoC}</div></div><div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 8</p><p class="text-xs font-bold text-red-600 uppercase mb-2">1º horário (22:00 - 02:00):</p><div class="flex flex-wrap gap-1 mb-4">${h1_dia8}</div><p class="text-xs font-bold text-red-600 uppercase mb-2">2º horário (02:00 - 06:00):</p><div class="flex flex-wrap gap-1">${h2_dia8}</div></div></div><div class="mt-8 pt-4 border-t border-slate-100 text-[13px] text-slate-500 italic"><p>• Mara em horários especiais.</p></div></div>`;
-        }
-
-        function mudarMesVigilias(delta) {
-            vigiliaMesAtual += delta;
-            if (vigiliaMesAtual < 1) { vigiliaMesAtual = 12; vigiliaAnoAtual -= 1; }
-            if (vigiliaMesAtual > 12) { vigiliaMesAtual = 1; vigiliaAnoAtual += 1; }
-            renderVigilias();
-        }
-
-        function renderCards(data, targetId, badgeClass, cardTypeClass) {
-            const container = document.getElementById(targetId);
-            container.innerHTML = ''; 
-            data.forEach(f => {
-                const isToDefine = f.min.toLowerCase().includes("definir") || f.min.toLowerCase().includes("sem");
-                container.innerHTML += `<div class="formando-card ${cardTypeClass}"><span class="badge ${badgeClass}">${cardTypeClass === 'card-p1' ? 'P1' : 'P2'}</span><h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4><div class="mb-3"><span class="info-label">Ministério</span><p class="info-value ${isToDefine ? 'text-red-500 italic' : ''}">${f.min}</p></div><div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3"><div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div><div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div></div><div class="mt-3 pt-3 border-t border-dashed border-slate-100"><span class="info-label">📧 E-mail</span><p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p></div><div class="mt-auto pt-4"><div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="info-label text-red-400">Acompanhamento (FP)</span><p class="info-value text-red-800 font-bold">${f.fap}</p></div></div></div>`;
-            });
-        }
-
-        function verificarAlertasDoDia() {
-            const hoje = new Date();
-            const diaHoje = hoje.getDate();
-            const mesHoje = hoje.getMonth() + 1;
-            
-            const opcoes = { day: 'numeric', month: 'long' };
-            document.getElementById('data-hoje-modal').innerText = hoje.toLocaleDateString('pt-BR', opcoes);
-
-            const todos = [...formandosP2, ...formandosP1, ...formadores];
-            const conteudo = document.getElementById('conteudo-alerta-dia');
-            let temEvento = false;
-
-            conteudo.innerHTML = '';
-
-            todos.forEach(p => {
-                const [diaN, mesN] = p.nasc.split('/').map(Number);
-                if (diaN === diaHoje && mesN === mesHoje) {
-                    temEvento = true;
-                    conteudo.innerHTML += `
-                        <div class="flex items-center gap-4 p-4 bg-red-50 rounded-2xl border border-red-100">
-                            <span class="text-2xl">🎂</span>
-                            <div>
-                                <p class="text-[10px] font-black text-red-600 uppercase">Aniversariante</p>
-                                <p class="font-bold text-slate-800 leading-tight">${p.nome}</p>
-                            </div>
-                        </div>`;
-                }
-
-                if (p.casam && p.casam !== "-" && !p.casam.includes("definir")) {
-                    const [diaC, mesC] = p.casam.split('/').map(Number);
-                    if (diaC === diaHoje && mesC === mesHoje) {
-                        temEvento = true;
-                        conteudo.innerHTML += `
-                            <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                                <span class="text-2xl">💍</span>
-                                <div>
-                                    <p class="text-[10px] font-black text-blue-600 uppercase">Bodas / Casamento</p>
-                                    <p class="font-bold text-slate-800 leading-tight">${p.nome}</p>
-                                </div>
-                            </div>`;
-                    }
-                }
-            });
-
-            if (temEvento) {
-                document.getElementById('modal-alerta-dia').classList.remove('hidden');
-                dispararConfetes();
-            }
-        }
-
-        function dispararConfetes() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#b91c1c', '#1e293b', '#fbbf24'] });
-        }
-
-        function fecharModal() {
-            document.getElementById('modal-alerta-dia').classList.add('hidden');
-        }
-
-        function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-
-	let alertasMesAtual = new Date().getMonth() + 1;
-	let alertasAnoAtual = new Date().getFullYear();
-
-	function renderAlertasMes(mes = alertasMesAtual, ano = alertasAnoAtual) {
-	    alertasMesAtual = mes;
-	    alertasAnoAtual = ano;
-
-	    document.getElementById('alertas-titulo').innerText = `Celebrações de ${nomeDoMes(mes)} de ${ano}`;
-
-	    const listaAniversarios = document.getElementById('lista-aniversarios');
-	    const listaCasamentos = document.getElementById('lista-casamentos');
-
-	    listaAniversarios.innerHTML = '';
-	    listaCasamentos.innerHTML = '';
-
-	    const todos = [...formandosP2, ...formandosP1, ...formadores];
-
-	    let temAniversario = false;
-	    let temCasamento = false;
-
-    const casamentosPorData = {};
-
-    todos.forEach(p => {
-        if (p.nasc) {
-            const [dia, mesN] = p.nasc.split('/').map(Number);
-            if (mesN === mes) {
-                temAniversario = true;
-                listaAniversarios.innerHTML += `
-                    <div class="p-3 bg-red-50 rounded-xl border border-red-100">
-                        <p class="font-bold text-slate-800">${p.nome}</p>
-                        <p class="text-xs text-red-600">${dia}/${mesN}</p>
-                    </div>
-                `;
-            }
-        }
-
-        if (p.casam && p.casam !== "-" && !p.casam.includes("definir")) {
-            const [diaC, mesC] = p.casam.split('/').map(Number);
-            if (mesC === mes) {
-                const chave = `${diaC}-${mesC}`;
-                if (!casamentosPorData[chave]) {
-                    casamentosPorData[chave] = [];
-                }
-                casamentosPorData[chave].push(p.nome);
-            }
-        }
-    });
-
-    Object.entries(casamentosPorData).forEach(([chave, nomes]) => {
-        const [diaC, mesC] = chave.split('-').map(Number);
-        if (nomes.length > 0) {
-            temCasamento = true;
-            const textoNomes = nomes.length > 1 ? nomes.join(' e ') : nomes[0];
-            listaCasamentos.innerHTML += `
-                <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
-                    <p class="font-bold text-slate-800">Casamento de ${textoNomes}</p>
-                    <p class="text-xs text-blue-600">${diaC}/${mesC}</p>
-                </div>
-            `;
-        }
-    });
-
-    if (!temCasamento) {
-        listaCasamentos.innerHTML = `<p class="text-sm text-slate-500">Nenhum casamento este mês.</p>`;
-    }
+/* =========================================================================
+   NAVEGAÇÃO
+   ========================================================================= */
+const HOME_ITEMS = [
+  { tab:"tab-alertas", icon:"🔔", label:"Aniversariantes do mês" },
+  { tab:"tab-lista", icon:"👥", label:"Formandos" },
+  { tab:"tab-formadores-detalhe", icon:"📖", label:"Formadores" },
+  { tab:"tab-acompanhamento", icon:"❤️", label:"Acompanhamento" },
+  { tab:"tab-equipes", icon:"✝️", label:"Equipes" },
+  { tab:"tab-grupos", icon:"💬", label:"Partilha" },
+  { tab:"tab-retiro", icon:"📅", label:"Retiro" },
+  { tab:"tab-vigilias", icon:"🕯️", label:"Vigílias" },
+  { tab:"tab-pagamentos", icon:"💰", label:"Pagamentos" },
+  { tab:"tab-controle", icon:"🔐", label:"Controle Formadores" },
+  { tab:"tab-editar", icon:"✏️", label:"Editar Dados", admin:true }
+];
+function renderHomeGrid(){
+  const g = document.getElementById("home-grid");
+  g.innerHTML = HOME_ITEMS.map(it => `
+    <div class="home-card ${it.admin?'admin':''}" onclick="openTab('${it.tab}')">
+      <div class="icon-box">${it.icon}</div>
+      <h3 class="font-bold text-sm">${it.label}</h3>
+    </div>`).join("");
+}
+function openTab(tabId){
+  document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(tabId==="tab-lista") renderFormandos();
+  if(tabId==="tab-acompanhamento") renderAcompanhamento();
+  if(tabId==="tab-equipes") renderEquipes();
+  if(tabId==="tab-grupos") renderGrupos();
+  if(tabId==="tab-formadores-detalhe") renderFormadores();
+  if(tabId==="tab-pagamentos") renderPagamentos();
+  if(tabId==="tab-retiro") renderRetiro();
+  if(tabId==="tab-alertas") renderAlertasMes();
+  if(tabId==="tab-vigilias") renderVigilias();
+  if(tabId==="tab-editar") prepararConfigForm();
 }
 
-function mudarMesAlertas(delta) {
-	    let mes = alertasMesAtual + delta;
-	    let ano = alertasAnoAtual;
-	    if (mes < 1) { mes = 12; ano -= 1; }
-	    if (mes > 12) { mes = 1; ano += 1; }
-	    renderAlertasMes(mes, ano);
-	}
+/* =========================================================================
+   HELPERS DE DADOS
+   ========================================================================= */
+function pessoas(tipo){ return DB.pessoas.filter(p=>p.tipo===tipo); }
+function todasPessoas(){ return DB.pessoas; }
+function nomeDoMes(m){ return ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"][m-1] || ""; }
+function primeiroNome(nome){ return nome.split(" ")[0]; }
 
-        document.addEventListener("DOMContentLoaded", function() {
-    renderCards(formandosP2, 'container-p2', 'bg-red-100 text-red-700', 'card-p2');
-    renderCards(formandosP1, 'container-p1', 'bg-blue-100 text-blue-700', 'card-p1');
-    renderVigilias();
-    verificarAlertasDoDia();
-    renderAlertasMes(); // 👈 AQUI
+/* =========================================================================
+   HOME
+   ========================================================================= */
+function renderHome(){
+  document.getElementById("home-citacao").innerHTML = `"${DB.config.citacaoTexto}"`;
+  document.getElementById("home-citacao-autor").textContent = "— " + DB.config.citacaoAutor;
+}
+
+/* =========================================================================
+   FORMANDOS (cards)
+   ========================================================================= */
+function cardFormandoHTML(f){
+  const cardTypeClass = f.tipo === "P1" ? "card-p1" : "card-p2";
+  const badgeClass = f.tipo === "P1" ? "badge-p1" : "badge-p2";
+  const isToDefine = (f.ministerio||"").toLowerCase().includes("definir") || (f.ministerio||"").toLowerCase().includes("sem");
+  return `<div class="formando-card ${cardTypeClass}">
+    <span class="badge ${badgeClass}">${f.tipo}</span>
+    <h4 class="font-bold text-slate-800 pr-10 leading-tight mb-2 uppercase text-sm">${f.nome}</h4>
+    <div class="mb-3"><span class="info-label">Ministério</span><p class="info-value ${isToDefine?'text-red-500 italic':''}">${f.ministerio||"—"}</p></div>
+    <div class="grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
+      <div><span class="info-label">🎂 Nasc.</span><p class="info-value">${f.nasc}</p></div>
+      <div><span class="info-label">💍 Casam.</span><p class="info-value">${f.casam}</p></div>
+    </div>
+    <div class="mt-3 pt-3 border-t border-dashed border-slate-100"><span class="info-label">📧 E-mail</span><p class="text-[11px] font-medium text-slate-600 lowercase break-all">${f.email}</p></div>
+    <div class="mt-auto pt-4"><div class="bg-red-50 p-3 rounded-xl border border-red-100"><span class="info-label text-red-400">Acompanhamento (FAP)</span><p class="info-value text-red-800 font-bold">${f.fap||"—"}</p></div></div>
+  </div>`;
+}
+function renderFormandos(){
+  document.getElementById("container-p2").innerHTML = pessoas("P2").map(cardFormandoHTML).join("");
+  document.getElementById("container-p1").innerHTML = pessoas("P1").map(cardFormandoHTML).join("");
+}
+
+/* =========================================================================
+   FORMADORES
+   ========================================================================= */
+function renderFormadores(){
+  const list = pessoas("Formador");
+  document.getElementById("lista-formadores").innerHTML = list.map((f,i)=>`
+    <div class="p-5 ${i===0?'bg-red-50 border-red-100':'bg-slate-50 border-slate-200'} rounded-2xl border">
+      <p class="text-[10px] font-black ${i===0?'text-red-600':'text-slate-400'} uppercase tracking-widest mb-1">${f.papelFormador}</p>
+      <h4 class="text-lg font-bold text-slate-800">${f.nome}</h4>
+      <div class="mt-4 space-y-2 text-sm text-slate-600">
+        <p>🎂 <strong>Nascimento:</strong> ${f.nasc}</p>
+        <p>💍 <strong>Casamento:</strong> ${f.casam}</p>
+        <p>📧 <strong>Email:</strong> ${f.email}</p>
+      </div>
+    </div>`).join("");
+}
+
+/* =========================================================================
+   ACOMPANHAMENTO — agrupado por formador responsável
+   ========================================================================= */
+function renderAcompanhamento(){
+  const responsaveis = pessoas("Formador").map(f=>primeiroNome(f.nome));
+  const html = responsaveis.map(nomeResp=>{
+    const seus = DB.pessoas.filter(p=>p.acompanhadoPor===nomeResp);
+    const balões = seus.map(p=>`<span class="name-balloon ${p.destaqueAcompanhamento?'font-bold border-red-200 bg-red-50':''}">${primeiroNome(p.nome)}</span>`).join("");
+    return `<div class="bg-white p-5 rounded-xl border-l-4 border-red-600 shadow-sm">
+      <p class="font-bold text-red-700 mb-2 uppercase text-xs">${nomeResp}:</p>
+      <div class="flex flex-wrap">${balões || '<span class="text-xs text-slate-400 italic">Ninguém atribuído ainda</span>'}</div>
+    </div>`;
+  }).join("");
+  const semResp = DB.pessoas.filter(p=>!p.acompanhadoPor && p.tipo!=="Formador");
+  const extra = semResp.length ? `<div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs text-amber-800">
+      <strong>Sem formador responsável atribuído:</strong> ${semResp.map(p=>primeiroNome(p.nome)).join(", ")}
+    </div>` : "";
+  document.getElementById("lista-acompanhamento").innerHTML = html + extra;
+}
+
+/* =========================================================================
+   EQUIPES DE SERVIÇO
+   ========================================================================= */
+const EQUIPES_ORDEM = ["Música","Liturgia","Fraternidade","Intercessão"];
+function renderEquipes(){
+  document.getElementById("lista-equipes").innerHTML = EQUIPES_ORDEM.map(nomeEquipe=>{
+    const membros = DB.pessoas.filter(p=>p.equipe===nomeEquipe && !p.coordEquipe);
+    const coords = DB.pessoas.filter(p=>p.equipe===nomeEquipe && p.coordEquipe);
+    return `<div class="bg-white p-4 rounded-xl border border-slate-200">
+      <h4 class="font-bold text-red-800 mb-4 border-b pb-2">${nomeEquipe}</h4>
+      <div class="mb-2">
+        <span class="font-bold text-xs uppercase text-slate-400 block mb-1">${coords.length>1?'Coordenadores':'Coordenador'}</span>
+        ${coords.map(c=>`<span class="name-balloon coordinator-label">${primeiroNome(c.nome)}</span>`).join("") || '<span class="text-xs text-slate-400 italic">A definir</span>'}
+      </div>
+      <div class="flex flex-wrap">${membros.map(m=>`<span class="name-balloon">${primeiroNome(m.nome)}</span>`).join("")}</div>
+    </div>`;
+  }).join("");
+}
+
+/* =========================================================================
+   GRUPOS DE PARTILHA
+   ========================================================================= */
+function renderGrupos(){
+  document.getElementById("lista-grupos").innerHTML = ["1","2","3"].map(n=>{
+    const coord = DB.pessoas.find(p=>p.grupoPartilha===n && p.coordGrupoPartilha);
+    const membros = DB.pessoas.filter(p=>p.grupoPartilha===n && !p.coordGrupoPartilha);
+    return `<div class="bg-white p-4 rounded-xl border border-slate-200">
+      <p class="font-bold text-red-700 text-xs mb-2">Grupo ${n}</p>
+      ${coord?`<span class="name-balloon coordinator-label">${primeiroNome(coord.nome)}</span>`:""}
+      ${membros.map(m=>`<span class="name-balloon">${primeiroNome(m.nome)}</span>`).join("")}
+    </div>`;
+  }).join("");
+}
+
+/* =========================================================================
+   VIGÍLIAS
+   ========================================================================= */
+let vigiliaMesAtual = new Date().getMonth()+1;
+let vigiliaAnoAtual = new Date().getFullYear();
+function renderVigilias(ano=vigiliaAnoAtual, mes=vigiliaMesAtual){
+  vigiliaAnoAtual = ano; vigiliaMesAtual = mes;
+  document.getElementById("tab-vigilias-period").innerHTML = `<span class="dot"></span>Escala de ${nomeDoMes(mes)} de ${ano}`;
+
+  const grupoDe = letra => DB.pessoas.filter(p=>p.grupoVigilia===letra && !p.coordVigilia);
+  const coordDe = letra => DB.pessoas.find(p=>p.grupoVigilia===letra && p.coordVigilia);
+  const balõesDe = letra => {
+    const c = coordDe(letra);
+    return (c?`<span class="name-balloon"><strong>${primeiroNome(c.nome)}</strong></span>`:"") +
+      grupoDe(letra).map(m=>`<span class="name-balloon">${primeiroNome(m.nome)}</span>`).join("");
+  };
+
+  const isPar = mes % 2 === 0;
+  const h1_dia8 = isPar ? balõesDe("A") : balõesDe("B");
+  const h2_dia8 = isPar ? balõesDe("B") : balõesDe("A");
+  const label_dia7 = isPar ? "1º horário (22:00 - 02:00)" : "2º horário (02:00 - 06:00)";
+
+  const alertaLink = DB.config.vigiliaLink ? `<div class="mb-4 p-3 bg-amber-50 border-l-4 border-amber-500 rounded flex items-center gap-2 shadow-sm"><span class="text-lg">⚠️</span><a href="${DB.config.vigiliaLink}" target="_blank" class="text-amber-800 font-bold text-xs uppercase hover:underline">Link oficial das vigílias</a></div>` : "";
+  const notaHtml = DB.config.vigiliaNota ? `<div class="mt-8 pt-4 border-t border-slate-100 text-[13px] text-slate-500 italic"><p>• ${DB.config.vigiliaNota}</p></div>` : "";
+
+  document.getElementById("tab-vigilias-content").innerHTML = alertaLink + `
+    <div class="mb-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div class="space-y-6">
+        <div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 7</p>
+          <p class="text-xs font-bold text-red-600 uppercase mb-2">${label_dia7}:</p>
+          <div class="flex flex-wrap gap-1">${balõesDe("C")}</div>
+        </div>
+        <div><p class="text-base font-bold text-slate-800 border-b pb-1 mb-3">Dia 8</p>
+          <p class="text-xs font-bold text-red-600 uppercase mb-2">1º horário (22:00 - 02:00):</p>
+          <div class="flex flex-wrap gap-1 mb-4">${h1_dia8}</div>
+          <p class="text-xs font-bold text-red-600 uppercase mb-2">2º horário (02:00 - 06:00):</p>
+          <div class="flex flex-wrap gap-1">${h2_dia8}</div>
+        </div>
+      </div>
+      ${notaHtml}
+    </div>`;
+}
+function mudarMesVigilias(delta){
+  vigiliaMesAtual += delta;
+  if(vigiliaMesAtual<1){ vigiliaMesAtual=12; vigiliaAnoAtual--; }
+  if(vigiliaMesAtual>12){ vigiliaMesAtual=1; vigiliaAnoAtual++; }
+  renderVigilias();
+}
+
+/* =========================================================================
+   RETIRO / PAGAMENTOS
+   ========================================================================= */
+function renderRetiro(){
+  document.getElementById("retiro-titulo").textContent = DB.config.retiroTitulo;
+  document.getElementById("retiro-data").textContent = DB.config.retiroData;
+}
+function renderPagamentos(){
+  document.getElementById("pagamentos-body").innerHTML = DB.config.pagamentos.map(p=>
+    `<tr><td>${p.descricao}</td><td>${p.data}</td><td>${p.valor}</td><td>${p.status}</td></tr>`).join("");
+}
+
+/* =========================================================================
+   ANIVERSÁRIOS / CASAMENTOS
+   ========================================================================= */
+let alertasMesAtual = new Date().getMonth()+1;
+let alertasAnoAtual = new Date().getFullYear();
+function renderAlertasMes(mes=alertasMesAtual, ano=alertasAnoAtual){
+  alertasMesAtual = mes; alertasAnoAtual = ano;
+  document.getElementById("alertas-titulo").innerHTML = `<span class="dot"></span>Celebrações de ${nomeDoMes(mes)} de ${ano}`;
+  const listaAniversarios = document.getElementById("lista-aniversarios");
+  const listaCasamentos = document.getElementById("lista-casamentos");
+  listaAniversarios.innerHTML = ""; listaCasamentos.innerHTML = "";
+  const casamentosPorData = {};
+  todasPessoas().forEach(p=>{
+    if(p.nasc){
+      const [dia, mesN] = p.nasc.split("/").map(Number);
+      if(mesN===mes) listaAniversarios.innerHTML += `<div class="p-3 bg-red-50 rounded-xl border border-red-100"><p class="font-bold text-slate-800">${p.nome}</p><p class="text-xs text-red-600">${dia}/${mesN}</p></div>`;
+    }
+    if(p.casam && p.casam!=="-" && !p.casam.toLowerCase().includes("definir")){
+      const [diaC, mesC] = p.casam.split("/").map(Number);
+      if(mesC===mes){
+        const chave = `${diaC}-${mesC}`;
+        (casamentosPorData[chave] = casamentosPorData[chave]||[]).push(p.nome);
+      }
+    }
+  });
+  const entradas = Object.entries(casamentosPorData);
+  if(!entradas.length){ listaCasamentos.innerHTML = `<p class="text-sm text-slate-500">Nenhum casamento este mês.</p>`; }
+  entradas.forEach(([chave, nomes])=>{
+    const [diaC, mesC] = chave.split("-").map(Number);
+    const texto = nomes.length>1 ? nomes.join(" e ") : nomes[0];
+    listaCasamentos.innerHTML += `<div class="p-3 bg-blue-50 rounded-xl border border-blue-100"><p class="font-bold text-slate-800">Casamento de ${texto}</p><p class="text-xs text-blue-600">${diaC}/${mesC}</p></div>`;
+  });
+}
+function mudarMesAlertas(delta){
+  let mes = alertasMesAtual+delta, ano = alertasAnoAtual;
+  if(mes<1){ mes=12; ano--; } if(mes>12){ mes=1; ano++; }
+  renderAlertasMes(mes, ano);
+}
+function verificarAlertasDoDia(){
+  const hoje = new Date();
+  const diaHoje = hoje.getDate(), mesHoje = hoje.getMonth()+1;
+  document.getElementById("data-hoje-modal").innerText = hoje.toLocaleDateString("pt-BR", {day:"numeric", month:"long"});
+  const conteudo = document.getElementById("conteudo-alerta-dia");
+  conteudo.innerHTML = ""; let temEvento = false;
+  todasPessoas().forEach(p=>{
+    const [diaN, mesN] = (p.nasc||"").split("/").map(Number);
+    if(diaN===diaHoje && mesN===mesHoje){
+      temEvento = true;
+      conteudo.innerHTML += `<div class="flex items-center gap-4 p-4 bg-red-50 rounded-2xl border border-red-100"><span class="text-2xl">🎂</span><div><p class="text-[10px] font-black text-red-600 uppercase">Aniversariante</p><p class="font-bold text-slate-800 leading-tight">${p.nome}</p></div></div>`;
+    }
+    if(p.casam && p.casam!=="-" && !p.casam.toLowerCase().includes("definir")){
+      const [diaC, mesC] = p.casam.split("/").map(Number);
+      if(diaC===diaHoje && mesC===mesHoje){
+        temEvento = true;
+        conteudo.innerHTML += `<div class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100"><span class="text-2xl">💍</span><div><p class="text-[10px] font-black text-blue-600 uppercase">Bodas / Casamento</p><p class="font-bold text-slate-800 leading-tight">${p.nome}</p></div></div>`;
+      }
+    }
+  });
+  if(temEvento){
+    document.getElementById("modal-alerta-dia").classList.remove("hidden");
+    confetti({ particleCount:150, spread:70, origin:{y:.6}, colors:['#9f1c2e','#241c1a','#c99a3a'] });
+  }
+}
+function fecharModal(){ document.getElementById("modal-alerta-dia").classList.add("hidden"); }
+
+/* =========================================================================
+   SINCRONIZAÇÃO COM A PLANILHA (Pessoas + Configurações)
+   ========================================================================= */
+async function carregarNuvem(){
+  try{
+    const [respPessoas, respConfig] = await Promise.all([
+      fetch(DB.config.apiUrlPlanilha + "?recurso=pessoas"),
+      fetch(DB.config.apiUrlPlanilha + "?recurso=config")
+    ]);
+    const pessoasNuvem = await respPessoas.json();
+    const configNuvem = await respConfig.json();
+    let mudou = false;
+    if(Array.isArray(pessoasNuvem) && pessoasNuvem.length){ DB.pessoas = pessoasNuvem; mudou = true; }
+    if(configNuvem && Object.keys(configNuvem).length){
+      const apiUrl = DB.config.apiUrlPlanilha;
+      DB.config = {...DB.config, ...configNuvem, apiUrlPlanilha: apiUrl};
+      mudou = true;
+    }
+    if(mudou){
+      salvarDB();
+      renderTudo();
+      if(editarLogado){ renderAdminPessoas(); prepararConfigForm(); }
+    }
+  }catch(err){
+    console.warn("Não foi possível sincronizar com a planilha agora — usando os dados salvos neste navegador.", err);
+  }
+}
+async function enviarPessoasNuvem(){
+  try{ await fetch(DB.config.apiUrlPlanilha, { method:"POST", mode:"no-cors", body: JSON.stringify({recurso:"pessoas", pessoas: DB.pessoas}) }); }
+  catch(e){ console.warn("Falha ao enviar pessoas para a planilha.", e); }
+}
+async function enviarConfigNuvem(){
+  try{ await fetch(DB.config.apiUrlPlanilha, { method:"POST", mode:"no-cors", body: JSON.stringify({recurso:"config", config: DB.config}) }); }
+  catch(e){ console.warn("Falha ao enviar configurações para a planilha.", e); }
+}
+
+/* =========================================================================
+   CONTROLE FORMADORES (matriz FAP + sync Google Sheets) — inalterado na
+   lógica, agora a lista de nomes vem da base central de pessoas.
+   ========================================================================= */
+const nomesMesesMatriz = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+let dbLocalMatriz = JSON.parse(localStorage.getItem("fap_db_2026")) || [];
+
+async function loginControle(){
+  const senha = document.getElementById("controle-pass").value;
+  if(senha !== DB.config.senha){ alert("Senha incorreta!"); return; }
+  const btn = document.querySelector("#controle-auth button");
+  const original = btn.innerText;
+  btn.innerText = "Sincronizando com a nuvem..."; btn.disabled = true;
+  try{
+    const resp = await fetch(DB.config.apiUrlPlanilha);
+    const dados = await resp.json();
+    dbLocalMatriz = dados.filter(item=>item.acao==="MARCADO");
+    localStorage.setItem("fap_db_2026", JSON.stringify(dbLocalMatriz));
+    document.getElementById("controle-auth").classList.add("hidden");
+    document.getElementById("controle-content").classList.remove("hidden");
+    renderMatrix();
+  }catch(err){
+    console.error(err);
+    alert("Atenção: não foi possível baixar os dados da planilha. Exibindo dados locais.");
+    document.getElementById("controle-auth").classList.add("hidden");
+    document.getElementById("controle-content").classList.remove("hidden");
+    renderMatrix();
+  }finally{ btn.innerText = original; btn.disabled = false; }
+}
+function gerarIdSeguro(nome){ return "total-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,""); }
+function renderMatrix(){
+  const body = document.getElementById("matrix-body");
+  const lista = DB.pessoas.filter(p=>p.tipo==="P1"||p.tipo==="P2").map(p=>p.nomeMatriz||primeiroNome(p.nome)).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  body.innerHTML = lista.map(formando=>{
+    const registros = dbLocalMatriz.filter(r=>r.formando===formando);
+    const cols = nomesMesesMatriz.map(mesNome=>{
+      const marcado = registros.some(r=>r.mes===mesNome);
+      return `<td><input type="checkbox" class="cb-fap" ${marcado?'checked':''} onchange="sincronizarFap('${formando.replace(/'/g,"\\'")}', '${mesNome}', this)"></td>`;
+    }).join("");
+    return `<tr><td class="name-cell">${formando}</td>${cols}<td class="total-cell" id="${gerarIdSeguro(formando)}">${registros.length}</td></tr>`;
+  }).join("");
+}
+async function sincronizarFap(formando, mesNome, checkbox){
+  const ativo = checkbox.checked;
+  if(ativo){ if(!dbLocalMatriz.some(r=>r.formando===formando && r.mes===mesNome)) dbLocalMatriz.push({formando, mes:mesNome}); }
+  else{ dbLocalMatriz = dbLocalMatriz.filter(r=>!(r.formando===formando && r.mes===mesNome)); }
+  localStorage.setItem("fap_db_2026", JSON.stringify(dbLocalMatriz));
+  const totalEl = document.getElementById(gerarIdSeguro(formando));
+  if(totalEl) totalEl.innerText = dbLocalMatriz.filter(r=>r.formando===formando).length;
+  try{
+    checkbox.style.opacity = ".4";
+    await fetch(DB.config.apiUrlPlanilha, { method:"POST", mode:"no-cors", body: JSON.stringify({formando, mes:mesNome, acao: ativo?"MARCADO":"DESMARCADO"}) });
+    checkbox.style.opacity = "1";
+  }catch(e){ checkbox.style.opacity = "1"; }
+}
+
+/* =========================================================================
+   PAINEL DE EDIÇÃO
+   ========================================================================= */
+let editarLogado = false;
+function loginEditar(){
+  const senha = document.getElementById("editar-pass").value;
+  if(senha !== DB.config.senha){ alert("Senha incorreta!"); return; }
+  editarLogado = true;
+  document.getElementById("editar-auth").classList.add("hidden");
+  document.getElementById("editar-content").classList.remove("hidden");
+  renderAdminPessoas();
+  prepararConfigForm();
+}
+function setAdminTab(nome){
+  ["pessoas","config","backup"].forEach(t=>{
+    document.getElementById("admin-tab-"+t).classList.toggle("hidden", t!==nome);
+    document.getElementById("admin-tab-btn-"+t).classList.toggle("active", t===nome);
+  });
+}
+function renderAdminPessoas(){
+  const busca = (document.getElementById("admin-busca").value || "").toLowerCase();
+  const lista = DB.pessoas.filter(p=>p.nome.toLowerCase().includes(busca))
+    .sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
+  document.getElementById("admin-pessoas-body").innerHTML = lista.map(p=>`
+    <tr>
+      <td class="font-semibold">${p.nome}</td>
+      <td>${p.tipo}${p.papelFormador?` · ${p.papelFormador}`:""}</td>
+      <td>${p.ministerio||"—"}</td>
+      <td>${p.fap||"—"}</td>
+      <td class="text-right"><button onclick="abrirModalPessoa('${p.id}')" class="btn-ghost">Editar</button></td>
+    </tr>`).join("") || `<tr><td colspan="5" class="text-center text-slate-400 italic py-6">Nenhuma pessoa encontrada.</td></tr>`;
+}
+
+/* --- modal pessoa --- */
+function onTipoChange(){
+  document.getElementById("pf-wrap-papel").style.display = document.getElementById("pf-tipo").value === "Formador" ? "" : "none";
+}
+function abrirModalPessoa(id){
+  document.getElementById("modal-pessoa").classList.remove("hidden");
+  const p = id ? DB.pessoas.find(x=>x.id===id) : null;
+  document.getElementById("modal-pessoa-titulo").textContent = p ? "Editar pessoa" : "Nova pessoa";
+  document.getElementById("modal-pessoa-excluir").style.display = p ? "" : "none";
+  document.getElementById("pf-id").value = p ? p.id : "";
+  document.getElementById("pf-nome").value = p ? p.nome : "";
+  document.getElementById("pf-tipo").value = p ? p.tipo : "P2";
+  document.getElementById("pf-papel").value = p && p.papelFormador ? p.papelFormador : "Assistente";
+  document.getElementById("pf-nasc").value = p ? p.nasc : "";
+  document.getElementById("pf-casam").value = p ? p.casam : "-";
+  document.getElementById("pf-email").value = p ? p.email : "";
+  document.getElementById("pf-ministerio").value = p ? p.ministerio : "";
+  document.getElementById("pf-fap").value = p ? p.fap : "";
+  document.getElementById("pf-acompanhadopor").value = p ? (p.acompanhadoPor||"") : "";
+  document.getElementById("pf-grupopartilha").value = p ? (p.grupoPartilha||"") : "";
+  document.getElementById("pf-coordpartilha").checked = p ? !!p.coordGrupoPartilha : false;
+  document.getElementById("pf-equipe").value = p ? (p.equipe||"") : "";
+  document.getElementById("pf-coordequipe").checked = p ? !!p.coordEquipe : false;
+  document.getElementById("pf-grupovigilia").value = p ? (p.grupoVigilia||"") : "";
+  document.getElementById("pf-coordvigilia").checked = p ? !!p.coordVigilia : false;
+  document.getElementById("pf-nomematriz").value = p ? (p.nomeMatriz||"") : "";
+  onTipoChange();
+}
+function fecharModalPessoa(){ document.getElementById("modal-pessoa").classList.add("hidden"); }
+function salvarPessoaModal(){
+  const nome = document.getElementById("pf-nome").value.trim();
+  if(!nome){ alert("Informe o nome."); return; }
+  const id = document.getElementById("pf-id").value || uid();
+  const dados = {
+    id, nome,
+    tipo: document.getElementById("pf-tipo").value,
+    papelFormador: document.getElementById("pf-papel").value,
+    nasc: document.getElementById("pf-nasc").value.trim(),
+    casam: document.getElementById("pf-casam").value.trim() || "-",
+    email: document.getElementById("pf-email").value.trim(),
+    ministerio: document.getElementById("pf-ministerio").value.trim(),
+    fap: document.getElementById("pf-fap").value.trim(),
+    acompanhadoPor: document.getElementById("pf-acompanhadopor").value,
+    grupoPartilha: document.getElementById("pf-grupopartilha").value,
+    coordGrupoPartilha: document.getElementById("pf-coordpartilha").checked,
+    equipe: document.getElementById("pf-equipe").value,
+    coordEquipe: document.getElementById("pf-coordequipe").checked,
+    grupoVigilia: document.getElementById("pf-grupovigilia").value,
+    coordVigilia: document.getElementById("pf-coordvigilia").checked,
+    nomeMatriz: document.getElementById("pf-nomematriz").value.trim() || primeiroNome(nome)
+  };
+  const idx = DB.pessoas.findIndex(x=>x.id===id);
+  if(idx>=0) DB.pessoas[idx] = {...DB.pessoas[idx], ...dados};
+  else DB.pessoas.push(dados);
+  salvarDB();
+  fecharModalPessoa();
+  renderAdminPessoas();
+  renderTudo();
+  enviarPessoasNuvem();
+  toast("Pessoa salva e enviada para a planilha.");
+}
+function excluirPessoaModal(){
+  const id = document.getElementById("pf-id").value;
+  if(!id) return;
+  if(!confirm("Tem certeza que deseja excluir esta pessoa? Essa ação não pode ser desfeita.")) return;
+  DB.pessoas = DB.pessoas.filter(p=>p.id!==id);
+  salvarDB();
+  fecharModalPessoa();
+  renderAdminPessoas();
+  renderTudo();
+  enviarPessoasNuvem();
+  toast("Pessoa excluída e planilha atualizada.");
+}
+
+/* --- config --- */
+function prepararConfigForm(){
+  document.getElementById("cfg-citacao-texto").value = DB.config.citacaoTexto;
+  document.getElementById("cfg-citacao-autor").value = DB.config.citacaoAutor;
+  document.getElementById("cfg-retiro-titulo").value = DB.config.retiroTitulo;
+  document.getElementById("cfg-retiro-data").value = DB.config.retiroData;
+  document.getElementById("cfg-vigilia-nota").value = DB.config.vigiliaNota;
+  document.getElementById("cfg-vigilia-link").value = DB.config.vigiliaLink;
+  document.getElementById("cfg-senha").value = DB.config.senha;
+  renderPagamentosAdmin();
+}
+function renderPagamentosAdmin(){
+  document.getElementById("cfg-pagamentos-list").innerHTML = DB.config.pagamentos.map((p,i)=>`
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-2 items-center bg-[#faf6f0] p-2 rounded-xl">
+      <input class="field-input" value="${p.descricao}" oninput="DB.config.pagamentos[${i}].descricao=this.value">
+      <input class="field-input" value="${p.data}" oninput="DB.config.pagamentos[${i}].data=this.value">
+      <input class="field-input" value="${p.valor}" oninput="DB.config.pagamentos[${i}].valor=this.value">
+      <input class="field-input" value="${p.status}" oninput="DB.config.pagamentos[${i}].status=this.value">
+      <button onclick="removerPagamentoRow(${i})" class="btn-danger">✕</button>
+    </div>`).join("");
+}
+function addPagamentoRow(){ DB.config.pagamentos.push({descricao:"", data:"", valor:"", status:"Aberto"}); renderPagamentosAdmin(); }
+function removerPagamentoRow(i){ DB.config.pagamentos.splice(i,1); renderPagamentosAdmin(); }
+function salvarConfig(){
+  DB.config.citacaoTexto = document.getElementById("cfg-citacao-texto").value.trim();
+  DB.config.citacaoAutor = document.getElementById("cfg-citacao-autor").value.trim();
+  DB.config.retiroTitulo = document.getElementById("cfg-retiro-titulo").value.trim();
+  DB.config.retiroData = document.getElementById("cfg-retiro-data").value.trim();
+  DB.config.vigiliaNota = document.getElementById("cfg-vigilia-nota").value.trim();
+  DB.config.vigiliaLink = document.getElementById("cfg-vigilia-link").value.trim();
+  DB.config.senha = document.getElementById("cfg-senha").value.trim() || "jp2";
+  salvarDB();
+  renderTudo();
+  enviarConfigNuvem();
+  toast("Configurações salvas e enviadas para a planilha.");
+}
+
+/* --- backup --- */
+function exportarBackup(){
+  const blob = new Blob([JSON.stringify(DB, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `celula-sjp2-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  toast("Backup baixado.");
+}
+function importarBackup(){
+  const input = document.getElementById("input-importar");
+  const file = input.files[0];
+  if(!file){ alert("Escolha um arquivo .json primeiro."); return; }
+  if(!confirm("Isso vai substituir todos os dados atuais neste navegador pelos dados do arquivo. Continuar?")) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const novo = JSON.parse(e.target.result);
+      if(!novo.pessoas || !novo.config) throw new Error("Formato inválido");
+      DB = novo; salvarDB(); renderTudo(); renderAdminPessoas(); prepararConfigForm();
+      enviarPessoasNuvem(); enviarConfigNuvem();
+      toast("Backup importado e enviado para a planilha.");
+    }catch(err){ alert("Não foi possível ler este arquivo. Verifique se é um backup válido."); }
+  };
+  reader.readAsText(file);
+}
+function restaurarOriginal(){
+  if(!confirm("Isso apaga TODAS as edições feitas neste navegador e volta aos dados originais. Deseja continuar?")) return;
+  DB = JSON.parse(JSON.stringify(DEFAULT_DB));
+  salvarDB(); renderTudo(); renderAdminPessoas(); prepararConfigForm();
+  enviarPessoasNuvem(); enviarConfigNuvem();
+  toast("Dados restaurados para o padrão de fábrica e enviados para a planilha.");
+}
+
+/* =========================================================================
+   BOOT
+   ========================================================================= */
+function renderTudo(){
+  renderHome(); renderHomeGrid();
+  renderFormandos(); renderFormadores();
+  renderAcompanhamento(); renderEquipes(); renderGrupos();
+  renderRetiro(); renderPagamentos();
+  renderAlertasMes(); renderVigilias();
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  renderTudo();
+  verificarAlertasDoDia();
+  carregarNuvem();
 });
-    </script>
+</script>
 </body>
 </html>
