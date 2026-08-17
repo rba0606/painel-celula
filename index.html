@@ -145,9 +145,9 @@
   <!-- LISTA FORMANDOS -->
   <div id="tab-lista" class="tab-content">
     <div class="back-btn" onclick="openTab('tab-home')">← Voltar ao início</div>
-    <h3 class="section-title"><span class="dot" style="background:#1f7a4d"></span>P2 — Nível de Discipulado</h3>
+    <h3 class="section-title"><span class="dot" style="background:#1f7a4d"></span>P2 — Postulantes de 2º ano</h3>
     <div id="container-p2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
-    <h3 class="section-title"><span class="dot" style="background:#2f5fa8"></span>P1 — Nível de Ingresso</h3>
+    <h3 class="section-title"><span class="dot" style="background:#2f5fa8"></span>P1 — Postulantes de 1º ano</h3>
     <div id="container-p1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
   </div>
 
@@ -226,26 +226,77 @@
       <button onclick="loginControle()" class="btn-primary w-full">Entrar no painel</button>
     </div>
     <div id="controle-content" class="hidden space-y-6">
-      <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl border border-[#ece3d8] gap-4">
-        <h2 class="text-lg font-bold font-display italic">Mapa de acompanhamento anual</h2>
-        <div class="flex gap-4 text-[10px] font-bold uppercase text-[#8a8074]">
-          <span class="flex items-center gap-2"><span class="w-4 h-4 bg-[#1f7a4d] rounded"></span> Realizado</span>
-          <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-[#d24a4a] rounded"></span> Pendente</span>
+      <div class="flex gap-2 admin-tabs bg-white p-1.5 rounded-2xl border border-[#ece3d8] w-fit flex-wrap">
+        <button id="controle-tab-btn-acompanhamento" class="active" onclick="setControleTab('acompanhamento')">❤️ Acompanhamento</button>
+        <button id="controle-tab-btn-pagamento" onclick="setControleTab('pagamento')">💰 Pagamento do Retiro</button>
+        <button id="controle-tab-btn-eventos" onclick="setControleTab('eventos')">📅 Outros Eventos</button>
+      </div>
+
+      <!-- CARD: ACOMPANHAMENTO (inalterado) -->
+      <div id="controle-tab-acompanhamento" class="controle-tab space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl border border-[#ece3d8] gap-4">
+          <h2 class="text-lg font-bold font-display italic">Mapa de acompanhamento anual</h2>
+          <div class="flex gap-4 text-[10px] font-bold uppercase text-[#8a8074]">
+            <span class="flex items-center gap-2"><span class="w-4 h-4 bg-[#1f7a4d] rounded"></span> Realizado</span>
+            <span class="flex items-center gap-2"><span class="w-4 h-4 border-2 border-[#d24a4a] rounded"></span> Pendente</span>
+          </div>
+        </div>
+        <div class="bg-white p-2 md:p-6 rounded-2xl border border-[#ece3d8]">
+          <div class="matrix-container">
+            <table class="matrix-table">
+              <thead><tr class="bg-[#faf6f0]">
+                <th class="name-cell">Formando</th>
+                <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                <th class="total-cell">Total</th>
+              </tr></thead>
+              <tbody id="matrix-body"></tbody>
+            </table>
+          </div>
+          <p class="text-center text-[10px] text-[#a79c8d] mt-4 italic">As alterações são sincronizadas automaticamente com a planilha.</p>
         </div>
       </div>
-      <div class="bg-white p-2 md:p-6 rounded-2xl border border-[#ece3d8]">
-        <div class="matrix-container">
-          <table class="matrix-table">
-            <thead><tr class="bg-[#faf6f0]">
-              <th class="name-cell">Formando</th>
-              <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
-              <th>Jul</th><th>Ago</th><th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
-              <th class="total-cell">Total</th>
-            </tr></thead>
-            <tbody id="matrix-body"></tbody>
-          </table>
+
+      <!-- CARD: CONTROLE DE PAGAMENTO (novo) -->
+      <div id="controle-tab-pagamento" class="controle-tab hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <p class="text-[11px] font-black uppercase tracking-widest text-[var(--crimson)] mb-1">📌 Salve esta data</p>
+          <h2 id="pgr-titulo" class="text-xl font-bold font-display mb-4"></h2>
+          <div class="grid sm:grid-cols-3 gap-4 text-sm mb-4">
+            <div class="bg-[#faf6f0] p-3 rounded-xl"><span class="info-label">📅 Datas</span><p id="pgr-datas" class="font-semibold text-slate-700"></p></div>
+            <div class="bg-[#faf6f0] p-3 rounded-xl"><span class="info-label">⛪ Local</span><p id="pgr-local" class="font-semibold text-slate-700"></p></div>
+            <div class="bg-[#faf6f0] p-3 rounded-xl"><span class="info-label">💵 Valor por pessoa</span><p id="pgr-valor" class="font-semibold text-slate-700"></p></div>
+          </div>
+          <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 space-y-1">
+            <p id="pgr-forma"></p>
+            <p>Pagamento até <strong id="pgr-prazo"></strong>.</p>
+          </div>
         </div>
-        <p class="text-center text-[10px] text-[#a79c8d] mt-4 italic">As alterações são sincronizadas automaticamente com a planilha.</p>
+        <div class="bg-white p-2 md:p-6 rounded-2xl border border-[#ece3d8]">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-3 mb-4 px-2">
+            <h3 class="font-bold font-display text-lg">Valor recebido por pessoa</h3>
+            <p id="pgr-total-arrecadado" class="text-sm font-bold text-[var(--crimson)]"></p>
+          </div>
+          <div class="matrix-container">
+            <table class="matrix-table">
+              <thead><tr class="bg-[#faf6f0]">
+                <th class="name-cell">Nome</th>
+                <th>Valor recebido</th>
+                <th>Status</th>
+              </tr></thead>
+              <tbody id="pgr-matrix-body"></tbody>
+            </table>
+          </div>
+          <p class="text-center text-[10px] text-[#a79c8d] mt-4 italic">As alterações são sincronizadas automaticamente com a planilha. Inclui formandos e formadores.</p>
+        </div>
+      </div>
+
+      <!-- CARD: OUTROS EVENTOS (genérico, cadastrado em Editar Dados) -->
+      <div id="controle-tab-eventos" class="controle-tab hidden space-y-6">
+        <div class="bg-[#faf6f0] p-4 rounded-2xl border border-[#e9e0d2] text-xs text-[#5b5248]">
+          Cada evento abaixo é criado em <strong>Editar Dados → Eventos</strong> e usa o nome de todas as 30 pessoas da célula (formandos P1, P2 e formadores).
+        </div>
+        <div id="eventos-lista"></div>
       </div>
     </div>
   </div>
@@ -268,6 +319,7 @@
 
       <div class="flex gap-2 admin-tabs bg-white p-1.5 rounded-2xl border border-[#ece3d8] w-fit flex-wrap">
         <button id="admin-tab-btn-pessoas" class="active" onclick="setAdminTab('pessoas')">👥 Pessoas</button>
+        <button id="admin-tab-btn-eventos" onclick="setAdminTab('eventos')">📅 Eventos</button>
         <button id="admin-tab-btn-config" onclick="setAdminTab('config')">⚙️ Configurações</button>
         <button id="admin-tab-btn-backup" onclick="setAdminTab('backup')">💾 Backup</button>
       </div>
@@ -284,6 +336,15 @@
             <tbody id="admin-pessoas-body"></tbody>
           </table>
         </div>
+      </div>
+
+      <!-- ADMIN: EVENTOS -->
+      <div id="admin-tab-eventos" class="admin-tab hidden">
+        <div class="flex flex-wrap gap-3 items-center justify-between mb-4">
+          <p class="text-xs text-[#8a8074] max-w-md">Cadastre um evento (retiro, contribuição, encontro, o que surgir) e ele aparece em "Controle Formadores → Outros Eventos" com uma tabela pronta usando o nome de todos os 30 membros da célula.</p>
+          <button onclick="abrirModalEvento()" class="btn-primary whitespace-nowrap">+ Novo evento</button>
+        </div>
+        <div id="admin-eventos-lista" class="space-y-3"></div>
       </div>
 
       <!-- ADMIN: CONFIG -->
@@ -320,6 +381,18 @@
           <h4 class="font-bold mb-4 font-display text-lg">Senha de acesso</h4>
           <p class="text-xs text-[#8a8074] mb-3">Usada tanto para "Editar Dados" quanto para "Controle Formadores". Isso é uma trava simples para evitar edições por engano — não é uma proteção de segurança forte, pois o código roda no navegador.</p>
           <input type="text" id="cfg-senha" class="field-input max-w-xs">
+        </div>
+        <div class="bg-white p-6 rounded-2xl border border-[#ece3d8]">
+          <h4 class="font-bold mb-4 font-display text-lg">Controle de Pagamento — Retiro</h4>
+          <div class="grid md:grid-cols-2 gap-3 mb-3">
+            <div class="md:col-span-2"><label class="field-label">Título / aviso</label><input type="text" id="cfg-pgr-titulo" class="field-input"></div>
+            <div><label class="field-label">Datas</label><input type="text" id="cfg-pgr-datas" class="field-input"></div>
+            <div><label class="field-label">Local</label><input type="text" id="cfg-pgr-local" class="field-input"></div>
+            <div><label class="field-label">Valor total por pessoa</label><input type="text" id="cfg-pgr-valor" class="field-input"></div>
+            <div><label class="field-label">Prazo final</label><input type="text" id="cfg-pgr-prazo" class="field-input"></div>
+            <div class="md:col-span-2"><label class="field-label">Formas de pagamento (texto livre)</label><textarea id="cfg-pgr-forma" class="field-textarea" rows="2"></textarea></div>
+          </div>
+          <p class="text-xs text-[#8a8074]">O valor recebido de cada pessoa é lançado direto na aba "Controle Formadores → Pagamento do Retiro", não aqui.</p>
         </div>
         <button onclick="salvarConfig()" class="btn-primary">Salvar configurações</button>
       </div>
@@ -428,6 +501,45 @@
   </div>
 </div>
 
+
+<!-- MODAL: evento -->
+<div id="modal-evento" class="modal-backdrop hidden">
+  <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full my-6 overflow-hidden">
+    <div class="bg-[var(--crimson)] p-5 text-white flex items-center justify-between">
+      <h3 id="modal-evento-titulo" class="font-bold font-display text-lg">Novo evento</h3>
+      <button onclick="fecharModalEvento()" class="text-white/80 hover:text-white text-xl leading-none">✕</button>
+    </div>
+    <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+      <input type="hidden" id="ev-id">
+      <div><label class="field-label">Título do evento</label><input type="text" id="ev-titulo" class="field-input" placeholder="Ex: Contribuição do Congresso"></div>
+      <div><label class="field-label">Tipo</label>
+        <select id="ev-tipo" class="field-select"><option value="pagamento">Controle de pagamento</option><option value="presenca">Controle de presença</option></select>
+      </div>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div><label class="field-label">Datas (opcional)</label><input type="text" id="ev-datas" class="field-input" placeholder="Ex: 09 a 11/10/2026"></div>
+        <div><label class="field-label">Local (opcional)</label><input type="text" id="ev-local" class="field-input"></div>
+        <div><label class="field-label">Valor total (opcional)</label><input type="text" id="ev-valor" class="field-input" placeholder="Ex: R$ 50,00"></div>
+        <div><label class="field-label">Prazo final (opcional)</label><input type="text" id="ev-prazo" class="field-input"></div>
+      </div>
+      <div><label class="field-label">Observação / forma de pagamento (opcional)</label><textarea id="ev-forma" class="field-textarea" rows="2"></textarea></div>
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <label class="field-label mb-0">Colunas da tabela (parcelas, datas de encontro, etc.)</label>
+          <button onclick="addItemEvento()" class="btn-ghost">+ Coluna</button>
+        </div>
+        <div id="ev-itens-list" class="space-y-2"></div>
+      </div>
+    </div>
+    <div class="p-5 bg-[#faf6f0] flex items-center justify-between border-t border-[#ece3d8]">
+      <button id="modal-evento-excluir" onclick="excluirEventoModal()" class="btn-danger">Excluir evento</button>
+      <div class="flex gap-2">
+        <button onclick="fecharModalEvento()" class="btn-ghost">Cancelar</button>
+        <button onclick="salvarEventoModal()" class="btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: celebrações de hoje -->
 <div id="modal-alerta-dia" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/60 backdrop-blur-sm p-4">
   <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden border border-[#ece3d8]">
@@ -454,7 +566,7 @@ const DEFAULT_DB = {
   config: {
     citacaoTexto: "Não tenhais medo! Abri, melhor, escancarai as portas a Cristo!",
     citacaoAutor: "São João Paulo II",
-    retiroTitulo: "Retiro de Ingresso P1",
+    retiroTitulo: "Retiro de Ingresso P1", 
     retiroData: "18 e 19 de Abril",
     vigiliaNota: "Mara em horários especiais.",
     vigiliaLink: "https://vigiliash.web.app/",
@@ -463,7 +575,16 @@ const DEFAULT_DB = {
       { descricao: "Pagamento da Plataforma 2026", data: "18/03/2026", valor: "R$ 15,00", status: "Aberto" },
       { descricao: "Retiro de Ingresso P1", data: "18 e 19/04/2026", valor: "R$ —", status: "Aberto" }
     ],
-    apiUrlPlanilha: "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec"
+    apiUrlPlanilha: "https://script.google.com/macros/s/AKfycbwKCgGhN2TQ0M3YviNDxnbw5hEvju0FdhJvZRV5f7TTOEfdVodkkR4sKJtZHJFN-UrMyA/exec",
+    retiroPagamento: {
+      titulo: "A Data do Nosso Retiro Mudou!",
+      datas: "09, 10 e 11 de outubro de 2026",
+      local: "Mosteiro São Bento",
+      valorTotal: "R$ 330,00",
+      prazoFinal: "30/09/2026",
+      formaPagamento: "Formas de pagamento: 3x de R$ 120,00 (Julho, Agosto e Setembro) ou 2x a combinar. Também é possível pagar no cartão de crédito, com acréscimo de juros — nesse caso, entre em contato diretamente."
+    },
+    eventos: []
   },
   pessoas: [
     // ---- P2 ----
@@ -480,12 +601,7 @@ const DEFAULT_DB = {
     { id:"p11", nome:"Pedro Francisco de Souza Teixeira", tipo:"P2", ministerio:"PJJ e Liturgia", nasc:"22/12/2004", casam:"-", email:"pedrosouzadf075@gmail.com", fap:"Pedrão (Priscila)", acompanhadoPor:"Rafael", grupoPartilha:"1", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"A", coordVigilia:false, nomeMatriz:"Pedro Francisco" },
     { id:"p12", nome:"Raissa Souza Alabarce", tipo:"P2", ministerio:"Kerigma (Asa Sul)", nasc:"06/09/1990", casam:"-", email:"raissaalabarce.souza@gmail.com", fap:"Milena Brito", acompanhadoPor:"Tânia", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Raissa Souza" },
     { id:"p13", nome:"Walkner Pinheiro Melo de Almeida", tipo:"P2", ministerio:"Música", nasc:"22/08/1980", casam:"-", email:"walkner.almeida@yahoo.com.br", fap:"Marcelo (Tânia)", acompanhadoPor:"Rafael", grupoPartilha:"", coordGrupoPartilha:false, equipe:"Música", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Walkner Pinheiro" },
-    { id:"p14", nome:"Agnes Caroline Serafim Cardoso", tipo:"P2", ministerio:"—", nasc:"19/12/1999", casam:"25/11/2023", email:"agneserafimcardosoreis@gmail.com", fap:"Jenisangêla - CV", acompanhadoPor:"", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:true, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Agnes Caroline" },
-    { id:"p15", nome:"Gustavo Teixeira Reis", tipo:"P2", ministerio:"Sem ministério", nasc:"06/01/2000", casam:"25/11/2023", email:"gustavoreis2302@gmail.com", fap:"Marcelo Vieira", acompanhadoPor:"Rafael", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Gustavo Teixeira" },
-    { id:"p16", nome:"Caio Eduardo Dos Santos Ferreira", tipo:"P2", ministerio:"Promoção humana", nasc:"25/09/1999", casam:"-", email:"caiodudu10@gmail.com", fap:"Matheus Tonhá", acompanhadoPor:"Rafael", grupoPartilha:"", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Caio Eduardo" },
     { id:"p17", nome:"Nayara Monteiro Ferreira", tipo:"P2", ministerio:"Promoção humana", nasc:"27/10/1988", casam:"-", email:"nayaramonteferreira@gmail.com", fap:"Camila Oka", acompanhadoPor:"Tânia", grupoPartilha:"", coordGrupoPartilha:false, equipe:"", coordEquipe:false, grupoVigilia:"", coordVigilia:false, nomeMatriz:"Nayara Monteiro Ferreira" },
-    { id:"p18", nome:"Alex Fernando Viana Couto da Silva", tipo:"P2", ministerio:"Música", nasc:"05/08/1984", casam:"02/09/2017", email:"axfdsl@gmail.com", fap:"Marcelo (Tânia)", acompanhadoPor:"", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Alex Fernando Viana" },
-    { id:"p19", nome:"Kelly Cristina Viana Couto da Silva", tipo:"P2", ministerio:"Centro de Formação", nasc:"29/07/1984", casam:"02/09/2017", email:"kellyvcouto@gmail.com", fap:"Thais (Marcelo)", acompanhadoPor:"", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Intercessão", coordEquipe:true, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Kelly Cristina Viana" },
     // ---- P1 ----
     { id:"p20", nome:"Laura Dias Marques Braz", tipo:"P1", ministerio:"Celeiro de Pastores", nasc:"30/09/2003", casam:"-", email:"lauravoc2024@gmail.com", fap:"Renata Ribas", acompanhadoPor:"Tânia", grupoPartilha:"2", coordGrupoPartilha:false, equipe:"Fraternidade", coordEquipe:false, grupoVigilia:"C", coordVigilia:false, nomeMatriz:"Laura Dias Marques" },
     { id:"p21", nome:"Sabrina Magalhães Vieira", tipo:"P1", ministerio:"1° anúncio", nasc:"21/08/1996", casam:"-", email:"sabrinavieirapsi@gmail.com", fap:"Barbara Mendes", acompanhadoPor:"Tânia", grupoPartilha:"3", coordGrupoPartilha:false, equipe:"Liturgia", coordEquipe:false, grupoVigilia:"B", coordVigilia:false, nomeMatriz:"Sabrina Magalhães" },
@@ -506,6 +622,8 @@ DEFAULT_DB.pessoas.find(p=>p.id==="p5").destaqueAcompanhamento = true;
 
 const STORAGE_KEY = "celula_sjp2_db_v1";
 let DB = carregarDB();
+if(!DB.config.retiroPagamento){ DB.config.retiroPagamento = JSON.parse(JSON.stringify(DEFAULT_DB.config.retiroPagamento)); }
+if(!DB.config.eventos){ DB.config.eventos = []; }
 
 function carregarDB(){
   try{
@@ -826,7 +944,7 @@ async function carregarNuvem(){
     if(mudou){
       salvarDB();
       renderTudo();
-      if(editarLogado){ renderAdminPessoas(); prepararConfigForm(); }
+      if(editarLogado){ renderAdminPessoas(); renderAdminEventos(); prepararConfigForm(); }
     }
   }catch(err){
     console.warn("Não foi possível sincronizar com a planilha agora — usando os dados salvos neste navegador.", err);
@@ -855,20 +973,41 @@ async function loginControle(){
   const original = btn.innerText;
   btn.innerText = "Sincronizando com a nuvem..."; btn.disabled = true;
   try{
-    const resp = await fetch(DB.config.apiUrlPlanilha);
-    const dados = await resp.json();
+    const [respFap, respPgr, respEventos] = await Promise.all([
+      fetch(DB.config.apiUrlPlanilha),
+      fetch(DB.config.apiUrlPlanilha + "?recurso=pagamentoretiro"),
+      fetch(DB.config.apiUrlPlanilha + "?recurso=eventos")
+    ]);
+    const dados = await respFap.json();
     dbLocalMatriz = dados.filter(item=>item.acao==="MARCADO");
     localStorage.setItem("fap_db_2026", JSON.stringify(dbLocalMatriz));
+    const dadosPgr = await respPgr.json();
+    pagamentosRetiroValores = {};
+    dadosPgr.forEach(r=>{ pagamentosRetiroValores[r.formando] = parseValorBR(String(r.valor||"")); });
+    localStorage.setItem("pagamento_retiro_valores_2026", JSON.stringify(pagamentosRetiroValores));
+    const dadosEventos = await respEventos.json();
+    dbLocalEventos = dadosEventos.filter(item=>item.acao==="MARCADO");
+    localStorage.setItem("eventos_dados", JSON.stringify(dbLocalEventos));
     document.getElementById("controle-auth").classList.add("hidden");
     document.getElementById("controle-content").classList.remove("hidden");
     renderMatrix();
+    renderPagamentoRetiro();
+    renderEventos();
   }catch(err){
     console.error(err);
     alert("Atenção: não foi possível baixar os dados da planilha. Exibindo dados locais.");
     document.getElementById("controle-auth").classList.add("hidden");
     document.getElementById("controle-content").classList.remove("hidden");
     renderMatrix();
+    renderPagamentoRetiro();
+    renderEventos();
   }finally{ btn.innerText = original; btn.disabled = false; }
+}
+function setControleTab(nome){
+  ["acompanhamento","pagamento","eventos"].forEach(t=>{
+    document.getElementById("controle-tab-"+t).classList.toggle("hidden", t!==nome);
+    document.getElementById("controle-tab-btn-"+t).classList.toggle("active", t===nome);
+  });
 }
 function gerarIdSeguro(nome){ return "total-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,""); }
 function renderMatrix(){
@@ -897,6 +1036,126 @@ async function sincronizarFap(formando, mesNome, checkbox){
   }catch(e){ checkbox.style.opacity = "1"; }
 }
 
+/* ---------- Controle de Pagamento do Retiro (valor recebido por pessoa) ---------- */
+let pagamentosRetiroValores = JSON.parse(localStorage.getItem("pagamento_retiro_valores_2026")) || {};
+function parseValorBR(str){
+  if(typeof str !== "string" || !str.trim()) return 0;
+  const limpo = str.replace(/[^\d,.-]/g, "").replace(/\.(?=\d{3}(,|$))/g, "").replace(",", ".");
+  const n = parseFloat(limpo);
+  return isNaN(n) ? 0 : n;
+}
+function formatarValorBR(n){ return "R$ " + n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function gerarIdSeguroPgr(nome){ return "totalpgr-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,""); }
+function renderPagamentoRetiroInfo(){
+  const cfg = DB.config.retiroPagamento || {};
+  document.getElementById("pgr-titulo").textContent = cfg.titulo || "";
+  document.getElementById("pgr-datas").textContent = cfg.datas || "—";
+  document.getElementById("pgr-local").textContent = cfg.local || "—";
+  document.getElementById("pgr-valor").textContent = cfg.valorTotal || "—";
+  document.getElementById("pgr-forma").textContent = cfg.formaPagamento || "";
+  document.getElementById("pgr-prazo").textContent = cfg.prazoFinal || "—";
+}
+function renderPagamentoRetiro(){
+  renderPagamentoRetiroInfo();
+  const valorEsperado = parseValorBR((DB.config.retiroPagamento||{}).valorTotal || "");
+  const nomes = nomesDaCelula();
+  let totalArrecadado = 0;
+  const body = document.getElementById("pgr-matrix-body");
+  body.innerHTML = nomes.map(nome=>{
+    const valor = pagamentosRetiroValores[nome] || 0;
+    totalArrecadado += valor;
+    let statusHtml;
+    if(valorEsperado>0 && valor >= valorEsperado) statusHtml = `<span class="badge badge-p2">Pago</span>`;
+    else if(valor>0) statusHtml = `<span class="badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a">Parcial</span>`;
+    else statusHtml = `<span class="badge" style="background:#fdecea;color:#b3261e;border:1px solid #f7d3d0">Pendente</span>`;
+    const valorExibido = valor ? valor.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : "";
+    return `<tr>
+      <td class="name-cell">${nome}</td>
+      <td><input type="text" inputmode="decimal" class="field-input" style="max-width:150px" value="${valorExibido}" placeholder="0,00" onchange="sincronizarValorPagamentoRetiro('${nome.replace(/'/g,"\\'")}', this)"></td>
+      <td id="${gerarIdSeguroPgr(nome)}-status">${statusHtml}</td>
+    </tr>`;
+  }).join("");
+  const esperadoTotal = valorEsperado>0 ? ` de ${formatarValorBR(valorEsperado*nomes.length)} esperado` : "";
+  document.getElementById("pgr-total-arrecadado").textContent = `Total arrecadado: ${formatarValorBR(totalArrecadado)}${esperadoTotal}`;
+}
+async function sincronizarValorPagamentoRetiro(nome, input){
+  const valor = parseValorBR(input.value);
+  pagamentosRetiroValores[nome] = valor;
+  localStorage.setItem("pagamento_retiro_valores_2026", JSON.stringify(pagamentosRetiroValores));
+  input.value = valor ? valor.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : "";
+  const valorEsperado = parseValorBR((DB.config.retiroPagamento||{}).valorTotal || "");
+  const statusEl = document.getElementById(gerarIdSeguroPgr(nome)+"-status");
+  if(statusEl){
+    if(valorEsperado>0 && valor >= valorEsperado) statusEl.innerHTML = `<span class="badge badge-p2">Pago</span>`;
+    else if(valor>0) statusEl.innerHTML = `<span class="badge" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a">Parcial</span>`;
+    else statusEl.innerHTML = `<span class="badge" style="background:#fdecea;color:#b3261e;border:1px solid #f7d3d0">Pendente</span>`;
+  }
+  const nomes = nomesDaCelula();
+  const totalArrecadado = nomes.reduce((soma,n)=>soma + (pagamentosRetiroValores[n]||0), 0);
+  const esperadoTotal = valorEsperado>0 ? ` de ${formatarValorBR(valorEsperado*nomes.length)} esperado` : "";
+  document.getElementById("pgr-total-arrecadado").textContent = `Total arrecadado: ${formatarValorBR(totalArrecadado)}${esperadoTotal}`;
+  try{
+    input.style.opacity = ".5";
+    await fetch(DB.config.apiUrlPlanilha, { method:"POST", mode:"no-cors", body: JSON.stringify({recurso:"pagamentoretirovalor", formando: nome, valor}) });
+    input.style.opacity = "1";
+  }catch(e){ input.style.opacity = "1"; }
+}
+
+/* ---------- Outros Eventos (genérico — usa todas as 30 pessoas da célula) ---------- */
+let dbLocalEventos = JSON.parse(localStorage.getItem("eventos_dados")) || [];
+function gerarIdSeguroEvento(eventoId, nome){
+  return "totalevt-" + eventoId + "-" + nome.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g,"");
+}
+function nomesDaCelula(){
+  return todasPessoas().map(p=>p.nomeMatriz || primeiroNome(p.nome)).sort((a,b)=>a.localeCompare(b,'pt-BR'));
+}
+function cardEventoHTML(ev){
+  const nomes = nomesDaCelula();
+  const head = `<th class="name-cell">Nome</th>` + ev.itens.map(it=>`<th>${it}</th>`).join("") + `<th class="total-cell">Total</th>`;
+  const rows = nomes.map(nome=>{
+    const registros = dbLocalEventos.filter(r=>r.eventoId===ev.id && r.pessoa===nome);
+    const cols = ev.itens.map(item=>{
+      const marcado = registros.some(r=>r.item===item);
+      return `<td><input type="checkbox" class="cb-fap" ${marcado?'checked':''} onchange="sincronizarEvento('${ev.id}','${nome.replace(/'/g,"\\'")}','${item.replace(/'/g,"\\'")}', this)"></td>`;
+    }).join("");
+    return `<tr><td class="name-cell">${nome}</td>${cols}<td class="total-cell" id="${gerarIdSeguroEvento(ev.id,nome)}">${registros.length}/${ev.itens.length}</td></tr>`;
+  }).join("");
+  const infoBlocos = [];
+  if(ev.datas) infoBlocos.push(["📅 Datas", ev.datas]);
+  if(ev.local) infoBlocos.push(["⛪ Local", ev.local]);
+  if(ev.valorTotal) infoBlocos.push(["💵 Valor", ev.valorTotal]);
+  return `<div class="bg-white p-4 md:p-6 rounded-2xl border border-[#ece3d8] mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+      <h3 class="text-lg font-bold font-display">${ev.titulo}</h3>
+      <span class="badge ${ev.tipo==='pagamento'?'badge-p2':'badge-p1'}">${ev.tipo==='pagamento'?'Pagamento':'Presença'}</span>
+    </div>
+    ${infoBlocos.length ? `<div class="grid sm:grid-cols-3 gap-3 mb-4 text-sm">${infoBlocos.map(([l,v])=>`<div class="bg-[#faf6f0] p-3 rounded-xl"><span class="info-label">${l}</span><p class="font-semibold text-slate-700">${v}</p></div>`).join("")}</div>` : ""}
+    ${(ev.prazoFinal || ev.formaPagamento) ? `<div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 mb-4 space-y-1">${ev.formaPagamento?`<p>${ev.formaPagamento}</p>`:""}${ev.prazoFinal?`<p>Prazo: <strong>${ev.prazoFinal}</strong></p>`:""}</div>` : ""}
+    <div class="matrix-container"><table class="matrix-table"><thead><tr class="bg-[#faf6f0]">${head}</tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+function renderEventos(){
+  const cont = document.getElementById("eventos-lista");
+  const eventos = DB.config.eventos || [];
+  cont.innerHTML = eventos.length
+    ? eventos.map(cardEventoHTML).join("")
+    : `<div class="bg-white p-8 rounded-2xl border border-dashed border-[#d8cdbe] text-center text-sm text-[#8a8074]">Nenhum evento cadastrado ainda. Crie um em <strong>Editar Dados → Eventos</strong>.</div>`;
+}
+async function sincronizarEvento(eventoId, pessoa, item, checkbox){
+  const ativo = checkbox.checked;
+  if(ativo){ if(!dbLocalEventos.some(r=>r.eventoId===eventoId && r.pessoa===pessoa && r.item===item)) dbLocalEventos.push({eventoId, pessoa, item}); }
+  else{ dbLocalEventos = dbLocalEventos.filter(r=>!(r.eventoId===eventoId && r.pessoa===pessoa && r.item===item)); }
+  localStorage.setItem("eventos_dados", JSON.stringify(dbLocalEventos));
+  const ev = (DB.config.eventos||[]).find(e=>e.id===eventoId);
+  const totalEl = document.getElementById(gerarIdSeguroEvento(eventoId, pessoa));
+  if(totalEl && ev) totalEl.innerText = `${dbLocalEventos.filter(r=>r.eventoId===eventoId && r.pessoa===pessoa).length}/${ev.itens.length}`;
+  try{
+    checkbox.style.opacity = ".4";
+    await fetch(DB.config.apiUrlPlanilha, { method:"POST", mode:"no-cors", body: JSON.stringify({recurso:"eventos", eventoId, pessoa, item, acao: ativo?"MARCADO":"DESMARCADO"}) });
+    checkbox.style.opacity = "1";
+  }catch(e){ checkbox.style.opacity = "1"; }
+}
+
 /* =========================================================================
    PAINEL DE EDIÇÃO
    ========================================================================= */
@@ -908,10 +1167,11 @@ function loginEditar(){
   document.getElementById("editar-auth").classList.add("hidden");
   document.getElementById("editar-content").classList.remove("hidden");
   renderAdminPessoas();
+  renderAdminEventos();
   prepararConfigForm();
 }
 function setAdminTab(nome){
-  ["pessoas","config","backup"].forEach(t=>{
+  ["pessoas","eventos","config","backup"].forEach(t=>{
     document.getElementById("admin-tab-"+t).classList.toggle("hidden", t!==nome);
     document.getElementById("admin-tab-btn-"+t).classList.toggle("active", t===nome);
   });
@@ -928,6 +1188,82 @@ function renderAdminPessoas(){
       <td>${p.fap||"—"}</td>
       <td class="text-right"><button onclick="abrirModalPessoa('${p.id}')" class="btn-ghost">Editar</button></td>
     </tr>`).join("") || `<tr><td colspan="5" class="text-center text-slate-400 italic py-6">Nenhuma pessoa encontrada.</td></tr>`;
+}
+
+/* --- admin eventos --- */
+function renderAdminEventos(){
+  const eventos = DB.config.eventos || [];
+  document.getElementById("admin-eventos-lista").innerHTML = eventos.length ? eventos.map(ev=>`
+    <div class="table-container p-4 flex items-center justify-between gap-3">
+      <div>
+        <p class="font-bold text-sm">${ev.titulo}</p>
+        <p class="text-xs text-[#8a8074]">${ev.tipo==='pagamento'?'Pagamento':'Presença'} · ${ev.itens.length} coluna(s)${ev.datas?` · ${ev.datas}`:""}</p>
+      </div>
+      <button onclick="abrirModalEvento('${ev.id}')" class="btn-ghost">Editar</button>
+    </div>`).join("") : `<p class="text-sm text-slate-400 italic text-center py-8">Nenhum evento cadastrado ainda.</p>`;
+}
+let itensEventoTemp = [];
+function abrirModalEvento(id){
+  document.getElementById("modal-evento").classList.remove("hidden");
+  const ev = id ? (DB.config.eventos||[]).find(e=>e.id===id) : null;
+  document.getElementById("modal-evento-titulo").textContent = ev ? "Editar evento" : "Novo evento";
+  document.getElementById("modal-evento-excluir").style.display = ev ? "" : "none";
+  document.getElementById("ev-id").value = ev ? ev.id : "";
+  document.getElementById("ev-titulo").value = ev ? ev.titulo : "";
+  document.getElementById("ev-tipo").value = ev ? ev.tipo : "pagamento";
+  document.getElementById("ev-datas").value = ev ? (ev.datas||"") : "";
+  document.getElementById("ev-local").value = ev ? (ev.local||"") : "";
+  document.getElementById("ev-valor").value = ev ? (ev.valorTotal||"") : "";
+  document.getElementById("ev-prazo").value = ev ? (ev.prazoFinal||"") : "";
+  document.getElementById("ev-forma").value = ev ? (ev.formaPagamento||"") : "";
+  itensEventoTemp = ev ? [...ev.itens] : ["Item 1"];
+  renderItensEventoAdmin();
+}
+function renderItensEventoAdmin(){
+  document.getElementById("ev-itens-list").innerHTML = itensEventoTemp.map((it,i)=>`
+    <div class="flex gap-2 items-center bg-[#faf6f0] p-2 rounded-xl">
+      <input class="field-input" value="${it}" oninput="itensEventoTemp[${i}]=this.value">
+      <button onclick="removerItemEvento(${i})" class="btn-danger">✕</button>
+    </div>`).join("");
+}
+function addItemEvento(){ itensEventoTemp.push("Nova coluna"); renderItensEventoAdmin(); }
+function removerItemEvento(i){ itensEventoTemp.splice(i,1); renderItensEventoAdmin(); }
+function fecharModalEvento(){ document.getElementById("modal-evento").classList.add("hidden"); }
+function salvarEventoModal(){
+  const titulo = document.getElementById("ev-titulo").value.trim();
+  if(!titulo){ alert("Informe o título do evento."); return; }
+  const itens = itensEventoTemp.map(i=>i.trim()).filter(Boolean);
+  if(!itens.length){ alert("Adicione pelo menos uma coluna (parcela, data do encontro, etc.)."); return; }
+  const id = document.getElementById("ev-id").value || ("evt_"+uid());
+  const dados = {
+    id, titulo,
+    tipo: document.getElementById("ev-tipo").value,
+    datas: document.getElementById("ev-datas").value.trim(),
+    local: document.getElementById("ev-local").value.trim(),
+    valorTotal: document.getElementById("ev-valor").value.trim(),
+    prazoFinal: document.getElementById("ev-prazo").value.trim(),
+    formaPagamento: document.getElementById("ev-forma").value.trim(),
+    itens
+  };
+  if(!DB.config.eventos) DB.config.eventos = [];
+  const idx = DB.config.eventos.findIndex(e=>e.id===id);
+  if(idx>=0) DB.config.eventos[idx] = dados; else DB.config.eventos.push(dados);
+  salvarDB();
+  fecharModalEvento();
+  renderAdminEventos();
+  enviarConfigNuvem();
+  toast("Evento salvo e enviado para a planilha.");
+}
+function excluirEventoModal(){
+  const id = document.getElementById("ev-id").value;
+  if(!id) return;
+  if(!confirm("Excluir este evento? As marcações já feitas continuam guardadas na planilha, mas o card some do app.")) return;
+  DB.config.eventos = (DB.config.eventos||[]).filter(e=>e.id!==id);
+  salvarDB();
+  fecharModalEvento();
+  renderAdminEventos();
+  enviarConfigNuvem();
+  toast("Evento excluído.");
 }
 
 /* --- modal pessoa --- */
@@ -1013,6 +1349,13 @@ function prepararConfigForm(){
   document.getElementById("cfg-vigilia-nota").value = DB.config.vigiliaNota;
   document.getElementById("cfg-vigilia-link").value = DB.config.vigiliaLink;
   document.getElementById("cfg-senha").value = DB.config.senha;
+  const pgr = DB.config.retiroPagamento || {};
+  document.getElementById("cfg-pgr-titulo").value = pgr.titulo || "";
+  document.getElementById("cfg-pgr-datas").value = pgr.datas || "";
+  document.getElementById("cfg-pgr-local").value = pgr.local || "";
+  document.getElementById("cfg-pgr-valor").value = pgr.valorTotal || "";
+  document.getElementById("cfg-pgr-prazo").value = pgr.prazoFinal || "";
+  document.getElementById("cfg-pgr-forma").value = pgr.formaPagamento || "";
   renderPagamentosAdmin();
 }
 function renderPagamentosAdmin(){
@@ -1035,8 +1378,16 @@ function salvarConfig(){
   DB.config.vigiliaNota = document.getElementById("cfg-vigilia-nota").value.trim();
   DB.config.vigiliaLink = document.getElementById("cfg-vigilia-link").value.trim();
   DB.config.senha = document.getElementById("cfg-senha").value.trim() || "jp2";
+  if(!DB.config.retiroPagamento) DB.config.retiroPagamento = {};
+  DB.config.retiroPagamento.titulo = document.getElementById("cfg-pgr-titulo").value.trim();
+  DB.config.retiroPagamento.datas = document.getElementById("cfg-pgr-datas").value.trim();
+  DB.config.retiroPagamento.local = document.getElementById("cfg-pgr-local").value.trim();
+  DB.config.retiroPagamento.valorTotal = document.getElementById("cfg-pgr-valor").value.trim();
+  DB.config.retiroPagamento.prazoFinal = document.getElementById("cfg-pgr-prazo").value.trim();
+  DB.config.retiroPagamento.formaPagamento = document.getElementById("cfg-pgr-forma").value.trim();
   salvarDB();
   renderTudo();
+  if(document.getElementById("controle-content") && !document.getElementById("controle-content").classList.contains("hidden")) renderPagamentoRetiro();
   enviarConfigNuvem();
   toast("Configurações salvas e enviadas para a planilha.");
 }
@@ -1060,7 +1411,7 @@ function importarBackup(){
     try{
       const novo = JSON.parse(e.target.result);
       if(!novo.pessoas || !novo.config) throw new Error("Formato inválido");
-      DB = novo; salvarDB(); renderTudo(); renderAdminPessoas(); prepararConfigForm();
+      DB = novo; salvarDB(); renderTudo(); renderAdminPessoas(); renderAdminEventos(); prepararConfigForm();
       enviarPessoasNuvem(); enviarConfigNuvem();
       toast("Backup importado e enviado para a planilha.");
     }catch(err){ alert("Não foi possível ler este arquivo. Verifique se é um backup válido."); }
@@ -1070,7 +1421,7 @@ function importarBackup(){
 function restaurarOriginal(){
   if(!confirm("Isso apaga TODAS as edições feitas neste navegador e volta aos dados originais. Deseja continuar?")) return;
   DB = JSON.parse(JSON.stringify(DEFAULT_DB));
-  salvarDB(); renderTudo(); renderAdminPessoas(); prepararConfigForm();
+  salvarDB(); renderTudo(); renderAdminPessoas(); renderAdminEventos(); prepararConfigForm();
   enviarPessoasNuvem(); enviarConfigNuvem();
   toast("Dados restaurados para o padrão de fábrica e enviados para a planilha.");
 }
